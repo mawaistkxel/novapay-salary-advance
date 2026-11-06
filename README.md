@@ -1,5 +1,7 @@
 # NovaKit Lite
 
+> **Salary-advance prototype (case study submission).** Run `npm install && npm run dev`, then use the **Demo scenario** panel next to the phone to pick what NovaPay decides (approved, reduced amount, Accept fails once, declined for unverified income or credit score) and tap "See your offer". Design reference (context, tokens, components, patterns): [`DESIGN.md`](DESIGN.md) · what changed and why: [`docs/WRITEUP.md`](docs/WRITEUP.md) · system changes and design↔code mapping: [`docs/SYSTEM_CHANGES.md`](docs/SYSTEM_CHANGES.md) · decisions and open questions: [`docs/DECISIONS.md`](docs/DECISIONS.md) · AI process: [`docs/AI_LOG.md`](docs/AI_LOG.md). The starter README follows unchanged.
+
 A small slice of **NovaPay's coded design system** — the starter for the AI-First Product Designer case study. It gives you design tokens, a handful of components, and a running mobile-framed app to build on.
 
 > Read this and the components carefully — but treat the system as a **starting point, not gospel**. Real design systems are messier than their docs suggest: some things are missing, some are inconsistent, and some shouldn't be reused as-is. Part of your job is to notice that.

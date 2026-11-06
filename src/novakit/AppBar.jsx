@@ -1,6 +1,7 @@
 /**
  * AppBar — NovaKit Lite
  * title + optional back affordance
+ * Back button: 36px -> 44px touch target, glyph at title size (was 15px).
  */
 export default function AppBar({ title, onBack = null }) {
   return (
@@ -9,7 +10,7 @@ export default function AppBar({ title, onBack = null }) {
         <button
           onClick={onBack}
           aria-label="Back"
-          className="h-9 w-9 -ml-1 flex items-center justify-center rounded-full text-neutral-700 active:bg-neutral-100"
+          className="h-11 w-11 -ml-2 flex items-center justify-center rounded-full text-title text-neutral-700 active:bg-neutral-100"
         >
           ‹
         </button>

@@ -3,6 +3,7 @@
 Context for Claude Code, carried over from my planning chat in claude.ai. Read it fully at the start of every session, and keep **Status**, **Decisions made** and **Open decisions** up to date as we work.
 
 Source of truth for product rules: @PRODUCT_REFERENCE.md
+Design reference (tokens, components, patterns, copy): @DESIGN.md
 
 ## 1. What this project is
 
@@ -26,7 +27,12 @@ Done in the planning chat:
 Session 1 (Claude Code, 6 Nov 2026):
 - Git initialised: commit 1 is the untouched starter; this file was added in commit 2. Work happens on branch `salary-advance`.
 - Open decisions settled (section 7). Plan approved: overlay fix → system changes → screens → docs → deploy.
+- Overlay bug fixed (toast now y=545–591 at 360×640). System changes and the full flow built on branch `salary-advance` (see `docs/SYSTEM_CHANGES.md`).
+- Tested by script through all five scenarios at 360×640, plus 390×844, 1280×800 and 675×414; keyboard pass on the tier picker. Not yet tested with a real screen reader or on a real phone.
+- Docs written: `docs/DECISIONS.md`, `docs/SYSTEM_CHANGES.md`, `docs/AI_LOG.md`, `docs/WRITEUP.md` (draft, ~1,450 words, needs trimming to ~2 pages and one "rejected output" picked).
 - Not on GitHub / Vercel yet; deploy waits for my go-ahead and the reviewers' GitHub usernames.
+
+Next steps: I review the flow and the write-up → create the private repo, push, PR `salary-advance` → `main`, merge → Vercel import → test the production link incognito and on a phone → invite reviewers → export the write-up to a Google Doc/PDF.
 
 Next steps, in order:
 1. Git hygiene: the first commit should be the untouched starter; this CLAUDE.md goes in a later commit.
@@ -196,7 +202,7 @@ The README warns that the system is messier than its docs: some things are missi
   3. Where I extended the system, and why: every token/component added or modified, each with a one-line rationale and how it maps to code; plus what's wrong, inconsistent or missing in NovaKit Lite
   4. How I'd know it's good: signals at 60–90 days, and what it must never do to a borrower regardless of conversion
   - Plus three short sections that matter as much as the build: **Assumptions I'm making** · **What I'd want to know that I don't** · **What I'd do differently with more time**
-- [ ] A Figma component sheet for the added/changed components (variants + auto-layout) **or** a Code Connect–style design↔code mapping
+- [x] A Figma component sheet for the added/changed components (variants + auto-layout) **or** a Code Connect–style design↔code mapping — both done: Figma "Nova Lite" → Components page (https://www.figma.com/design/8nnupfLUC7Futie5CQh22R/Nova-Lite?node-id=1-25) and docs/SYSTEM_CHANGES.md
 - [ ] AI process: prompts/chat logs or a 5–10 minute screen recording, plus **one AI output I rejected or heavily reworked, saying exactly what was wrong with it**
 
 ## 14. How to work with me
