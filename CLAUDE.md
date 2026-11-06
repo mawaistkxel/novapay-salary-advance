@@ -3,6 +3,7 @@
 Context for Claude Code, carried over from my planning chat in claude.ai. Read it fully at the start of every session, and keep **Status**, **Decisions made** and **Open decisions** up to date as we work.
 
 Source of truth for product rules: @PRODUCT_REFERENCE.md
+Design reference (tokens, components, patterns, copy): @DESIGN.md
 
 ## 1. What this project is
 
