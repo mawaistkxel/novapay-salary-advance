@@ -28,10 +28,12 @@ export default function App() {
   return (
     <div className="min-h-screen w-full flex justify-center py-6">
       {/* Mobile frame */}
-      <div className="relative w-[390px] min-h-[780px] bg-white rounded-[28px] shadow-xl overflow-hidden border border-neutral-300">
+      {/* Fixed height, never taller than the viewport, so overlays (Toast, BottomSheet)
+          pin to the visible bottom of the screen. Content scrolls inside <main>. */}
+      <div className="relative w-[390px] h-[min(844px,calc(100dvh-48px))] flex flex-col bg-white rounded-[28px] shadow-xl overflow-hidden border border-neutral-300">
         <AppBar title="NovaPay" />
 
-        <main className="p-4 space-y-4">
+        <main className="flex-1 overflow-y-auto p-4 space-y-4">
           <Card>
             <div className="text-caption text-neutral-500">Available balance</div>
             <div className="mt-1">
