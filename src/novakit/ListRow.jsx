@@ -1,6 +1,7 @@
 /**
  * ListRow / TransactionRow — NovaKit Lite
  * leading icon · title + subtitle · trailing amount
+ * Divider: hard-coded #DADADA replaced with the neutral-300 token.
  */
 export default function ListRow({
   icon = null,
@@ -12,7 +13,7 @@ export default function ListRow({
   return (
     <div
       className={
-        "flex items-center gap-3 py-3 border-b border-[#DADADA] last:border-b-0 " +
+        "flex items-center gap-3 py-3 border-b border-neutral-300 last:border-b-0 " +
         className
       }
     >

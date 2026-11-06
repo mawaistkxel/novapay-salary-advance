@@ -1,6 +1,9 @@
 /**
  * Panel — NovaKit Lite
  * A surface container for grouping content.
+ *
+ * DEPRECATED: duplicates Card (same surface, different border). Use Card.
+ * Kept exported so existing imports don't break; not used in new work.
  */
 export default function Panel({ children, className = "" }) {
   return (

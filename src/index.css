@@ -4,10 +4,27 @@
 
 :root {
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  color: #1a1a1a;
+  color: theme("colors.neutral.900"); /* was #1a1a1a, the same value as the token */
 }
 
 body {
   margin: 0;
-  background: #e9eaee; /* page behind the phone frame */
+  background: theme("colors.neutral.200"); /* page behind the phone frame; was #e9eaee */
+}
+
+/* One visible focus style for every interactive element (keyboard users only). */
+:focus-visible {
+  outline: 2px solid theme("colors.brand.DEFAULT");
+  outline-offset: 2px;
+}
+
+/* Respect reduced-motion: no transitions or spinners spinning. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
