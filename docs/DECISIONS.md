@@ -39,7 +39,7 @@ Feeds write-up section 2 and the three extra sections. Product rules come from `
 
 ## Open questions (what I'd want to know)
 
-1. **What happens if the wallet doesn't have enough on payday?** Partial pull, retry, late status? This is the most important gap: the terms screen tells people to "make sure you'll have Rs X", but can't honestly say what happens if they don't.
+1. **What happens if the wallet doesn't have enough on payday?** Partial pull, retry, late status? This is the most important gap: the terms screen can't honestly say what happens if the money isn't there, so it says nothing about it.
 2. **Are there late fees or penalties?** Not specified, so the UI says nothing about them. The UI must not imply there are none ("no other charges") either.
 3. Why is a user's limit what it is? The locked tier says only "Your current limit is Rs 10,000" because the basis isn't defined.
 4. Can a user cancel after accepting, or repay early? Is there a cooling-off period required by the regulator?

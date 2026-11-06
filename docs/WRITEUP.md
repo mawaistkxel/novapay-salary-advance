@@ -64,7 +64,7 @@ There's no current flow in the starter, so this read is based on the brief's des
 - Freelancers are out of scope for a *salary* advance until a rule exists.
 
 ## What I'd want to know that I don't
-- **What happens if the wallet is short on payday?** The most important gap. I tell users to "make sure you'll have Rs X" but can't honestly say what happens if they don't.
+- **What happens if the wallet is short on payday?** The most important gap. The terms screen can't honestly say what happens if the money isn't there, so it says nothing about it.
 - Are there late fees? Can people cancel or repay early? Any regulator cooling-off rule?
 - What can we legally say about a credit-score decline, and what's behind `other`?
 - Is the haircut really known before Accept?

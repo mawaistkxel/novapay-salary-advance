@@ -73,11 +73,6 @@ export default function TermsScreen({
         />
       </Card>
 
-      <p className="text-body text-neutral-700">
-        Make sure you'll have <AmountText amount={total} size="body" className="font-semibold" /> in
-        your wallet on {PAYDAY}.
-      </p>
-
       <Checkbox id="consent" checked={consent} onChange={onConsent}>
         I agree that NovaPay will take{" "}
         <AmountText amount={total} size="body" className="font-semibold" /> from my wallet on{" "}
@@ -101,11 +96,6 @@ export default function TermsScreen({
               </span>
             )}
           </Button>
-          {!consent ? (
-            <p className="text-body text-neutral-700 text-center">
-              Tick the box above to accept.
-            </p>
-          ) : null}
         </div>
         <Button size="lg" variant="secondary" onClick={onDecline} disabled={accepting}>
           Not now
