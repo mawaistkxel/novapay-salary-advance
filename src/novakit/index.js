@@ -7,3 +7,8 @@ export { default as AppBar } from "./AppBar.jsx";
 export { default as BottomSheet } from "./BottomSheet.jsx";
 export { default as Toast } from "./Toast.jsx";
 export { default as AmountText } from "./AmountText.jsx";
+// Added for the salary-advance flow
+export { default as TierPicker } from "./TierPicker.jsx";
+export { default as CostBreakdown } from "./CostBreakdown.jsx";
+export { default as Checkbox } from "./Checkbox.jsx";
+export { default as Notice } from "./Notice.jsx";
