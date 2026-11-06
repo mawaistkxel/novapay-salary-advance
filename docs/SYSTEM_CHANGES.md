@@ -2,6 +2,13 @@
 
 One row per token or component added or modified. This doubles as the **Code Connect–style mapping** the brief asks for: each design property maps to a code prop and to tokens in `tailwind.config.js`. Import everything from the barrel: `import { TierPicker } from "./novakit"`.
 
+**Figma component sheet:** [Nova Lite → Components page](https://www.figma.com/design/8nnupfLUC7Futie5CQh22R/Nova-Lite?node-id=1-25). It mirrors `src/novakit/`:
+- **Variables:** a "NovaKit" collection of 31 variables (colour, radius, spacing). Each has code syntax set to its Tailwind `theme()` path.
+- **Styles:** 6 text styles (display, title, body, body-strong, caption, caption-strong) and the `shadow/card` effect style. Inter stands in for the system UI font.
+- **Components:** 12, as 15 component and component-set nodes, each tagged Added / Changed / Starter. Every fill, stroke, radius and gap is bound to a variable. Each description names its source file and the property-to-prop mapping. Variant sets: Button 16, TierPicker / Option 4, AmountText 3, Checkbox 3, TextField 3, Notice 2, CostBreakdown / Row 2.
+- **Examples:** two example screens (Terms and accept, Decline) built only from instances.
+- **Known gaps:** the TextField focus ring and the TierPicker focus ring's white offset use raw colours, because effect colours with alpha can't take a token. Panel is not included (deprecated).
+
 **Tokens added: none.** Every new state maps to existing colour, radius and type tokens. Contrast was checked for every new text/background pair (see the table at the end).
 
 ## Added components

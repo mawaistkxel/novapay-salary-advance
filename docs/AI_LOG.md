@@ -36,6 +36,21 @@ Keep or share this chat itself as part of the AI log.
 
 > Pick one for the write-up, or use something from the planning chat. #2 shows design↔code judgement best; #1 shows the trust guardrails at work.
 
+## 3. Figma component sheet (same session)
+
+**What I asked:** "Give me the components library and design that in the Figma file, in the Components page."
+
+**What the AI did:** checked the file. It was empty, with 8 community kits attached (Material 3, Apple OS kits, Simple Design System). It rebuilt NovaKit from the code rather than reusing a kit, because none matched NovaKit's tokens or props.
+- Created the variables (mirroring `tailwind.config.js`, with `theme()` code syntax), text styles and the shadow style.
+- Built the components with variants and auto-layout, then two example screens from instances.
+
+**Caught and fixed along the way** (all from its own screenshots and audit):
+- Inner auto-layout frames got Figma's default white fill, which hid the selected tier's tint.
+- Resizing after setting "hug" locked row heights, so CostBreakdown rows overlapped.
+- The focus ring didn't render, because shadow spread needs clipping on.
+- The page header collapsed, because "fill" isn't allowed inside a wrapping layout.
+- AmountText and Checkbox variants had unbound white backgrounds.
+
 ## Template for later entries ("log this")
 
 **What I asked:**

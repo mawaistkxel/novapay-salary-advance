@@ -201,7 +201,7 @@ The README warns that the system is messier than its docs: some things are missi
   3. Where I extended the system, and why: every token/component added or modified, each with a one-line rationale and how it maps to code; plus what's wrong, inconsistent or missing in NovaKit Lite
   4. How I'd know it's good: signals at 60–90 days, and what it must never do to a borrower regardless of conversion
   - Plus three short sections that matter as much as the build: **Assumptions I'm making** · **What I'd want to know that I don't** · **What I'd do differently with more time**
-- [ ] A Figma component sheet for the added/changed components (variants + auto-layout) **or** a Code Connect–style design↔code mapping
+- [x] A Figma component sheet for the added/changed components (variants + auto-layout) **or** a Code Connect–style design↔code mapping — both done: Figma "Nova Lite" → Components page (https://www.figma.com/design/8nnupfLUC7Futie5CQh22R/Nova-Lite?node-id=1-25) and docs/SYSTEM_CHANGES.md
 - [ ] AI process: prompts/chat logs or a 5–10 minute screen recording, plus **one AI output I rejected or heavily reworked, saying exactly what was wrong with it**
 
 ## 14. How to work with me
