@@ -17,7 +17,7 @@ export const DECLINE_COPY = {
     nextTitle: "What you can do",
     next: "Share a recent payslip or bank statement. Once we've confirmed your income, we'll let you know whether an advance is available to you.",
     canVerify: true,
-    home: "We need to confirm your salary before we can offer an advance.",
+    home: "We need to verify your salary before we can offer an advance.",
     homeAction: "See what's needed",
   },
   credit_score: {
