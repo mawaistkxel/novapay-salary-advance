@@ -18,6 +18,22 @@ body {
   outline-offset: 2px;
 }
 
+/* Screen headings receive focus from code on every screen change (so screen
+   readers start at the top). They aren't controls, so no outline. This rule has
+   to live here: it comes after Tailwind's utilities, so outline-none can't win. */
+[tabindex="-1"]:focus-visible {
+  outline: none;
+}
+
+/* High-fidelity view: the same focus style, in its own blue. */
+[data-view="hifi"] :focus-visible {
+  outline-color: theme("colors.hf.blue.600");
+}
+/* On the blue hero a blue outline would vanish; white measures ≥ 5.6:1 there. */
+[data-view="hifi"] .hf-on-blue :focus-visible {
+  outline-color: theme("colors.white");
+}
+
 /* Respect reduced-motion: no transitions or spinners spinning. */
 @media (prefers-reduced-motion: reduce) {
   *,
