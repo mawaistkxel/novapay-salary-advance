@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { MotionConfig } from "framer-motion";
+import { IconContext } from "@phosphor-icons/react";
 import { Toast } from "./novakit";
 import { Toast as HfToast } from "./hifi";
 import HomeScreen from "./screens/HomeScreen";
@@ -177,7 +178,7 @@ export default function App() {
       <div
         className={
           "min-h-screen w-full flex flex-col lg:flex-row items-center lg:items-start justify-center gap-6 py-6 transition-colors duration-500 " +
-          (hifi ? "bg-gradient-to-br from-hf-blue-100 via-hf-page to-hf-blue-50" : "")
+          (hifi ? "hf-backdrop" : "")
         }
       >
         {/* Fixed height, never taller than the viewport, so overlays (Toast, BottomSheet)
@@ -191,7 +192,8 @@ export default function App() {
               : "bg-white shadow-xl border border-neutral-300")
           }
         >
-          {renderScreen()}
+          {/* Hi-fi icons are thin line glyphs, like the reference; screens opt into fill. */}
+          <IconContext.Provider value={{ weight: hifi ? "light" : "regular" }}>{renderScreen()}</IconContext.Provider>
           {hifi ? (
             <HfToast open={!!toast} message={toast?.message} icon={toast?.icon === null ? null : "check"} />
           ) : (

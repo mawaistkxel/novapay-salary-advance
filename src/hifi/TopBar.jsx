@@ -1,39 +1,21 @@
 import { ArrowLeft } from "@phosphor-icons/react";
+import { RoundButton } from "./Tile";
 
 /**
  * TopBar — NovaKit Hi-Fi
- * Round back button (44px target) + centred title. tone "light" sits on the blue
- * hero with a glass button; "dark" sits on light screens.
+ * Round glass back button (44px target) + centred title.
  */
-export default function TopBar({ title, onBack, tone = "dark" }) {
-  const light = tone === "light";
+export default function TopBar({ title, onBack }) {
   return (
-    <header className="grid h-14 shrink-0 grid-cols-[44px_1fr_44px] items-center px-4">
+    <header className="relative grid h-14 shrink-0 grid-cols-[44px_1fr_44px] items-center px-4">
       {onBack ? (
-        <button
-          type="button"
-          onClick={onBack}
-          aria-label="Back"
-          className={
-            "grid h-11 w-11 place-items-center rounded-full transition-colors active:scale-95 " +
-            (light
-              ? "bg-white/[0.14] text-white shadow-hf-glass backdrop-blur-md hover:bg-white/20"
-              : "bg-white text-hf-ink-900 shadow-hf-soft hover:bg-hf-mist")
-          }
-        >
-          <ArrowLeft size={20} weight="bold" />
-        </button>
+        <RoundButton label="Back" onClick={onBack}>
+          <ArrowLeft size={20} />
+        </RoundButton>
       ) : (
         <span />
       )}
-      <p
-        className={
-          "truncate text-center text-[16px] font-semibold tracking-tight " +
-          (light ? "text-white" : "text-hf-ink-900")
-        }
-      >
-        {title}
-      </p>
+      <p className="truncate text-center text-[16px] font-medium tracking-tight text-hf-ink-900">{title}</p>
       <span />
     </header>
   );

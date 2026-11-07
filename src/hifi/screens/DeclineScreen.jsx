@@ -14,14 +14,14 @@ export default function DeclineScreen({ reason, onVerify, onHome }) {
       title="Salary advance"
       onBack={onHome}
       icon={
-        <IconBadge size="lg" tone="white">
-          {copy.canVerify ? <FileMagnifyingGlass size={26} weight="duotone" /> : <Info size={26} weight="duotone" />}
+        <IconBadge size="lg" >
+          {copy.canVerify ? <FileMagnifyingGlass size={26} /> : <Info size={26} />}
         </IconBadge>
       }
       heading="We can't offer you an advance right now"
     >
-      <Tile as="section" aria-labelledby="hf-why" className="space-y-1 p-5">
-        <h3 id="hf-why" className="text-hf-body font-semibold text-hf-ink-900">
+      <Tile tone="glass" as="section" aria-labelledby="hf-why" className="space-y-1 p-5">
+        <h3 id="hf-why" className="text-hf-body font-medium text-hf-ink-900">
           Why
         </h3>
         <p className="text-hf-body text-hf-ink-700">{copy.why}</p>
@@ -32,7 +32,7 @@ export default function DeclineScreen({ reason, onVerify, onHome }) {
       </Notice>
 
       <p className="flex gap-2.5 px-1 text-hf-body text-hf-ink-700">
-        <ShieldCheck aria-hidden="true" size={20} weight="duotone" className="mt-px shrink-0 text-hf-blue-700" />
+        <ShieldCheck aria-hidden="true" size={20} className="mt-px shrink-0 text-hf-navy-600" />
         Nothing else in your NovaPay wallet changes because of this.
       </p>
 

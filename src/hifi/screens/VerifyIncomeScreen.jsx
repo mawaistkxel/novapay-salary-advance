@@ -13,25 +13,25 @@ export default function VerifyIncomeScreen({ uploading, onUpload, onBack }) {
       onBack={onBack}
       icon={
         <IconBadge size="lg">
-          <FileText size={26} weight="duotone" />
+          <FileText size={26} />
         </IconBadge>
       }
       heading="Show us your salary"
     >
       <section aria-labelledby="hf-send" className="space-y-3">
-        <h3 id="hf-send" className="text-hf-h2 text-hf-ink-900">
+        <h3 id="hf-send" className="text-hf-h2 font-normal text-hf-ink-900">
           Send one of these
         </h3>
-        <Tile as="ul" className="divide-y divide-hf-line px-4 py-1">
+        <Tile as="ul" className="divide-y divide-hf-line/80 px-4 py-1">
           <li className="flex items-center gap-3 py-3">
             <IconBadge size="sm">
-              <FileText size={18} weight="bold" />
+              <FileText size={18} />
             </IconBadge>
             <span className="text-hf-body text-hf-ink-900">Your most recent payslip</span>
           </li>
           <li className="flex items-center gap-3 py-3">
             <IconBadge size="sm">
-              <Bank size={18} weight="bold" />
+              <Bank size={18} />
             </IconBadge>
             <span className="text-hf-body text-hf-ink-900">A bank statement that shows your salary being paid</span>
           </li>
@@ -40,9 +40,9 @@ export default function VerifyIncomeScreen({ uploading, onUpload, onBack }) {
 
       <Tile className="space-y-4 p-5">
         <section aria-labelledby="hf-why-ask" className="flex gap-3">
-          <Question aria-hidden="true" size={22} weight="duotone" className="mt-px shrink-0 text-hf-blue-700" />
+          <Question aria-hidden="true" size={22} className="mt-px shrink-0 text-hf-navy-600" />
           <div className="space-y-1">
-            <h3 id="hf-why-ask" className="text-hf-body font-semibold text-hf-ink-900">
+            <h3 id="hf-why-ask" className="text-hf-body font-medium text-hf-ink-900">
               Why we ask
             </h3>
             <p className="text-hf-body text-hf-ink-700">
@@ -52,9 +52,9 @@ export default function VerifyIncomeScreen({ uploading, onUpload, onBack }) {
         </section>
         <div className="border-t border-hf-line" />
         <section aria-labelledby="hf-use" className="flex gap-3">
-          <LockKey aria-hidden="true" size={22} weight="duotone" className="mt-px shrink-0 text-hf-blue-700" />
+          <LockKey aria-hidden="true" size={22} className="mt-px shrink-0 text-hf-navy-600" />
           <div className="space-y-1">
-            <h3 id="hf-use" className="text-hf-body font-semibold text-hf-ink-900">
+            <h3 id="hf-use" className="text-hf-body font-medium text-hf-ink-900">
               How we use it
             </h3>
             <p className="text-hf-body text-hf-ink-700">
@@ -65,7 +65,7 @@ export default function VerifyIncomeScreen({ uploading, onUpload, onBack }) {
       </Tile>
 
       <div className="space-y-3 pt-1">
-        <Button size="lg" loading={uploading} onClick={onUpload} icon={<UploadSimple size={18} weight="bold" />}>
+        <Button size="lg" loading={uploading} onClick={onUpload} icon={<UploadSimple size={18} />}>
           {uploading ? "Uploading…" : "Upload a document"}
         </Button>
         <Button size="lg" variant="secondary" onClick={onBack} disabled={uploading}>

@@ -5,20 +5,20 @@ const fmt = new Intl.NumberFormat("en-PK");
 
 /**
  * Money — NovaKit Hi-Fi
- * "Rs 10,300" with the currency set smaller and lighter than the figure, the way
- * the moodboard sets cents. Tabular figures so amounts don't jitter.
+ * "Rs 10,300": light, large figures with the currency set smaller and softer,
+ * the way the reference sets cents. Tabular figures so amounts don't jitter.
  *
- * When `amount` changes after mount, the figure rolls to the new value (never on
+ * When `amount` changes after mount the figure rolls to the new value (never on
  * first render: counting up from zero would turn a balance into a show). Screen
- * readers get the final value only, never the in-between numbers.
+ * readers get the final value only.
  *
  * Props
  *   amount   integer PKR
- *   size     hero | h1 | h2 | body
- *   weight   for size "body": semibold (default) | normal (inside running text)
+ *   size     hero (42 light) | h1 (26) | h2 (18) | body (15)
+ *   weight   for size "body": medium (default) | normal (inside running text)
  *   className  colour overrides (inherits colour by default)
  */
-export default function Money({ amount = 0, size = "body", weight = "semibold", className = "" }) {
+export default function Money({ amount = 0, size = "body", weight = "medium", className = "" }) {
   const reduce = useReducedMotion();
   const value = useMotionValue(amount);
   const text = useTransform(value, (v) => fmt.format(Math.round(v)));
@@ -39,10 +39,10 @@ export default function Money({ amount = 0, size = "body", weight = "semibold", 
   }, [amount, reduce, value]);
 
   const sizes = {
-    hero: ["text-hf-hero", "text-[22px] font-medium mr-1.5 opacity-80"],
-    h1: ["text-hf-h1", "text-[17px] font-medium mr-1 opacity-80"],
-    h2: ["text-hf-h2", "text-[15px] font-medium mr-1 opacity-80"],
-    body: [`text-hf-body ${weight === "normal" ? "font-normal" : "font-semibold"}`, "mr-[0.25em]"],
+    hero: ["text-hf-hero", "text-[20px] font-normal mr-2 opacity-70"],
+    h1: ["text-hf-h1", "text-[17px] font-normal mr-1.5 opacity-70"],
+    h2: ["text-hf-h2", "text-[15px] font-normal mr-1 opacity-70"],
+    body: [`text-hf-body ${weight === "normal" ? "font-normal" : "font-medium"}`, "mr-[0.25em]"],
   };
   const [figure, currency] = sizes[size] || sizes.body;
 

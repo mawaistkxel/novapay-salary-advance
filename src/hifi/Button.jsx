@@ -2,17 +2,15 @@ import { motion } from "framer-motion";
 
 /**
  * Button — NovaKit Hi-Fi
- * Full-width pill. Same API as NovaKit's Button, plus a "glass" variant for use
- * on the blue hero.
+ * Full-width pill. Same API as NovaKit's Button.
  *
- * Primary and secondary are the same size, weight and type, so saying no never
- * looks weaker than saying yes: "Not now" is ink-900 on mist (17.0:1).
+ * primary   liquid navy (the one accent): glossy cap, inner rim, navy drop.
+ * secondary white liquid glass with navy text. Same height, weight and type
+ *           size as primary, so "Not now" never looks weaker (navy-700 on
+ *           white glass ≥ 9.8:1).
  *
- * Props
- *   variant  primary | secondary | glass
- *   size     md (48px) | lg (56px). Use lg for money decisions.
- *   loading  keeps the colour, shows a spinner, sets aria-busy, ignores clicks
- *   disabled, onClick, type, icon (leading element), children
+ * Props: variant primary | secondary · size md 48 | lg 56 · loading · disabled ·
+ *        icon (leading) · onClick · type
  */
 export default function Button({
   variant = "primary",
@@ -28,14 +26,8 @@ export default function Button({
   const inactive = disabled || loading;
   const sizes = { md: "h-12 text-hf-body", lg: "h-14 text-[16px] leading-[22px]" };
   const variants = {
-    primary: disabled
-      ? "bg-hf-ink-300/70 text-hf-ink-700"
-      : "bg-hf-blue-600 text-white shadow-hf-press hover:bg-hf-blue-700",
-    secondary: disabled
-      ? "bg-hf-mist text-hf-ink-500 border border-hf-line"
-      : "bg-hf-mist text-hf-ink-900 border border-hf-ink-300 hover:bg-white",
-    // white/10 keeps the label ≥ 4.63:1 anywhere on the hero (white/14 fails low down)
-    glass: "bg-white/10 text-white shadow-hf-glass backdrop-blur-md hover:ring-1 hover:ring-inset hover:ring-white/50",
+    primary: disabled ? "bg-hf-ink-300/70 text-hf-ink-700" : "hf-liquid text-white hover:brightness-110",
+    secondary: disabled ? "hf-glass text-hf-ink-500" : "hf-glass-strong text-hf-navy-700 hover:brightness-[1.02]",
   };
   return (
     <motion.button
@@ -47,8 +39,8 @@ export default function Button({
       whileTap={inactive ? undefined : { scale: 0.98, y: 1 }}
       transition={{ type: "spring", stiffness: 500, damping: 30 }}
       className={
-        "relative w-full inline-flex items-center justify-center gap-2 rounded-full px-6 font-semibold " +
-        "transition-colors duration-200 select-none " +
+        "relative w-full inline-flex items-center justify-center gap-2 rounded-full px-6 font-medium tracking-[-0.01em] " +
+        "transition-[filter,background-color] duration-200 select-none " +
         (disabled ? "cursor-not-allowed " : loading ? "cursor-progress " : "cursor-pointer ") +
         `${sizes[size] || sizes.md} ${variants[variant] || variants.primary} ${className}`
       }
@@ -56,7 +48,7 @@ export default function Button({
       {loading ? (
         <span
           aria-hidden="true"
-          className="h-4 w-4 rounded-full border-2 border-current border-r-transparent animate-spin"
+          className="h-4 w-4 rounded-full border-[1.5px] border-current border-r-transparent animate-spin"
         />
       ) : icon ? (
         <span aria-hidden="true" className="inline-flex">

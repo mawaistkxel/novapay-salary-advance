@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import {
-  ArrowDownLeft,
   Bell,
+  Buildings,
+  CalendarBlank,
   DeviceMobile,
   Eye,
   EyeSlash,
@@ -10,15 +11,17 @@ import {
   HourglassMedium,
   PaperPlaneTilt,
   Plus,
+  QrCode,
   Receipt as ReceiptIcon,
+  Wallet,
 } from "@phosphor-icons/react";
 import {
   Avatar,
   Button,
-  HeroBackdrop,
   IconBadge,
   Money,
   QuickAction,
+  RoundButton,
   StatusBar,
   TabBar,
   Tile,
@@ -27,13 +30,20 @@ import {
 } from "..";
 import { PAYDAY } from "../../data/scenarios";
 
-const USER = { first: "Sana", initials: "SM" };
+const USER = { first: "Sana", last: "Mirza", initials: "SM" };
+
+const spring = { type: "spring", stiffness: 260, damping: 30 };
+const list = { hidden: {}, show: { transition: { staggerChildren: 0.06, delayChildren: 0.05 } } };
+const rise = { hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0, transition: spring } };
 
 /**
  * Home (high fidelity). Same props and states as the wireframe Home: not checked
- * yet, checking, active advance, declined, documents submitted. Controls outside
- * the salary advance call onUnavailable, which says plainly that they're not part
- * of this prototype.
+ * yet, checking, active advance, declined, documents submitted.
+ *
+ * Layout follows the reference: greeting, a glass balance card with one liquid
+ * navy control, round glass quick actions, then the salary advance and recent
+ * activity over a slate haze, with a floating glass tab bar. Wallet controls the
+ * prototype doesn't build call onUnavailable, which says so.
  */
 export default function HomeScreen({
   balance,
@@ -49,88 +59,96 @@ export default function HomeScreen({
   const notHere = (what) => onUnavailable?.(what);
 
   return (
-    <div className="relative flex min-h-0 flex-1 flex-col bg-hf-blue-700">
-      <StatusBar tone="light" className="relative z-10 bg-hf-blue-700" />
-      <main className="relative flex flex-1 flex-col overflow-y-auto">
+    <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-hf-page">
+      {/* Light from the top right, slate haze rising from the bottom (decorative). */}
+      <div aria-hidden="true" className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-white blur-3xl" />
+      <div aria-hidden="true" className="hf-haze pointer-events-none absolute inset-x-0 bottom-0 h-[58%]" />
+
+      <StatusBar tone="dark" className="relative" />
+      <main className="relative flex-1 overflow-y-auto px-5 pb-32 pt-1">
         <h1 className="sr-only">NovaPay home</h1>
+        <motion.div variants={list} initial="hidden" animate="show" className="space-y-6">
+          <motion.header variants={rise} className="flex items-center gap-3">
+            <Avatar initials={USER.initials} />
+            <div className="min-w-0 flex-1">
+              <p className="text-hf-small text-hf-ink-700">Welcome back</p>
+              <p className="text-[17px] font-medium leading-tight tracking-tight text-hf-ink-900">
+                {USER.first} {USER.last}
+              </p>
+            </div>
+            <RoundButton label="Notifications" onClick={() => notHere("Notifications")}>
+              <Bell size={20} />
+            </RoundButton>
+          </motion.header>
 
-        <section className="hf-on-blue relative shrink-0 px-5 pb-12 text-white [@media(max-height:700px)]:pb-10" aria-label="Wallet">
-          <HeroBackdrop />
-          <div className="relative">
-            <div className="flex items-center gap-3 pt-2">
-              <Avatar initials={USER.initials} />
-              <div className="min-w-0 flex-1">
-                <p className="text-[17px] font-semibold leading-tight tracking-tight">Hi, {USER.first}</p>
-                <p className="text-hf-small text-white">NovaPay wallet</p>
-              </div>
-              <button
-                type="button"
-                aria-label="Notifications"
-                onClick={() => notHere("Notifications")}
-                className="grid h-11 w-11 place-items-center rounded-full bg-white/[0.14] shadow-hf-glass backdrop-blur-md transition-colors hover:bg-white/20 active:scale-95"
+          <motion.section variants={rise} aria-label="Wallet" className="hf-glass rounded-hf-lg p-5">
+            <div className="flex items-center gap-2">
+              <Wallet aria-hidden="true" size={18} className="text-hf-ink-700" />
+              <p className="flex-1 text-hf-body text-hf-ink-700">Available balance</p>
+              <RoundButton
+                tone="navy"
+                label={hidden ? "Show balance" : "Hide balance"}
+                pressed={hidden}
+                onClick={() => setHidden((h) => !h)}
               >
-                <Bell size={20} weight="bold" />
-              </button>
+                {hidden ? <EyeSlash size={18} /> : <Eye size={18} />}
+              </RoundButton>
             </div>
-
-            <div className="mt-8 [@media(max-height:700px)]:mt-4">
-              <div className="flex items-center gap-2">
-                <p className="text-hf-body text-white">Available balance</p>
-                <button
-                  type="button"
-                  onClick={() => setHidden((h) => !h)}
-                  aria-pressed={hidden}
-                  aria-label={hidden ? "Show balance" : "Hide balance"}
-                  className="-m-2 grid h-11 w-11 place-items-center rounded-full text-white transition-colors hover:bg-white/10"
-                >
-                  {hidden ? <EyeSlash size={18} weight="bold" /> : <Eye size={18} weight="bold" />}
-                </button>
-              </div>
-              <div className="mt-1 h-12">
-                {hidden ? (
-                  <span className="text-hf-hero tracking-[0.08em]">
-                    <span className="sr-only">Balance hidden</span>
-                    <span aria-hidden="true">Rs ••••••</span>
+            <div className="mt-5 h-[46px] text-hf-ink-900">
+              {hidden ? (
+                <span className="text-hf-hero">
+                  <span className="sr-only">Balance hidden</span>
+                  <span aria-hidden="true">
+                    <span className="mr-2 text-[20px] opacity-70">Rs</span>••••••
                   </span>
-                ) : (
-                  <Money amount={balance} size="hero" className="text-white" />
-                )}
-              </div>
+                </span>
+              ) : (
+                <Money amount={balance} size="hero" />
+              )}
             </div>
+            <p className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-white/80 px-3 py-1.5 text-hf-small text-hf-ink-700 ring-1 ring-inset ring-hf-line">
+              <CalendarBlank aria-hidden="true" size={14} />
+              Next salary <span className="font-medium text-hf-ink-900">{PAYDAY}</span>
+            </p>
+          </motion.section>
 
-            <div className="mt-7 grid grid-cols-3 gap-2 [@media(max-height:700px)]:mt-4">
-              <QuickAction icon={<PaperPlaneTilt size={18} weight="bold" />} label="Send" onClick={() => notHere("Send")} />
-              <QuickAction icon={<Plus size={18} weight="bold" />} label="Top up" onClick={() => notHere("Top up")} />
-              <QuickAction icon={<ReceiptIcon size={18} weight="bold" />} label="Pay bills" onClick={() => notHere("Pay bills")} />
+          <motion.section variants={rise} aria-labelledby="hf-quick">
+            <h2 id="hf-quick" className="mb-3 text-hf-h2 font-normal text-hf-ink-900">
+              Quick actions
+            </h2>
+            <div className="grid grid-cols-4 gap-2">
+              <QuickAction icon={<PaperPlaneTilt size={22} />} label="Send" onClick={() => notHere("Send")} />
+              <QuickAction icon={<Plus size={22} />} label="Add money" onClick={() => notHere("Add money")} />
+              <QuickAction icon={<ReceiptIcon size={22} />} label="Pay bills" onClick={() => notHere("Pay bills")} />
+              <QuickAction icon={<QrCode size={22} />} label="Scan" onClick={() => notHere("Scan to pay")} />
             </div>
-          </div>
-        </section>
+          </motion.section>
 
-        <motion.div
-          initial={{ y: 40 }}
-          animate={{ y: 0 }}
-          transition={{ type: "spring", stiffness: 180, damping: 26 }}
-          className="relative -mt-6 flex-1 space-y-4 rounded-t-hf-lg bg-hf-page px-4 pb-28 pt-5 shadow-hf-sheet"
-        >
-          <Tile className="space-y-4 p-5">{renderAdvance()}</Tile>
+          <motion.div variants={rise}>
+            <Tile tone="strong" className="space-y-4 p-5">
+              {renderAdvance()}
+            </Tile>
+          </motion.div>
 
-          <Tile className="px-5 pb-2 pt-5">
-            <h2 className="text-hf-h2 text-hf-ink-900">Recent activity</h2>
-            <ul className="mt-1 divide-y divide-hf-line">
+          <motion.section variants={rise} aria-labelledby="hf-recent">
+            <h2 id="hf-recent" className="mb-3 text-hf-h2 font-normal text-hf-ink-900">
+              Recent activity
+            </h2>
+            <Tile tone="strong" as="ul" className="divide-y divide-hf-line/80 px-4 py-1">
               {advance ? (
                 <TxRow
-                  icon={<HandCoins size={20} weight="bold" />}
+                  icon={<HandCoins size={20} />}
                   title="Salary advance"
-                  subtitle={`Today · repaid ${PAYDAY}`}
+                  subtitle={`Today, repaid ${PAYDAY}`}
                   amount={advance.disbursed}
                   direction="advance"
                 />
               ) : null}
-              <TxRow icon={<PaperPlaneTilt size={20} weight="bold" />} title="Sent to Ahmed K." subtitle="Today, 2:14 PM" amount={1500} direction="out" />
-              <TxRow icon={<ArrowDownLeft size={20} weight="bold" />} title="Salary credited" subtitle="28 Jun" amount={68000} direction="in" />
-              <TxRow icon={<DeviceMobile size={20} weight="bold" />} title="Mobile top-up" subtitle="27 Jun" amount={500} direction="out" />
-            </ul>
-          </Tile>
+              <TxRow leading={<Avatar initials="AK" size="sm" />} title="Sent to Ahmed K." subtitle="Today, 2:14 PM" amount={1500} direction="out" />
+              <TxRow icon={<Buildings size={20} />} title="Salary credited" subtitle="28 Jun" amount={68000} direction="in" />
+              <TxRow icon={<DeviceMobile size={20} />} title="Mobile top-up" subtitle="27 Jun" amount={500} direction="out" />
+            </Tile>
+          </motion.section>
         </motion.div>
       </main>
       <TabBar active="home" onUnavailable={notHere} />
@@ -142,9 +160,9 @@ export default function HomeScreen({
     return (
       <div className="flex items-center gap-3">
         <IconBadge size="sm">
-          <HandCoins size={18} weight="bold" />
+          <HandCoins size={20} />
         </IconBadge>
-        <p className="flex-1 text-hf-body font-semibold text-hf-ink-900">Salary advance</p>
+        <p className="flex-1 text-hf-body font-medium text-hf-ink-900">Salary advance</p>
         {extra}
       </div>
     );
@@ -154,14 +172,12 @@ export default function HomeScreen({
     if (advance) {
       return (
         <>
-          {label(
-            <span className="rounded-full bg-hf-blue-50 px-2.5 py-1 text-hf-small text-hf-blue-700">Active</span>
-          )}
+          {label(<span className="rounded-full bg-hf-navy-50 px-2.5 py-1 text-hf-small font-medium text-hf-navy-700">Active</span>)}
           <p className="text-hf-body text-hf-ink-700">
-            <Money amount={advance.total} className="text-hf-ink-900" /> will be taken from your wallet on{" "}
-            {PAYDAY}, your next payday.
+            <Money amount={advance.total} className="text-hf-ink-900" /> will be taken from your wallet on {PAYDAY},
+            your next payday.
           </p>
-          <div className="rounded-hf-sm bg-hf-mist p-4">
+          <div className="rounded-hf-md bg-hf-mist p-4">
             <Timeline disbursed={advance.disbursed} total={advance.total} date={PAYDAY} />
           </div>
         </>
@@ -171,11 +187,9 @@ export default function HomeScreen({
       return (
         <>
           {label()}
-          <div className="flex gap-3 rounded-hf-sm bg-hf-mist p-4">
-            <HourglassMedium aria-hidden="true" size={22} weight="duotone" className="shrink-0 text-hf-blue-700" />
-            <p className="text-hf-body text-hf-ink-900">
-              We're checking the document you sent. We'll let you know when it's done.
-            </p>
+          <div className="flex gap-3 rounded-hf-md bg-hf-mist p-4">
+            <HourglassMedium aria-hidden="true" size={22} className="shrink-0 text-hf-navy-600" />
+            <p className="text-hf-body text-hf-ink-900">We're checking the document you sent. We'll let you know when it's done.</p>
           </div>
         </>
       );
@@ -196,7 +210,7 @@ export default function HomeScreen({
       <>
         {label()}
         <div className="space-y-1">
-          <p className="text-hf-h2 text-hf-ink-900">Need cash before payday?</p>
+          <p className="text-[20px] leading-[26px] tracking-[-0.02em] text-hf-ink-900">Need cash before payday?</p>
           <p className="text-hf-body text-hf-ink-700">
             You may qualify for a NovaPay salary advance. Checking won't take any money.
           </p>

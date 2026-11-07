@@ -1,13 +1,14 @@
 /**
  * Avatar — NovaKit Hi-Fi
- * Initials on a glass disc with a thin light ring. No stock photo, no generic
- * silhouette. Decorative next to the visible name, so hidden from screen readers.
+ * Initials on a soft navy-to-white disc with a white rim, for people and payees.
+ * Decorative next to a visible name, so hidden from screen readers.
  */
-export default function Avatar({ initials }) {
+export default function Avatar({ initials, size = "md" }) {
+  const sizes = { sm: "h-10 w-10 text-[13px]", md: "h-11 w-11 text-[15px]" };
   return (
     <span
       aria-hidden="true"
-      className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gradient-to-br from-white/30 to-white/10 text-[15px] font-semibold tracking-tight text-white shadow-hf-glass ring-2 ring-white/25"
+      className={`grid shrink-0 place-items-center rounded-full bg-gradient-to-br from-hf-navy-100 to-white font-medium tracking-tight text-hf-navy-700 shadow-hf-soft ring-2 ring-white ${sizes[size]}`}
     >
       {initials}
     </span>

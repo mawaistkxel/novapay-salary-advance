@@ -3,19 +3,15 @@ import { CheckCircle, Info } from "@phosphor-icons/react";
 
 /**
  * Toast — NovaKit Hi-Fi ("island")
- * A navy pill that drops from under the status bar, like a dynamic island.
- * Same contract as NovaKit's Toast: an always-mounted role="status" region, so
- * screen readers announce it; transient confirmations only.
+ * A smoked-navy glass pill that drops from under the status bar. Same contract
+ * as NovaKit's Toast: an always-mounted role="status" region; transient
+ * confirmations only. White on navy-900 is 15.9:1.
  *
  * icon: "check" (default) | null → info glyph for neutral messages.
  */
 export default function Toast({ open, message, icon = "check" }) {
   return (
-    <div
-      role="status"
-      aria-live="polite"
-      className="pointer-events-none absolute inset-x-3 top-12 z-30 flex justify-center"
-    >
+    <div role="status" aria-live="polite" className="pointer-events-none absolute inset-x-3 top-12 z-30 flex justify-center">
       <AnimatePresence>
         {open ? (
           <motion.div
@@ -24,12 +20,12 @@ export default function Toast({ open, message, icon = "check" }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -12, scale: 0.96 }}
             transition={{ type: "spring", stiffness: 420, damping: 30 }}
-            className="flex max-w-full items-start gap-2.5 rounded-[22px] bg-hf-navy-900 px-4 py-3 text-hf-body text-white shadow-hf-float"
+            className="flex max-w-full items-start gap-2.5 rounded-[22px] bg-hf-navy-900/95 px-4 py-3 text-hf-body text-white shadow-hf-float ring-1 ring-inset ring-white/15 backdrop-blur-xl"
           >
             {icon ? (
               <CheckCircle aria-hidden="true" size={20} weight="fill" className="mt-px shrink-0 text-hf-green-400" />
             ) : (
-              <Info aria-hidden="true" size={20} weight="fill" className="mt-px shrink-0 text-hf-blue-100" />
+              <Info aria-hidden="true" size={20} className="mt-px shrink-0 text-hf-navy-100" />
             )}
             <span>{message}</span>
           </motion.div>
