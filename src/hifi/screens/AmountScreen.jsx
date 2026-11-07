@@ -39,7 +39,7 @@ export default function AmountScreen({ limit, value, onChange, onBack, onContinu
           items={[
             { value: "3%", label: "one-time fee" },
             { value: "0%", label: "interest" },
-            { value: PAYDAY, label: "repaid on payday" },
+            { value: PAYDAY, label: "repayment" },
           ]}
         />
       }
