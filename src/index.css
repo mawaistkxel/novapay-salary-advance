@@ -110,6 +110,7 @@ body {
     border: 1px solid theme(colors.white / 70%);
     box-shadow:
       inset 0 1px 0 theme(colors.white),
+      inset 0 0 10px theme(colors.hf.navy.900 / 8%),
       inset 0 -2px 4px theme(colors.hf.navy.900 / 6%),
       0 12px 26px -12px theme(colors.hf.navy.900 / 70%);
     -webkit-backdrop-filter: blur(14px) saturate(160%);
