@@ -33,7 +33,7 @@ Feeds write-up section 2 and the three extra sections. Product rules come from `
 | Wallet controls outside the advance (Send, Top up, Pay bills, tabs, bell) **say they're not in the prototype** instead of doing nothing | Dead buttons in a click-through look like bugs | A toast reviewers may see often |
 | **Hi-fi restyled (v2)** to my "Payno" reference: misty slate, one navy accent, light type, liquid-glass buttons and cards; replaces the cobalt hero of v1 | v1 read as heavy and generic; the reference is calmer, which suits a lending decision better too | Glass costs some contrast headroom; managed with strong glass over the haze and measured pairs |
 | The salary advance card sits **below** quick actions on Home, as in the reference, not pinned above them | A wallet that pushes credit above its own payments feels like a sales screen | At 360×640 the card starts just under the fold (its edge shows above the tab bar) |
-| Hi-fi shows a **stock photo for Sana** (Mahnoor Ikram, Unsplash License, loaded from the Unsplash CDN) and **initials for payees** | Matches the reference; image generation needs a paid plan. Initials stay as the fallback if the photo can't load | A real person's photo stands in for an invented user: fine under the licence for a prototype, but replace it before anything public-facing |
+| Hi-fi Home header shows a **NovaPay logo** (segmented-"N" mark + wordmark, as the page's h1), not a user avatar and greeting; payees keep initials | Cleaner, closer to the reference brand bar, and no real person's photo standing in for an invented user | The prototype mark isn't a real NovaPay asset; it would be replaced by the brand's logo |
 
 ## Assumptions
 

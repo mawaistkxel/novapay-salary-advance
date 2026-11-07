@@ -18,6 +18,7 @@ import {
   Avatar,
   Button,
   IconBadge,
+  Logo,
   Money,
   QuickAction,
   RoundButton,
@@ -28,16 +29,6 @@ import {
   TxRow,
 } from "..";
 import { PAYDAY } from "../../data/scenarios";
-
-// Prototype persona. Photo: Mahnoor Ikram on Unsplash (Unsplash License, free to
-// use): https://unsplash.com/photos/mA8tRLbBeDk. Loaded from Unsplash's CDN,
-// face-cropped at 2x; if it can't load, Avatar falls back to the initials.
-const USER = {
-  first: "Sana",
-  last: "Mirza",
-  initials: "SM",
-  photo: "https://images.unsplash.com/photo-1734865812496-b2fe2e1a56ca?w=96&h=96&fit=crop&crop=faces&auto=format&q=80",
-};
 
 const spring = { type: "spring", stiffness: 260, damping: 30 };
 const list = { hidden: {}, show: { transition: { staggerChildren: 0.06, delayChildren: 0.05 } } };
@@ -73,16 +64,10 @@ export default function HomeScreen({
 
       <StatusBar tone="dark" className="relative" />
       <main className="relative flex-1 overflow-y-auto px-5 pb-32 pt-1">
-        <h1 className="sr-only">NovaPay home</h1>
         <motion.div variants={list} initial="hidden" animate="show" className="space-y-6">
           <motion.header variants={rise} className="flex items-center gap-3">
-            <Avatar initials={USER.initials} src={USER.photo} />
-            <div className="min-w-0 flex-1">
-              <p className="text-hf-small text-hf-ink-700">Welcome back</p>
-              <p className="text-[17px] font-medium leading-tight tracking-tight text-hf-ink-900">
-                {USER.first} {USER.last}
-              </p>
-            </div>
+            {/* The logo is the page title, so it's the h1 (replaces a hidden one). */}
+            <Logo as="h1" className="flex-1" />
             <RoundButton label="Notifications" onClick={() => notHere("Notifications")}>
               <Bell size={20} />
             </RoundButton>

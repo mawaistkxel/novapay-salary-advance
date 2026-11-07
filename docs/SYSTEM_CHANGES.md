@@ -117,6 +117,7 @@ These approximate Apple's Liquid Glass on the web; there is no official web vers
 | **Screen** + **Atmosphere** | ScreenLayout | `title` · `onBack` · `heading` · `lead` · `icon` · `feature` | Mist page with soft light sources; `feature` puts the heading in a glass card (Choose amount). Focus moves to the heading; content staggers in |
 | **Tile**, **IconBadge**, **RoundButton** | Card (+ ListRow icon) | `tone` glass \| strong \| solid; badge `tone` glass \| navy; button `tone` glass \| navy, `pressed` | One surface family instead of Card + Panel |
 | **TxRow** | ListRow | `leading` · `icon` · `title` · `subtitle` · `amount` · `direction` in \| out \| advance | An advance is ink, not green |
+| **Logo** | none | `as` (h1 on Home) · `showWord` | Prototype mark: two rounded uprights and a softened diagonal (a segmented "N") + "NovaPay" wordmark, one colour (navy-900, 14.56:1 on the page). Hand-drawn SVG, allowed as a single simple geometric mark |
 | **QuickAction**, **TabBar**, **Avatar**, **StatusBar**, **TopBar** | AppBar (TopBar) / none | — | Round 56px glass actions; glass tab bar with haloed liquid centre button; controls outside the advance toast "not part of this prototype" |
 
 Prototype-only (not in either kit): `src/ViewToggle.jsx`, beside `DemoSwitcher`.
