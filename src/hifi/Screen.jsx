@@ -37,8 +37,13 @@ export function Atmosphere() {
  *
  * `feature` puts the heading and lead inside a glass card, for screens whose
  * headline is a number (Choose amount).
+ *
+ * `footer` pins its content to the bottom of the screen, outside the scroll,
+ * with a short fade so content slides under it. Only for "continue" actions
+ * (Choose amount). Never for Accept: on money screens the person scrolls past
+ * the costs to reach it, on purpose.
  */
-export default function Screen({ title, onBack, heading, lead, icon, feature = false, children }) {
+export default function Screen({ title, onBack, heading, lead, icon, feature = false, footer, children }) {
   const headingRef = useRef(null);
   useEffect(() => {
     headingRef.current?.focus({ preventScroll: true });
@@ -64,7 +69,7 @@ export default function Screen({ title, onBack, heading, lead, icon, feature = f
       <Atmosphere />
       <StatusBar tone="dark" className="relative" />
       <TopBar title={title} onBack={onBack} />
-      <main className="relative flex-1 overflow-y-auto px-5 pb-10 pt-3">
+      <main className={`relative flex-1 overflow-y-auto px-5 pt-3 ${footer ? "pb-4" : "pb-10"}`}>
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -83,6 +88,21 @@ export default function Screen({ title, onBack, heading, lead, icon, feature = f
           ))}
         </motion.div>
       </main>
+      {footer ? (
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ ...spring, delay: 0.15 }}
+          className="relative shrink-0 bg-hf-page px-5 pb-6 pt-2"
+        >
+          {/* Fade above the bar so scrolling content slips under it (decorative). */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 -top-6 h-6 bg-gradient-to-t from-hf-page to-hf-page/0"
+          />
+          {footer}
+        </motion.div>
+      ) : null}
     </div>
   );
 }

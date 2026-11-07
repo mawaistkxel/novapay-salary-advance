@@ -272,6 +272,7 @@ A "Wireframe / High fidelity" toggle sits outside the phone frame (`?view=hifi` 
 - The total to repay is the loudest number on the terms screen. Accept and "Not now" are the same size and weight.
 - Borrowed money is never shown as good news (no green for the advance, no celebration on Done).
 - Shapes: cards 28px, rows and options 20px, every control a pill or circle.
+- Layout exception: on **Choose amount** "See full cost" is pinned to the bottom (`Screen footer`). Never pin Accept: on Terms the person scrolls past the costs to reach it.
 - Every colour is a token; materials are classes in `index.css`; no hex in components.
 
 **Motion (hi-fi only):** spring-based, `transform`/`opacity` only, each with a reason: content reveals in a short stagger (orientation), the tier slab glides (shows the choice moved), the tick and the timeline draw (confirm a state), the toast drops (feedback). Nothing celebrates. `MotionConfig reducedMotion="user"` plus the CSS rule turn it off.

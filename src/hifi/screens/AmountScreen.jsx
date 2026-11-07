@@ -39,6 +39,14 @@ export default function AmountScreen({ limit, value, onChange, onBack, onContinu
           <Money amount={limit} size="hero" className="mt-2" />
         </>
       }
+      footer={
+        <div className="space-y-2">
+          <Button size="lg" disabled={!value} loading={checking} onClick={onContinue}>
+            {checking ? "Checking…" : "See full cost"}
+          </Button>
+          {!value ? <p className="text-center text-hf-body text-hf-ink-700">Choose an amount to continue.</p> : null}
+        </div>
+      }
       lead={
         <FactStrip
           items={[
@@ -52,12 +60,6 @@ export default function AmountScreen({ limit, value, onChange, onBack, onContinu
       <TierPicker label="How much do you need?" name="tier" options={options} value={value} onChange={onChange} />
 
 
-      <div className="space-y-2 pt-1">
-        <Button size="lg" disabled={!value} loading={checking} onClick={onContinue}>
-          {checking ? "Checking…" : "See full cost"}
-        </Button>
-        {!value ? <p className="text-center text-hf-body text-hf-ink-700">Choose an amount to continue.</p> : null}
-      </div>
     </Screen>
   );
 }
