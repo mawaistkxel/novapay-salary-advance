@@ -93,7 +93,7 @@ export default function HomeScreen({
                 {hidden ? <EyeSlash size={18} /> : <Eye size={18} />}
               </RoundButton>
             </div>
-            <div className="mt-[18px] h-[46px] text-hf-ink-900">
+            <div className="mt-4 h-[46px] text-hf-ink-900">
               {hidden ? (
                 <span className="text-hf-hero">
                   <span className="sr-only">Balance hidden</span>
