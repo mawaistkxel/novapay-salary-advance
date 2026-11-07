@@ -1,5 +1,6 @@
-import { Button, FactStrip, Money, Screen, TierPicker } from "..";
+import { Button, Disclosure, FactStrip, Money, Screen, TierPicker } from "..";
 import { TIERS, PAYDAY, totalFor } from "../../data/scenarios";
+import { LIMIT_EXPLAINER_TITLE, limitExplainerBody } from "../../data/limitCopy";
 
 /**
  * Choose amount (high fidelity). Same rules as the wireframe: the repayment for
@@ -44,7 +45,14 @@ export default function AmountScreen({ limit, value, onChange, onBack, onContinu
         />
       }
     >
-      <TierPicker label="How much do you need?" name="tier" options={options} value={value} onChange={onChange} />
+      <TierPicker key="tiers" label="How much do you need?" name="tier" options={options} value={value} onChange={onChange} />
+
+      {/* Only when a tier is locked; shared, honest copy (src/data/limitCopy.js). */}
+      {TIERS.some((t) => t > limit) ? (
+        <Disclosure key="limits" title={LIMIT_EXPLAINER_TITLE}>
+          {limitExplainerBody(limit)}
+        </Disclosure>
+      ) : null}
 
       <div className="space-y-2 pt-1">
         <Button size="lg" disabled={!value} loading={checking} onClick={onContinue}>

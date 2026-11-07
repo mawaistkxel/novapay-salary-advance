@@ -191,7 +191,7 @@ Screen-level helpers (not part of NovaKit): `src/screens/ScreenLayout.jsx` (app 
 Heading → (haircut Notice, if any) → Card with CostBreakdown → consent Checkbox → (failure Notice, if any) → `Accept and get Rs X` (primary, lg, disabled until ticked, loading on submit) → `Not now` (secondary, lg).
 
 ### Choosing an amount
-"You can borrow up to Rs X" + one line on the fee, the date and no interest → TierPicker with the repayment per tier → "See full cost" (disabled until a tier is chosen, with "Choose an amount to continue." beneath).
+"You can borrow up to Rs X" + one line on the fee, the date and no interest → TierPicker with the repayment per tier → (if a tier is locked) a "How limits work" note that expands in place and promises nothing about raising the limit → "See full cost" (disabled until a tier is chosen, with "Choose an amount to continue." beneath).
 
 ### Reduced amount (haircut)
 A caution Notice above the breakdown: "We can offer Rs 5,000, not Rs 10,000", with why in one line, "The fee and total below are for Rs 5,000. You can still say no." Fee and total are recalculated.

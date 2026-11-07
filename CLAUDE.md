@@ -150,7 +150,7 @@ Timeline: 72 hours from when the brief was sent, sized for about 6 hours of focu
 Items 1–4 and 6–9 were decided on 6 Nov 2026 (see section 7).
 
 5. Late path: not being built (decline chosen). If it comes up: reminder timing and tone, and what happens if the payday pull fails. **Late fees are not specified; never invent one.**
-- Still open: why the limit is Rs 10,000 (the copy must not invent a basis), whether there is any way to cancel after accepting, and what happens if the wallet is short on payday. Track in `docs/DECISIONS.md`.
+- Still open: why the limit is Rs 10,000 (the copy must not invent a basis; the "How limits work" note says only that it comes from our checks and may not rise), whether there is any way to cancel after accepting, and what happens if the wallet is short on payday. Track in `docs/DECISIONS.md`.
 
 ## 9. Gaps in the documents (state as assumptions or questions)
 
