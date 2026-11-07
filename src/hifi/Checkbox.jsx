@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
  * Checkbox — NovaKit Hi-Fi
  * The consent tile. Always starts unticked; the label is the full commitment.
  * A native checkbox (sr-only) carries the semantics. Ticked = brighter glass,
- * navy rim, liquid-navy box, and the tick strokes itself in.
+ * soft navy rim (20%), liquid-navy box, and the tick strokes itself in.
  */
 export default function Checkbox({ id, checked, onChange, children }) {
   return (
@@ -13,7 +13,7 @@ export default function Checkbox({ id, checked, onChange, children }) {
       className={
         "flex cursor-pointer items-start gap-3 rounded-hf-md p-4 transition-shadow " +
         "has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-hf-navy-600 " +
-        (checked ? "hf-glass-strong ring-[1.5px] ring-inset ring-hf-navy-600" : "hf-glass")
+        (checked ? "hf-glass-strong ring-[1.5px] ring-inset ring-hf-navy-600/20" : "hf-glass")
       }
     >
       <input id={id} type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} className="sr-only" />
