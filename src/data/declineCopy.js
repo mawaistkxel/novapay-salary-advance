@@ -23,7 +23,7 @@ export const DECLINE_COPY = {
   },
   credit_score: {
     heading: "We can't offer you an advance right now",
-    why: "This is based on your credit score, which comes from your history of borrowing and repaying.",
+    why: "This is based on your credit score, which comes from your history of borrowing and repaying. Maintain credit score to get the Salary Advance offers, once it is available to you, you can see that in your homepage.",
     canVerify: false,
     home: "Not available to you right now.",
     homeAction: "See why",
