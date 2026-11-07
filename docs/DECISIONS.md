@@ -35,7 +35,7 @@ Feeds write-up section 2 and the three extra sections. Product rules come from `
 | The salary advance card sits **below** quick actions on Home, as in the reference, not pinned above them | A wallet that pushes credit above its own payments feels like a sales screen | At 360×640 the card starts just under the fold (its edge shows above the tab bar) |
 | The Home **offer** is the one **navy** surface (option A of three: navy card, light card with a timeline, strip under the balance); with a calm title, the "checking won't take any money" line and a soft white glass "See your offer". A strip of cost facts (3% fee, 0% interest, repaid on payday) was tried and removed at my call; the costs appear on the next screen, before any decision | It's the core feature, so it needs focus; contrast earns attention without hype copy | Louder than the balance card. Active, declined and documents-sent states go back to light glass: no loud card for a debt or bad news |
 | Hi-fi **Choose amount** states the terms as a **fact strip** (3% one-time fee · 0% interest · 28 Jul repayment) instead of the wireframe's sentence | Scannable before choosing; same facts as the sentence | The only place the two views word something differently: the strip drops "in one go from your wallet", which the terms screen and the consent line still state before Accept |
-| **"How limits work"** expandable note below the amount options (both views, only when a tier is locked): "Your limit is the most our checks allow for you right now… We can't lend above it, and we can't promise if or when it will go up. If you have questions about your limit, NovaPay support can help." | I wanted a path from the locked tier to an explanation. A "See how I can reach this limit" link was considered and rejected: it promises a way up the product hasn't defined | It explains less than people may want; the real answer depends on the open question of how limits are set |
+| The locked **Rs 15,000** tier says **"How limits work"** (with an info icon in hi-fi) instead of "Your current limit is Rs 10,000." It opens nothing yet | The limit is already stated in the heading and the "Above your limit" badge, so repeating it was redundant. How limits are set isn't confirmed by stakeholders, so no explanation is shown. "See how I can reach this limit" and an expandable note were both tried and dropped | It looks like a link but does nothing; in the live session, say it's a placeholder pending the limits answer |
 | Hi-fi Home header shows a **NovaPay logo** (segmented-"N" mark + wordmark, as the page's h1), not a user avatar and greeting; payees keep initials | Cleaner, closer to the reference brand bar, and no real person's photo standing in for an invented user | The prototype mark isn't a real NovaPay asset; it would be replaced by the brand's logo |
 
 ## Assumptions
@@ -51,6 +51,8 @@ Feeds write-up section 2 and the three extra sections. Product rules come from `
 - NovaPay has a support channel that can explain where credit-history information came from.
 - A declined user can check again once income is verified. No waiting period is assumed.
 - Freelancers: not handled. This is a *salary* advance tied to a payday; I assume freelance income is out of scope until a rule exists.
+
+- "How limits work" on the locked tier is a **placeholder**: I assume stakeholders will define how limits are set (and whether they can rise) before it gets content. Until then it shows nothing.
 
 ## Open questions (what I'd want to know)
 

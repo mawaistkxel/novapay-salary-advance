@@ -1,6 +1,7 @@
-import { Button, Disclosure, FactStrip, Money, Screen, TierPicker } from "..";
+import { Info } from "@phosphor-icons/react";
+import { Button, FactStrip, Money, Screen, TierPicker } from "..";
 import { TIERS, PAYDAY, totalFor } from "../../data/scenarios";
-import { LIMIT_EXPLAINER_TITLE, limitExplainerBody } from "../../data/limitCopy";
+import { LIMIT_EXPLAINER_TITLE } from "../../data/limitCopy";
 
 /**
  * Choose amount (high fidelity). Same rules as the wireframe: the repayment for
@@ -17,10 +18,13 @@ export default function AmountScreen({ limit, value, onChange, onBack, onContinu
         You repay <Money amount={totalFor(amount)} className="text-hf-ink-900" /> on {PAYDAY}
       </>
     ),
+    // The limit is already stated above and in the badge; this is a placeholder
+    // until stakeholders confirm how limits work (it opens nothing yet).
     lockedReason: (
-      <>
-        Your current limit is <Money amount={limit} weight="normal" />.
-      </>
+      <span className="inline-flex items-center gap-1.5 font-medium text-hf-navy-700">
+        <Info aria-hidden="true" size={18} />
+        {LIMIT_EXPLAINER_TITLE}
+      </span>
     ),
   }));
 
@@ -45,14 +49,8 @@ export default function AmountScreen({ limit, value, onChange, onBack, onContinu
         />
       }
     >
-      <TierPicker key="tiers" label="How much do you need?" name="tier" options={options} value={value} onChange={onChange} />
+      <TierPicker label="How much do you need?" name="tier" options={options} value={value} onChange={onChange} />
 
-      {/* Only when a tier is locked; shared, honest copy (src/data/limitCopy.js). */}
-      {TIERS.some((t) => t > limit) ? (
-        <Disclosure key="limits" title={LIMIT_EXPLAINER_TITLE}>
-          {limitExplainerBody(limit)}
-        </Disclosure>
-      ) : null}
 
       <div className="space-y-2 pt-1">
         <Button size="lg" disabled={!value} loading={checking} onClick={onContinue}>
