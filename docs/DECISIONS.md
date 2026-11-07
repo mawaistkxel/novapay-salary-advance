@@ -56,7 +56,7 @@ Feeds write-up section 2 and the three extra sections. Product rules come from `
 - **Eligibility is pre-assessed** before the user asks, from data they've already agreed to share with the wallet (salary credits, account history), so Home can show the result without a "check" step. Whether this is allowed, and with what consent, is open question 9. The UI makes no claim about effects on a credit record.
 - Uploaded income documents are used **only** to confirm income for salary advances. Needs confirming with compliance and data protection.
 - NovaPay has a support channel that can explain where credit-history information came from.
-- The income decline screen's heading, "**Verify your income to see the offer**" (my wording, 7 Nov), assumes that verifying income leads to an offer for this user. That isn't defined: a verified user could still be declined on credit score. If that can happen, the heading should become "Verify your salary to see if you can get an advance". The prototype itself ends at "We're checking the document you sent" and never shows the offer.
+- The income decline screen's heading, "**Verify your income to see the offer**" (my wording, 7 Nov), assumes that verifying income leads to an offer for this user. That isn't defined: a verified user could still be declined on credit score. If that can happen, the heading should become "Verify your income to see if you can get an advance". The prototype itself ends at "We're checking the document you sent" and never shows the offer.
 - Once income is verified, Home updates to show whether an advance is available. No waiting period or outcome is assumed.
 - Freelancers: not handled. This is a *salary* advance tied to a payday; I assume freelance income is out of scope until a rule exists.
 
