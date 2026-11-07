@@ -14,7 +14,7 @@ export default function DemoSwitcher({ scenarios, value, onChange, onReset }) {
           Prototype only
         </p>
         <p className="text-body text-neutral-900 mt-1">
-          Choose what NovaPay decides, then tap “See your offer”.
+          Choose what NovaPay decides, then tap “Check eligibility”.
         </p>
       </div>
       <fieldset className="space-y-1">

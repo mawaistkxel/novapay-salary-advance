@@ -109,7 +109,7 @@ export default function HomeScreen({
           </div>
         </div>
         <Button size="lg" loading={checking} onClick={onSeeOffer}>
-          {checking ? "Checking…" : "See your offer"}
+          {checking ? "Checking…" : "Check eligibility"}
         </Button>
       </>
     );

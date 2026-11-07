@@ -210,7 +210,7 @@ export default function HomeScreen({
           You may qualify for a NovaPay salary advance. Checking won't take any money.
         </p>
         <Button variant="inverse" size="lg" loading={checking} onClick={onSeeOffer}>
-          {checking ? "Checking…" : "See your offer"}
+          {checking ? "Checking…" : "Check eligibility"}
         </Button>
         {/* Depth: two faint rings in the top-right corner (decorative). Last child,
             so it doesn't shift the vertical rhythm. */}
