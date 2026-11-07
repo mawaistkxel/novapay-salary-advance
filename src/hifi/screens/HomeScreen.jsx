@@ -212,19 +212,6 @@ export default function HomeScreen({
             You may qualify for a NovaPay salary advance. Checking won't take any money.
           </p>
         </div>
-        {/* The costs, up front. Value above label visually; label first for screen readers. */}
-        <dl className="grid grid-cols-3 divide-x divide-white/15 rounded-hf-md bg-white/10 ring-1 ring-inset ring-white/15">
-          {[
-            ["3%", "one-time fee"],
-            ["0%", "interest"],
-            [PAYDAY, "repaid on payday"],
-          ].map(([value, term]) => (
-            <div key={term} className="flex flex-col-reverse justify-end gap-0.5 px-3 py-2.5">
-              <dt className="text-hf-small text-hf-navy-100">{term}</dt>
-              <dd className="text-[19px] leading-6 tracking-[-0.02em] text-white">{value}</dd>
-            </div>
-          ))}
-        </dl>
         <Button variant="inverse" size="lg" loading={checking} onClick={onSeeOffer}>
           {checking ? "Checking…" : "See your offer"}
         </Button>
