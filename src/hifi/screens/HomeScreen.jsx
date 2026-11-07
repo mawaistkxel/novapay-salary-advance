@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import {
   Bell,
   Buildings,
-  CalendarBlank,
   DeviceMobile,
   Eye,
   EyeSlash,
@@ -106,16 +105,9 @@ export default function HomeScreen({
                 <Money amount={balance} size="hero" />
               )}
             </div>
-            <p className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-white/80 px-3 py-1.5 text-hf-small text-hf-ink-700 ring-1 ring-inset ring-hf-line">
-              <CalendarBlank aria-hidden="true" size={14} />
-              Next salary <span className="font-medium text-hf-ink-900">{PAYDAY}</span>
-            </p>
           </motion.section>
 
-          <motion.section variants={rise} aria-labelledby="hf-quick">
-            <h2 id="hf-quick" className="mb-3 text-hf-h2 font-normal text-hf-ink-900">
-              Quick actions
-            </h2>
+          <motion.section variants={rise} aria-label="Quick actions">
             <div className="grid grid-cols-4 gap-2">
               <QuickAction icon={<PaperPlaneTilt size={22} />} label="Send" onClick={() => notHere("Send")} />
               <QuickAction icon={<Plus size={22} />} label="Add money" onClick={() => notHere("Add money")} />
