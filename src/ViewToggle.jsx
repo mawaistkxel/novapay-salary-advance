@@ -51,7 +51,6 @@ export default function ViewToggle({ value, onChange }) {
           );
         })}
       </div>
-      <p className="mt-2 text-body text-neutral-700">Same flow, same words. Only the look changes.</p>
     </fieldset>
   );
 }
