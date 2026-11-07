@@ -8,7 +8,7 @@ import Money from "./Money";
  * preselected, locked tiers visible with a plain reason.
  *
  * Options are glass rows. The selected state is one shared element (layoutId):
- * a brighter glass slab with a soft navy rim (35%) that glides to the chosen row;
+ * a brighter glass slab with a soft navy rim (20%) that glides to the chosen row;
  * the filled radio carries the selected state (≥ 3:1), so the rim can stay subtle. The radio
  * fills with liquid navy. Locked = flat, faded, lock in place of the radio, and
  * an "Above your limit" tag. It isn't an error, so it isn't red.
@@ -36,7 +36,7 @@ export default function TierPicker({ label, name, options, value, onChange }) {
                 layoutId={`${name}-highlight`}
                 transition={{ type: "spring", stiffness: 380, damping: 34 }}
                 aria-hidden="true"
-                className="hf-glass-strong absolute inset-0 rounded-hf-md ring-[1.5px] ring-inset ring-hf-navy-600/35"
+                className="hf-glass-strong absolute inset-0 rounded-hf-md ring-[1.5px] ring-inset ring-hf-navy-600/20"
               />
             ) : null}
 
