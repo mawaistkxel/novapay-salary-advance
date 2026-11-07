@@ -50,7 +50,12 @@ export default function Screen({ title, onBack, heading, lead, icon, feature = f
       <h2 ref={headingRef} tabIndex={-1} className="text-hf-h1 text-hf-ink-900 outline-none">
         {heading}
       </h2>
-      {lead ? <p className="mt-3 text-hf-body text-hf-ink-700">{lead}</p> : null}
+      {/* A string lead is a paragraph; a node (e.g. a FactStrip) gets its own block. */}
+      {typeof lead === "string" ? (
+        <p className="mt-3 text-hf-body text-hf-ink-700">{lead}</p>
+      ) : lead ? (
+        <div className="mt-4">{lead}</div>
+      ) : null}
     </>
   );
 

@@ -1,4 +1,4 @@
-import { Button, Money, Screen, TierPicker } from "..";
+import { Button, FactStrip, Money, Screen, TierPicker } from "..";
 import { TIERS, PAYDAY, totalFor } from "../../data/scenarios";
 
 /**
@@ -34,7 +34,15 @@ export default function AmountScreen({ limit, value, onChange, onBack, onContinu
           <Money amount={limit} size="hero" className="mt-2" />
         </>
       }
-      lead={`A one-time fee of 3%, no interest. You repay it all in one go from your wallet on ${PAYDAY}, your next payday.`}
+      lead={
+        <FactStrip
+          items={[
+            { value: "3%", label: "one-time fee" },
+            { value: "0%", label: "interest" },
+            { value: PAYDAY, label: "repaid on payday" },
+          ]}
+        />
+      }
     >
       <TierPicker label="How much do you need?" name="tier" options={options} value={value} onChange={onChange} />
 

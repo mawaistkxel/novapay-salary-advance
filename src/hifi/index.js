@@ -8,6 +8,7 @@
 export { default as Avatar } from "./Avatar.jsx";
 export { default as Button } from "./Button.jsx";
 export { default as Checkbox } from "./Checkbox.jsx";
+export { default as FactStrip } from "./FactStrip.jsx";
 export { default as Logo } from "./Logo.jsx";
 export { default as Money } from "./Money.jsx";
 export { default as Notice } from "./Notice.jsx";
