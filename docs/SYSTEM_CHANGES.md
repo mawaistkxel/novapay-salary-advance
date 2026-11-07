@@ -84,6 +84,7 @@ A second component set behind the "High fidelity" toggle. **It doesn't replace N
 | `hf-ink-500 / 300` | #7E879C / #CDD3DF | Graphics only (radio and checkbox rings, 3.60:1) / borders |
 | `hf-amber-*` | unchanged | Caution |
 | `hf-green-600` | #11663A (was #16804A) | Money in; darkened so it passes over the haze |
+| `hf-amber-400` | #FBBF24 | Warning icon in the island toast only (9.44:1 on navy-900); never text on light surfaces |
 | `font-geist` | Geist Variable | Display at weight 300, headings 400, labels 500 |
 | `rounded-hf-sm / md / lg` | 14 / 20 / 28px | Rule: cards 28, rows and options 20, controls pill |
 | `shadow-hf-soft / float` | navy-tinted | Elevation tinted with the navy, never black glows |
@@ -116,7 +117,7 @@ These approximate Apple's Liquid Glass on the web; there is no official web vers
 | **Receipt** + **Timeline** | CostBreakdown | `receivedLabel` · `disbursed` · `fee` · `total` · `date` · `showHints` | `<dl>` in glass; total on a liquid navy slab |
 | **Checkbox** | Checkbox | same props | Glass tile; ticked = brighter glass, navy rim, liquid box, tick draws itself |
 | **Notice** | Notice | same props | info = navy-50, caution = amber-50; thin Phosphor icon |
-| **Toast** ("island") | Toast | `open` · `message` · `icon` | Smoked navy glass pill under the status bar; always-mounted `role="status"` |
+| **Toast** ("island") | Toast | `open` · `message` · `title` · `icon` check \| warning \| null · `tone` caution | Smoked navy glass pill under the status bar; always-mounted `role="status"`. `tone="caution"` (failed Accept) sets `aria-live="assertive"`, amber-400 warning icon, bold title, shown 6 s |
 | **Screen** + **Atmosphere** | ScreenLayout | `title` · `onBack` · `heading` · `lead` · `icon` · `feature` · `center` (centres the icon + heading block; Decline) · `footer` (pinned action bar with a fade above; Choose amount and Terms. On Terms the consent box must stay in the scrolling content) | Mist page with soft light sources; `feature` puts the heading in a glass card (Choose amount). Focus moves to the heading; content staggers in |
 | **Tile**, **IconBadge**, **RoundButton** | Card (+ ListRow icon) | `tone` glass \| strong \| solid \| navy (one emphasised surface per screen; sets white focus outlines via `.hf-on-dark`); badge `tone` glass \| navy \| soft (navy-50 circle, for an illustration on white glass); button `tone` glass \| navy, `pressed` | One surface family instead of Card + Panel |
 | **TxRow** | ListRow | `leading` · `icon` · `title` · `subtitle` · `amount` · `direction` in \| out \| advance | An advance is ink, not green |

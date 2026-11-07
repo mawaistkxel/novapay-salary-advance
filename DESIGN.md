@@ -216,7 +216,7 @@ Approved users see the offer card ("See amounts and cost"), with no limit amount
 
 ### Loading, failure, empty
 - **Loading:** the triggering button shows its loading state ("Checking…" on See full cost, "Sending…", "Uploading…"); no full-screen spinners.
-- **Failure on a money action:** caution Notice with `alert`: "That didn't go through. No money was moved and nothing will be taken from your wallet. Please try again." Keep the person on the same screen with their choices intact.
+- **Failure on a money action:** caution Notice with `alert`: "That didn't go through. No money was moved and nothing will be taken from your wallet. Please try again." Keep the person on the same screen with their choices intact. Hi-fi shows it in the island toast at the top instead (title "That didn't go through", amber warning icon, 6 s, announced assertively), the same place and style as other feedback.
 - **Back out:** "Not now" returns Home with the toast "No advance taken. Nothing has changed in your wallet."
 
 ### Confirmation
@@ -279,7 +279,7 @@ A "Wireframe / High fidelity" toggle sits outside the phone frame (`?view=hifi` 
 - The total to repay is the loudest number on the terms screen. Accept and "Not now" are the same size and weight.
 - Borrowed money is never shown as good news (no green for the advance, no celebration on Done).
 - Shapes: cards 28px, rows and options 20px, every control a pill or circle.
-- **Pinned actions, every screen (rule, 7 Nov):** a screen's actions always sit in the pinned bar at the bottom (`Screen footer`), never at the end of the scrolling content: "See full cost" (Choose amount), Accept + "Not now" (Terms), Verify your income + Back to home (Decline), Upload + "Not now" (Verify income), Back to home (Done). Home has no screen-level actions (its buttons belong to cards). On Terms this is only safe because Accept stays disabled until the consent box is ticked, and the box stays in the scrolling content below the costs. Never move the consent box into the bar. A failed Accept shows its message in the bar, above the button.
+- **Pinned actions, every screen (rule, 7 Nov):** a screen's actions always sit in the pinned bar at the bottom (`Screen footer`), never at the end of the scrolling content: "See full cost" (Choose amount), Accept + "Not now" (Terms), Verify your income + Back to home (Decline), Upload + "Not now" (Verify income), Back to home (Done). Home has no screen-level actions (its buttons belong to cards). On Terms this is only safe because Accept stays disabled until the consent box is ticked, and the box stays in the scrolling content below the costs. Never move the consent box into the bar. A failed Accept shows its message in the island toast at the top, not in the bar.
 - Every colour is a token; materials are classes in `index.css`; no hex in components.
 
 **Motion (hi-fi only):** spring-based, `transform`/`opacity` only, each with a reason: content reveals in a short stagger (orientation), the tier slab glides (shows the choice moved), the tick and the timeline draw (confirm a state), the toast drops (feedback). Nothing celebrates. `MotionConfig reducedMotion="user"` plus the CSS rule turn it off.

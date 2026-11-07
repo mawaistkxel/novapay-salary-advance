@@ -88,9 +88,11 @@ export default function App() {
   }
   useEffect(() => () => timers.current.forEach(clearTimeout), []);
 
-  function showToast(message, icon) {
-    setToast({ message, icon });
-    later(() => setToast(null), 3200);
+  // tone "caution" is for a failed action: shown longer, announced assertively.
+  function showToast(message, icon, { title, tone, ms = 3200 } = {}) {
+    const id = Date.now() + Math.random();
+    setToast({ id, message, icon, title, tone });
+    later(() => setToast((t) => (t && t.id === id ? null : t)), ms);
   }
 
   function reset(nextKey = scenarioKey) {
@@ -131,6 +133,15 @@ export default function App() {
     later(() => {
       if (scenario.failFirstAccept && attempt === 1) {
         update({ busy: null, acceptError: true, acceptAttempts: attempt });
+        // Hi-fi shows the failure in the island at the top (like other feedback);
+        // the wireframe keeps its inline caution Notice above Accept.
+        if (view === "hifi") {
+          showToast("No money was moved and nothing will be taken from your wallet. Please try again.", "warning", {
+            title: "That didn't go through",
+            tone: "caution",
+            ms: 6000,
+          });
+        }
         return;
       }
       update({
@@ -195,7 +206,13 @@ export default function App() {
           {/* Hi-fi icons are thin line glyphs, like the reference; screens opt into fill. */}
           <IconContext.Provider value={{ weight: hifi ? "light" : "regular" }}>{renderScreen()}</IconContext.Provider>
           {hifi ? (
-            <HfToast open={!!toast} message={toast?.message} icon={toast?.icon === null ? null : "check"} />
+            <HfToast
+              open={!!toast}
+              message={toast?.message}
+              title={toast?.title}
+              tone={toast?.tone}
+              icon={toast?.icon === null ? null : toast?.icon || "check"}
+            />
           ) : (
             <Toast open={!!toast} message={toast?.message} icon={toast?.icon} />
           )}

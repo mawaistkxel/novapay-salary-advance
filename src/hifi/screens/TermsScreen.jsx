@@ -35,11 +35,7 @@ export default function TermsScreen({
       heading="Your salary advance"
       footer={
         <div className="space-y-3">
-          {acceptError ? (
-            <Notice tone="caution" title="That didn't go through" alert>
-              No money was moved and nothing will be taken from your wallet. Please try again.
-            </Notice>
-          ) : null}
+          {/* A failed Accept is shown in the island toast at the top (App.jsx). */}
           <Button size="lg" disabled={!consent} loading={accepting} onClick={onAccept}>
             {accepting ? (
               "Sending…"

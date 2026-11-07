@@ -65,6 +65,7 @@ export default {
           amber: {
             50: "#FFF6E8",
             100: "#FBE3BF",
+            400: "#FBBF24", // icon on navy-900 only (Toast warning, 9.98:1)
             700: "#9A4B07", // caution title (5.79:1 on amber-50)
           },
           green: {
