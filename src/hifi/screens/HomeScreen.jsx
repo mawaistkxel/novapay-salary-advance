@@ -55,6 +55,7 @@ export default function HomeScreen({
 }) {
   const [hidden, setHidden] = useState(false);
   const notHere = (what) => onUnavailable?.(what);
+  const isOffer = !advance && !documentsSubmitted && !declined;
 
   return (
     <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-hf-page">
@@ -64,7 +65,7 @@ export default function HomeScreen({
 
       <StatusBar tone="dark" className="relative" />
       <main className="relative flex-1 overflow-y-auto px-5 pb-32 pt-1">
-        <motion.div variants={list} initial="hidden" animate="show" className="space-y-6">
+        <motion.div variants={list} initial="hidden" animate="show" className="space-y-5">
           <motion.header variants={rise} className="flex items-center gap-3">
             {/* The logo is the page title, so it's the h1 (replaces a hidden one). */}
             <Logo as="h1" className="flex-1" />
@@ -110,7 +111,10 @@ export default function HomeScreen({
           </motion.section>
 
           <motion.div variants={rise}>
-            <Tile tone="strong" className="space-y-4 p-5">
+            {/* The offer is the one navy surface on Home: attention from contrast and
+                plain facts, not hype. Every later state (active, declined, documents
+                sent) goes back to light glass: no loud card for bad news or a debt. */}
+            <Tile tone={isOffer ? "navy" : "strong"} className={isOffer ? "space-y-3.5 p-5" : "space-y-4 p-5"}>
               {renderAdvance()}
             </Tile>
           </motion.div>
@@ -193,16 +197,43 @@ export default function HomeScreen({
     }
     return (
       <>
-        {label()}
-        <div className="space-y-1">
-          <p className="text-[20px] leading-[26px] tracking-[-0.02em] text-hf-ink-900">Need cash before payday?</p>
-          <p className="text-hf-body text-hf-ink-700">
+        <div className="flex items-center gap-3">
+          <span
+            aria-hidden="true"
+            className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/10 text-white ring-1 ring-inset ring-white/20"
+          >
+            <HandCoins size={18} />
+          </span>
+          <p className="flex-1 text-hf-body font-medium text-hf-navy-100">Salary advance</p>
+        </div>
+        <div className="space-y-1.5">
+          <h2 className="text-[22px] leading-[28px] tracking-[-0.025em] text-white">Need cash before payday?</h2>
+          <p className="text-hf-body text-hf-navy-100">
             You may qualify for a NovaPay salary advance. Checking won't take any money.
           </p>
         </div>
-        <Button size="lg" loading={checking} onClick={onSeeOffer}>
+        {/* The costs, up front. Value above label visually; label first for screen readers. */}
+        <dl className="grid grid-cols-3 divide-x divide-white/15 rounded-hf-md bg-white/10 ring-1 ring-inset ring-white/15">
+          {[
+            ["3%", "one-time fee"],
+            ["0%", "interest"],
+            [PAYDAY, "repaid on payday"],
+          ].map(([value, term]) => (
+            <div key={term} className="flex flex-col-reverse justify-end gap-0.5 px-3 py-2.5">
+              <dt className="text-hf-small text-hf-navy-100">{term}</dt>
+              <dd className="text-[19px] leading-6 tracking-[-0.02em] text-white">{value}</dd>
+            </div>
+          ))}
+        </dl>
+        <Button variant="inverse" size="lg" loading={checking} onClick={onSeeOffer}>
           {checking ? "Checking…" : "See your offer"}
         </Button>
+        {/* Depth: two faint rings in the top-right corner (decorative). Last child,
+            so it doesn't shift the vertical rhythm. */}
+        <div aria-hidden="true" className="pointer-events-none absolute -right-14 -top-14 -z-10 !mt-0">
+          <div className="h-44 w-44 rounded-full ring-1 ring-white/10" />
+          <div className="absolute -inset-8 rounded-full ring-1 ring-white/[0.06]" />
+        </div>
       </>
     );
   }

@@ -12,6 +12,8 @@ export default function Tile({ tone = "glass", as: Tag = "div", className = "", 
     glass: "hf-glass rounded-hf-lg",
     strong: "hf-glass-strong rounded-hf-lg",
     solid: "bg-hf-mist rounded-hf-md",
+    // The one emphasised surface on a screen (Home's offer). White text only.
+    navy: "hf-liquid-deep hf-grain hf-grain-light hf-on-dark relative isolate overflow-hidden rounded-hf-lg text-white",
   };
   return (
     <Tag className={`p-4 ${tones[tone] || tones.glass} ${className}`} {...rest}>

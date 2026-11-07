@@ -96,6 +96,9 @@ A second component set behind the "High fidelity" toggle. **It doesn't replace N
 | `.hf-glass` | White 82→62% fill, white hairline border, bright inset top edge, navy-tinted drop, `backdrop-filter: blur(22px) saturate(160%)` | Cards, rows, tier options |
 | `.hf-glass-strong` | White 92→80%, used where something floats or sits over the haze | Tab bar, round buttons, secondary button, Home cards over the haze |
 | `.hf-liquid` | Navy 600→800 with a glossy radial cap of light, inner rim and navy drop | Primary button, selected radio, checkbox, total band, emphasised badge |
+| `.hf-liquid-deep` | Navy 700→900 with a soft corner bloom instead of the glossy cap (the cap is too bright across a tall card) | Home offer card (`Tile tone="navy"`) |
+| `.hf-pearl` | White to navy-50 with an inner highlight and navy drop | `Button variant="inverse"` (on navy) |
+| `.hf-grain-light` | The grain tile tinted white at 0.10, so it shows on navy | Home offer card |
 | `.hf-liquid-halo` | Adds a white glass halo ring | Tab bar centre button |
 | `.hf-grain` | Static navy SVG noise under the content (pseudo-element, opacity 0.26); an image, not a live filter | Home balance card |
 | `.hf-haze` | Page→slate gradient rising from the bottom | Home only |
@@ -107,7 +110,7 @@ These approximate Apple's Liquid Glass on the web; there is no official web vers
 
 | Component | Lite counterpart | Design property → code | Notes |
 |---|---|---|---|
-| **Button** | Button | `variant` primary \| secondary · `size` md 48 \| lg 56 · `loading` · `disabled` · `icon` | Primary = liquid navy; secondary = white liquid glass with navy text. Same size, weight and type. Press = `scale .98` spring |
+| **Button** | Button | `variant` primary \| secondary \| inverse (pearl on navy, 11.19:1) · `size` md 48 \| lg 56 · `loading` · `disabled` · `icon` | Primary = liquid navy; secondary = white liquid glass with navy text. Same size, weight and type. Press = `scale .98` spring |
 | **Money** | AmountText | `amount` · `size` hero \| h1 \| h2 \| body · `weight` | Light large figures, softer "Rs". Rolls on change, never from zero; screen readers get the final value |
 | **TierPicker** | TierPicker | same props; default / selected / focused / locked | Glass rows; one `layoutId` slab with a navy rim glides to the choice; radio fills with liquid navy. Focus = outline outside the row |
 | **Receipt** + **Timeline** | CostBreakdown | `receivedLabel` · `disbursed` · `fee` · `total` · `date` · `showHints` | `<dl>` in glass; total on a liquid navy slab |
@@ -115,7 +118,7 @@ These approximate Apple's Liquid Glass on the web; there is no official web vers
 | **Notice** | Notice | same props | info = navy-50, caution = amber-50; thin Phosphor icon |
 | **Toast** ("island") | Toast | `open` · `message` · `icon` | Smoked navy glass pill under the status bar; always-mounted `role="status"` |
 | **Screen** + **Atmosphere** | ScreenLayout | `title` · `onBack` · `heading` · `lead` · `icon` · `feature` | Mist page with soft light sources; `feature` puts the heading in a glass card (Choose amount). Focus moves to the heading; content staggers in |
-| **Tile**, **IconBadge**, **RoundButton** | Card (+ ListRow icon) | `tone` glass \| strong \| solid; badge `tone` glass \| navy; button `tone` glass \| navy, `pressed` | One surface family instead of Card + Panel |
+| **Tile**, **IconBadge**, **RoundButton** | Card (+ ListRow icon) | `tone` glass \| strong \| solid \| navy (one emphasised surface per screen; sets white focus outlines via `.hf-on-dark`); badge `tone` glass \| navy; button `tone` glass \| navy, `pressed` | One surface family instead of Card + Panel |
 | **TxRow** | ListRow | `leading` · `icon` · `title` · `subtitle` · `amount` · `direction` in \| out \| advance | An advance is ink, not green |
 | **Logo** | none | `as` (h1 on Home) · `showWord` | Prototype mark: two rounded uprights and a softened diagonal (a segmented "N") + "NovaPay" wordmark, one colour (navy-900, 14.56:1 on the page). Hand-drawn SVG, allowed as a single simple geometric mark |
 | **QuickAction**, **TabBar**, **Avatar**, **StatusBar**, **TopBar** | AppBar (TopBar) / none | — | Round 56px glass actions; glass tab bar with haloed liquid centre button; controls outside the advance toast "not part of this prototype" |
@@ -136,6 +139,10 @@ Prototype-only (not in either kit): `src/ViewToggle.jsx`, beside `DemoSwitcher`.
 | hf-navy-700 on hf-navy-50 | 9.81 | Info title, "Active" chip, current tab |
 | hf-navy-700 on white glass | ≥9.8 | "Not now" |
 | hf-ink-700 on the grained balance card (average / darkest speck) | 6.05 / 5.19 | "Available balance" over `.hf-grain` |
+| white / hf-navy-100 on `.hf-liquid-deep` under the bloom (worst case) | 7.35 / 5.65 | Offer card title, body and labels. **The glossy `.hf-liquid` cap measured 3.12 for navy-100 on a tall card**, so the card uses its own material |
+| white / hf-navy-100 on the facts panel (white/10 on navy-700) | 8.31 / 6.39 | "3%", "0%", "28 Jul" and their labels |
+| hf-navy-700 on `.hf-pearl` | 11.19 | "See your offer" on navy |
+| White focus outline on navy | ≥ 7.35 | `.hf-on-dark` |
 | hf-amber-700 on hf-amber-50 | 5.79 | Caution title |
 | white on hf-navy-900 | 15.90 | Toast |
 | hf-ink-500 on white / page | 3.60 / 3.18 | Radio and checkbox rings only (graphics, ≥3:1) |

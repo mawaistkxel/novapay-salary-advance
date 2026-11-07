@@ -267,6 +267,7 @@ A "Wireframe / High fidelity" toggle sits outside the phone frame (`?view=hifi` 
 
 **Rules that carry over unchanged:** §2 principles, §6 patterns, §7 copy and §8 accessibility all apply. In particular:
 - One accent: navy-600. Amber and green only for caution and money in.
+- One emphasised navy surface per screen at most (Home: the offer card). It carries facts, never hype, and only in the offer state.
 - Text never depends on blur. Anything with text over the Home haze uses `.hf-glass-strong` (≥80% white).
 - The total to repay is the loudest number on the terms screen. Accept and "Not now" are the same size and weight.
 - Borrowed money is never shown as good news (no green for the advance, no celebration on Done).

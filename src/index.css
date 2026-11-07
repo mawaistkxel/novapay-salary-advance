@@ -29,6 +29,10 @@ body {
 [data-view="hifi"] :focus-visible {
   outline-color: theme("colors.hf.navy.600");
 }
+/* On navy surfaces a navy outline would vanish; white is ≥ 7.35:1 there. */
+[data-view="hifi"] .hf-on-dark :focus-visible {
+  outline-color: theme("colors.white");
+}
 
 /* ── NovaKit Hi-Fi materials ────────────────────────────────────────────────
    A web approximation of "liquid glass" (Apple's material is native-only; there
@@ -82,6 +86,28 @@ body {
       0 0 0 1px theme(colors.hf.navy.900 / 25%),
       0 12px 26px -12px theme(colors.hf.navy.700 / 85%);
   }
+  /* Deep liquid navy for a large surface (the Home offer card). The glossy cap of
+     .hf-liquid is too bright across a tall card (navy-100 text fell to 3.12:1),
+     so here the light is a soft bloom in the top-right corner instead. Worst
+     case measured: white 7.35:1, navy-100 5.65:1 under the bloom. */
+  .hf-liquid-deep {
+    background:
+      radial-gradient(80% 60% at 88% 0%, theme(colors.white / 14%), transparent 70%),
+      linear-gradient(160deg, theme(colors.hf.navy.700), theme(colors.hf.navy.900));
+    border: 1px solid theme(colors.white / 12%);
+    box-shadow:
+      inset 0 1px 0 theme(colors.white / 22%),
+      0 22px 44px -22px theme(colors.hf.navy.900 / 60%);
+  }
+  /* Pearl button for use on navy: white glass with a soft navy-50 base. */
+  .hf-pearl {
+    background: linear-gradient(180deg, theme(colors.white), theme(colors.hf.navy.50));
+    box-shadow:
+      inset 0 1px 0 theme(colors.white),
+      inset 0 -2px 4px theme(colors.hf.navy.900 / 8%),
+      0 10px 22px -12px theme(colors.hf.navy.900 / 70%);
+  }
+
   /* The tab bar's centre button: liquid navy inside a white glass halo. */
   .hf-liquid-halo {
     box-shadow:
@@ -106,6 +132,12 @@ body {
     opacity: 0.26;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.086 0 0 0 0 0.114 0 0 0 0 0.231 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-size: 160px 160px;
+  }
+
+  /* Grain for dark surfaces: the same tile tinted white, so it reads on navy. */
+  .hf-grain-light::before {
+    opacity: 0.1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
   /* Home only: the slate haze that rises behind recent activity and the tab bar. */

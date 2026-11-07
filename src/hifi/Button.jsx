@@ -28,6 +28,8 @@ export default function Button({
   const variants = {
     primary: disabled ? "bg-hf-ink-300/70 text-hf-ink-700" : "hf-liquid text-white hover:brightness-110",
     secondary: disabled ? "hf-glass text-hf-ink-500" : "hf-glass-strong text-hf-navy-700 hover:brightness-[1.02]",
+    // On a navy surface: pearl white with navy text (11.19:1).
+    inverse: disabled ? "bg-white/40 text-hf-navy-700" : "hf-pearl text-hf-navy-700 hover:brightness-[1.03]",
   };
   return (
     <motion.button
