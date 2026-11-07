@@ -39,9 +39,9 @@ export function Atmosphere() {
  * headline is a number (Choose amount).
  *
  * `footer` pins its content to the bottom of the screen, outside the scroll,
- * with a short fade so content slides under it. Only for "continue" actions
- * (Choose amount). Never for Accept: on money screens the person scrolls past
- * the costs to reach it, on purpose.
+ * with a short fade so content slides under it. Used for "See full cost" and for
+ * Terms (Accept + "Not now"). On Terms the consent box must stay in the scroll,
+ * below the costs: that's what makes a pinned Accept safe.
  */
 export default function Screen({ title, onBack, heading, lead, icon, feature = false, footer, children }) {
   const headingRef = useRef(null);
