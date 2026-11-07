@@ -23,7 +23,7 @@ There's no current flow in the starter, so this read is based on the brief's des
 **The not-good path: decline.** I chose decline because it's the hard moment inside a *first-time* experience, and where vagueness feels most like being judged. The screen says no plainly, names the real reason in everyday words, and only offers a next step when one exists:
 - *Income not verified:* "We couldn't confirm your salary", then a single screen explaining what to send, why, and how it's used. No promised review time and no fake instant approval.
 - *Credit score:* the reason, and the honest truth that there's nothing to do in the app today, with a pointer to support if something in their history looks wrong. No "try again later" when nothing would change.
-- Home stops inviting a declined user to "Check eligibility", and links back to the reason instead.
+- There's no "Check eligibility" tap that can end in a no. Home already shows the answer: the offer for approved users, and for declined users a quiet card ("We need to confirm your salary…" or "Not available to you right now") that opens the reason. The reason itself is never on Home, where others may see the phone. This assumes NovaPay can pre-assess eligibility, which I'd confirm with compliance.
 
 **What I chose not to build:** late-repayment reminders (outside the first-time flow, and the rules don't define failed pulls or fees), a full verification loop, and a celebratory confirmation. The confirmation repeats the total and the date, because taking on debt isn't a win to cheer.
 

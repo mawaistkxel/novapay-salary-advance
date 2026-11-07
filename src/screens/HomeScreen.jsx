@@ -1,17 +1,18 @@
 import { AppBar, Card, ListRow, Button, AmountText } from "../novakit";
 import { PAYDAY } from "../data/scenarios";
+import { declineCopyFor } from "../data/declineCopy";
 
 /**
  * Home — the starter screen, plus the salary-advance entry card in whichever
- * state the user is in: not checked yet, checking, active advance, declined,
- * or documents submitted.
+ * state the user is in: available, declined (per reason), active advance, or
+ * documents submitted. Eligibility is known before the user taps anything, so
+ * there's no "check" step that can end in a no.
  */
 export default function HomeScreen({
   balance,
   advance,
-  declined,
+  declineReason,
   documentsSubmitted,
-  checking,
   onSeeOffer,
   onSeeDecline,
 }) {
@@ -84,18 +85,18 @@ export default function HomeScreen({
         </div>
       );
     }
-    if (declined) {
-      // Don't keep inviting someone to an offer they were just declined for.
+    if (declineReason) {
+      // Quiet, and no reason on Home: it shows what's needed or "not available",
+      // and the reason sits one tap away. Never an offer they can't have.
+      const copy = declineCopyFor(declineReason);
       return (
         <>
           <div>
             <div className="text-body font-semibold text-neutral-900">Salary advance</div>
-            <div className="text-body text-neutral-700 mt-1">
-              Not available to you right now.
-            </div>
+            <div className="text-body text-neutral-700 mt-1">{copy.home}</div>
           </div>
           <Button variant="secondary" onClick={onSeeDecline}>
-            See why and what you can do
+            {copy.homeAction}
           </Button>
         </>
       );
@@ -108,8 +109,8 @@ export default function HomeScreen({
             Repaid automatically on your next payday. One fee of 3%, no interest.
           </div>
         </div>
-        <Button size="lg" loading={checking} onClick={onSeeOffer}>
-          {checking ? "Checking…" : "Check eligibility"}
+        <Button size="lg" onClick={onSeeOffer}>
+          See amounts and cost
         </Button>
       </>
     );

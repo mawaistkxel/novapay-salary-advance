@@ -205,10 +205,17 @@ A caution Notice above the breakdown: "We can offer Rs 5,000, not Rs 10,000", wi
 | `credit_score` | This is based on your credit score… | Back to home only; support for errors |
 | `other` | Our checks didn't meet the conditions… | Back to home; support for questions |
 
-After a decline, Home shows "Not available to you right now" with a link to the reason, not the original offer card.
+Eligibility is shown on Home upfront; there is no tap-to-check step that can end in a no. A declined user's Home card is quiet (light surface, no reason on Home) and opens the decline screen:
+
+| Reason | Home card | Button |
+|---|---|---|
+| `income_unverified` | We need to confirm your salary before we can offer an advance. | See what's needed |
+| `credit_score` / `other` | Not available to you right now. | See why |
+
+Approved users see the offer card ("See amounts and cost"), with no limit amount on Home. Copy lives in `src/data/declineCopy.js` (`home`, `homeAction`).
 
 ### Loading, failure, empty
-- **Loading:** the triggering button shows its loading state ("Checking…", "Sending…", "Uploading…"); no full-screen spinners.
+- **Loading:** the triggering button shows its loading state ("Checking…" on See full cost, "Sending…", "Uploading…"); no full-screen spinners.
 - **Failure on a money action:** caution Notice with `alert`: "That didn't go through. No money was moved and nothing will be taken from your wallet. Please try again." Keep the person on the same screen with their choices intact.
 - **Back out:** "Not now" returns Home with the toast "No advance taken. Nothing has changed in your wallet."
 

@@ -29,14 +29,16 @@ import {
   TxRow,
 } from "..";
 import { PAYDAY } from "../../data/scenarios";
+import { declineCopyFor } from "../../data/declineCopy";
 
 const spring = { type: "spring", stiffness: 260, damping: 30 };
 const list = { hidden: {}, show: { transition: { staggerChildren: 0.06, delayChildren: 0.05 } } };
 const rise = { hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0, transition: spring } };
 
 /**
- * Home (high fidelity). Same props and states as the wireframe Home: not checked
- * yet, checking, active advance, declined, documents submitted.
+ * Home (high fidelity). Same props and states as the wireframe Home: available,
+ * declined (per reason), active advance, documents submitted. Eligibility is
+ * known upfront, so there's no "check" step that can end in a no.
  *
  * Layout follows the reference: greeting, a glass balance card with one liquid
  * navy control, round glass quick actions, then the salary advance and recent
@@ -46,16 +48,15 @@ const rise = { hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0, transiti
 export default function HomeScreen({
   balance,
   advance,
-  declined,
+  declineReason,
   documentsSubmitted,
-  checking,
   onSeeOffer,
   onSeeDecline,
   onUnavailable,
 }) {
   const [hidden, setHidden] = useState(false);
   const notHere = (what) => onUnavailable?.(what);
-  const isOffer = !advance && !documentsSubmitted && !declined;
+  const isOffer = !advance && !documentsSubmitted && !declineReason;
 
   return (
     <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-hf-page">
@@ -183,14 +184,16 @@ export default function HomeScreen({
         </>
       );
     }
-    if (declined) {
-      // Don't keep inviting someone to an offer they were just declined for.
+    if (declineReason) {
+      // Quiet, and no reason on Home: it shows what's needed or "not available",
+      // and the reason sits one tap away. Never an offer they can't have.
+      const copy = declineCopyFor(declineReason);
       return (
         <>
           {label()}
-          <p className="text-hf-body text-hf-ink-700">Not available to you right now.</p>
+          <p className="text-hf-body text-hf-ink-700">{copy.home}</p>
           <Button variant="secondary" onClick={onSeeDecline}>
-            See why and what you can do
+            {copy.homeAction}
           </Button>
         </>
       );
@@ -209,8 +212,8 @@ export default function HomeScreen({
         <p className="text-hf-body text-hf-navy-100">
           Repaid automatically on your next payday. One fee of 3%, no interest.
         </p>
-        <Button variant="inverse" size="lg" loading={checking} onClick={onSeeOffer}>
-          {checking ? "Checking…" : "Check eligibility"}
+        <Button variant="inverse" size="lg" onClick={onSeeOffer}>
+          See amounts and cost
         </Button>
         {/* Depth: two faint rings in the top-right corner (decorative). Last child,
             so it doesn't shift the vertical rhythm. */}

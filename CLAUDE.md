@@ -143,6 +143,7 @@ Timeline: 72 hours from when the brief was sent, sized for about 6 hours of focu
 | No new colour tokens; extensions: TierPicker, CostBreakdown, Checkbox, Notice; fixes to Button, Toast, Card, ListRow, index.css | Restraint; every change maps to existing tokens |
 | **High-fidelity view** behind a "Wireframe / High fidelity" toggle outside the frame; direction = **misty slate + navy liquid glass** after my "Payno" reference (v2, replaced the first blue + glass pass) | I want a finished look alongside the wireframe; the wireframe stays the reasoning baseline |
 | Hi-fi screens share the wireframe's props and state machine; switching view keeps the current screen and choices; `?view=hifi` in the URL | Same flow, rules and words in both views; side-by-side comparison in the live session |
+| **Eligibility shown on Home upfront** (no "Check eligibility" tap); declined card is quiet, per reason, with the reason one tap away; approved button "See amounts and cost"; no limit on Home (7 Nov) | A tap that can only end in a no is a let-down the UI creates; assumes pre-assessment, logged as open question 9 in `docs/DECISIONS.md` |
 | Packages approved for hi-fi: framer-motion, @phosphor-icons/react, @fontsource-variable/geist | Motion, icons, typeface; nothing else without asking |
 
 ## 8. Open decisions: ask me, don't decide silently

@@ -141,7 +141,7 @@ Prototype-only (not in either kit): `src/ViewToggle.jsx`, beside `DemoSwitcher`.
 | hf-navy-700 on white glass | ≥9.8 | "Not now" |
 | hf-ink-700 on the grained balance card (average / darkest speck) | 6.05 / 5.19 | "Available balance" over `.hf-grain` |
 | white / hf-navy-100 on `.hf-liquid-deep` under the bloom (worst case) | 7.35 / 5.65 | Offer card title, body and labels. **The glossy `.hf-liquid` cap measured 3.12 for navy-100 on a tall card**, so the card uses its own material |
-| hf-navy-700 on `.hf-soft-white` (78% white over navy, worst case) | 7.33 | "Check eligibility" on navy |
+| hf-navy-700 on `.hf-soft-white` (78% white over navy, worst case) | 7.33 | "See amounts and cost" on navy |
 | White focus outline on navy | ≥ 7.35 | `.hf-on-dark` |
 | hf-amber-700 on hf-amber-50 | 5.79 | Caution title |
 | white on hf-navy-900 | 15.90 | Toast |

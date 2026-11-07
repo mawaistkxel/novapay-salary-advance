@@ -26,6 +26,7 @@ import {
 } from "./data/scenarios";
 
 // Simulated network/risk-check delays, so loading states are visible.
+// CHECK_MS is the quote on the Amount screen (where a haircut can apply).
 const CHECK_MS = 900;
 const ACCEPT_MS = 1100;
 
@@ -61,11 +62,10 @@ const INITIAL = {
   applied: null, // applied_amount
   disbursed: null, // disbursed_amount (after any haircut)
   consent: false,
-  busy: null, // which action is loading: check | quote | accept | upload
+  busy: null, // which action is loading: quote | accept | upload
   acceptError: false,
   acceptAttempts: 0,
   advance: null, // { disbursed, fee, total } once accepted
-  declined: false,
   documentsSubmitted: false,
 };
 
@@ -101,13 +101,13 @@ export default function App() {
     setS(INITIAL);
   }
 
-  // Home → eligibility check → amount (approved) or decline.
+  // Eligibility is pre-assessed (an assumption, see docs/DECISIONS.md), so Home
+  // already knows the answer: approved users go straight to the amounts, and a
+  // declined user never taps "check" only to be told no.
+  const declineReason = scenario.decision === "approved" ? null : scenario.denial_reason || "other";
+
   function seeOffer() {
-    update({ busy: "check" });
-    later(() => {
-      if (scenario.decision === "approved") update({ busy: null, screen: "amount" });
-      else update({ busy: null, screen: "declined", declined: true });
-    }, CHECK_MS);
+    update({ screen: "amount" });
   }
 
   // Amount → risk check on the requested amount (haircut happens here) → terms.
@@ -276,9 +276,8 @@ export default function App() {
             key="home"
             balance={balance}
             advance={s.advance}
-            declined={s.declined}
+            declineReason={declineReason}
             documentsSubmitted={s.documentsSubmitted}
-            checking={s.busy === "check"}
             onSeeOffer={seeOffer}
             onSeeDecline={() => update({ screen: "declined" })}
             onUnavailable={unavailable}
