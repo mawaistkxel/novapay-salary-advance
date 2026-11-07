@@ -209,8 +209,8 @@ Eligibility is shown on Home upfront; there is no tap-to-check step that can end
 
 | Reason | Home card | Button |
 |---|---|---|
-| `income_unverified` | We need to verify your salary before we can offer an advance. | See what's needed |
-| `credit_score` / `other` | Not available to you right now. | See why |
+| `income_unverified` | We need to verify your salary before we can offer an advance. | See what's needed (primary: a real next step exists) |
+| `credit_score` / `other` | Not available to you right now. | See why (secondary) |
 
 Approved users see the offer card ("See amounts and cost"), with no limit amount on Home. Copy lives in `src/data/declineCopy.js` (`home`, `homeAction`).
 

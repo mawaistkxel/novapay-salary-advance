@@ -202,7 +202,7 @@ export default function HomeScreen({
             </IconBadge>,
           )}
           <p className="text-hf-body text-hf-ink-700">{copy.home}</p>
-          <Button variant="secondary" onClick={onSeeDecline}>
+          <Button variant={copy.canVerify ? "primary" : "secondary"} onClick={onSeeDecline}>
             {copy.homeAction}
           </Button>
         </>
