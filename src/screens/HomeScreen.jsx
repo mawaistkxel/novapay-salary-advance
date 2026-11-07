@@ -105,7 +105,7 @@ export default function HomeScreen({
         <div>
           <div className="text-title text-neutral-900">Need cash before payday?</div>
           <div className="text-body text-neutral-700 mt-1">
-            You may qualify for a NovaPay salary advance.
+            Repaid automatically on your next payday. One fee of 3%, no interest.
           </div>
         </div>
         <Button size="lg" loading={checking} onClick={onSeeOffer}>
