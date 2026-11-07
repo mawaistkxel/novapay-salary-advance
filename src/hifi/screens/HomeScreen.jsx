@@ -18,6 +18,8 @@ import {
   Avatar,
   Button,
   IconBadge,
+  Illustration,
+  declineIllustration,
   Logo,
   Money,
   QuickAction,
@@ -146,12 +148,14 @@ export default function HomeScreen({
   );
 
   // A render helper, not a nested component (that would remount on every render).
-  function label(extra = null) {
+  function label(extra = null, leading = null) {
     return (
       <div className="flex items-center gap-3">
-        <IconBadge size="sm">
-          <HandCoins size={20} />
-        </IconBadge>
+        {leading || (
+          <IconBadge size="sm">
+            <HandCoins size={20} />
+          </IconBadge>
+        )}
         <p className="flex-1 text-hf-body font-medium text-hf-ink-900">Salary advance</p>
         {extra}
       </div>
@@ -190,7 +194,7 @@ export default function HomeScreen({
       const copy = declineCopyFor(declineReason);
       return (
         <>
-          {label()}
+          {label(null, <Illustration name={declineIllustration(declineReason)} size="sm" />)}
           <p className="text-hf-body text-hf-ink-700">{copy.home}</p>
           <Button variant="secondary" onClick={onSeeDecline}>
             {copy.homeAction}

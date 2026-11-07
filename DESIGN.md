@@ -284,6 +284,8 @@ A "Wireframe / High fidelity" toggle sits outside the phone frame (`?view=hifi` 
 
 **Motion (hi-fi only):** spring-based, `transform`/`opacity` only, each with a reason: content reveals in a short stagger (orientation), the tier slab glides (shows the choice moved), the tick and the timeline draw (confirm a state), the toast drops (feedback). Nothing celebrates. `MotionConfig reducedMotion="user"` plus the CSS rule turn it off.
 
+**Illustrations:** small 3D navy spot illustrations from the Nova Lite Figma (Components → Illustrations), only in the decline state: magnifier (income, other) and chart (credit score), 72px on the decline screen and 40px on the Home card. Decorative (`alt=""`). Never coins, gold or a briefcase (selling), never a lock or cross (punishing). Export note: the Figma REST export renders these components on a grey square because of their "change color" overlay layer; export through the plugin API instead.
+
 **Libraries:** `framer-motion`, `@phosphor-icons/react` and `@fontsource-variable/geist` were approved for the hi-fi view (an exception to §9's "no new UI libraries"). Don't add more without asking.
 
 **Not done:** dark mode, and a screen-reader pass.

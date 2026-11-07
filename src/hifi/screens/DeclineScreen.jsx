@@ -1,11 +1,13 @@
-import { FileMagnifyingGlass, Info, ShieldCheck } from "@phosphor-icons/react";
-import { Button, IconBadge, Notice, Screen, Tile } from "..";
+import { ShieldCheck } from "@phosphor-icons/react";
+import { Button, Illustration, Notice, Screen, Tile, declineIllustration } from "..";
 import { declineCopyFor } from "../../data/declineCopy";
 
 /**
  * Decline (high fidelity) — moment (c). Same words as the wireframe (shared copy
  * file). A light, quiet screen: no blue hero, no red, no warning triangle. The
- * reason is named; a next step appears only when one exists.
+ * reason is named; a next step appears only when one exists. A small navy
+ * illustration (magnifier for income, chart for credit score) softens the news;
+ * it's decorative and never the only signal.
  */
 export default function DeclineScreen({ reason, onVerify, onHome }) {
   const copy = declineCopyFor(reason);
@@ -13,11 +15,7 @@ export default function DeclineScreen({ reason, onVerify, onHome }) {
     <Screen
       title="Salary advance"
       onBack={onHome}
-      icon={
-        <IconBadge size="lg" >
-          {copy.canVerify ? <FileMagnifyingGlass size={26} /> : <Info size={26} />}
-        </IconBadge>
-      }
+      icon={<Illustration name={declineIllustration(reason)} size="lg" />}
       heading="We can't offer you an advance right now"
     >
       <Tile tone="glass" as="section" aria-labelledby="hf-why" className="space-y-1 p-5">
