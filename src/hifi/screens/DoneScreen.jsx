@@ -10,6 +10,7 @@ export default function DoneScreen({ disbursed, fee, total, onDone }) {
   return (
     <Screen
       title="Salary advance"
+      center
       icon={
         <IconBadge size="lg" tone="navy">
           <Check size={26} />
