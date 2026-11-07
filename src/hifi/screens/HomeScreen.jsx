@@ -204,14 +204,11 @@ export default function HomeScreen({
           >
             <HandCoins size={18} />
           </span>
-          <p className="flex-1 text-hf-body font-medium text-hf-navy-100">Salary advance</p>
+          <h2 className="flex-1 text-hf-body font-medium text-hf-navy-100">Need cash before payday?</h2>
         </div>
-        <div className="space-y-1.5">
-          <h2 className="text-[22px] leading-[28px] tracking-[-0.025em] text-white">Need cash before payday?</h2>
-          <p className="text-hf-body text-hf-navy-100">
-            You may qualify for a NovaPay salary advance. Checking won't take any money.
-          </p>
-        </div>
+        <p className="text-hf-body text-hf-navy-100">
+          You may qualify for a NovaPay salary advance. Checking won't take any money.
+        </p>
         <Button variant="inverse" size="lg" loading={checking} onClick={onSeeOffer}>
           {checking ? "Checking…" : "See your offer"}
         </Button>
