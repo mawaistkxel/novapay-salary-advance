@@ -1,12 +1,21 @@
 import { useEffect, useRef, useState } from "react";
+import { MotionConfig } from "framer-motion";
 import { Toast } from "./novakit";
+import { Toast as HfToast } from "./hifi";
 import HomeScreen from "./screens/HomeScreen";
 import AmountScreen from "./screens/AmountScreen";
 import TermsScreen from "./screens/TermsScreen";
 import DoneScreen from "./screens/DoneScreen";
 import DeclineScreen from "./screens/DeclineScreen";
 import VerifyIncomeScreen from "./screens/VerifyIncomeScreen";
+import HfHomeScreen from "./hifi/screens/HomeScreen";
+import HfAmountScreen from "./hifi/screens/AmountScreen";
+import HfTermsScreen from "./hifi/screens/TermsScreen";
+import HfDoneScreen from "./hifi/screens/DoneScreen";
+import HfDeclineScreen from "./hifi/screens/DeclineScreen";
+import HfVerifyIncomeScreen from "./hifi/screens/VerifyIncomeScreen";
 import DemoSwitcher from "./DemoSwitcher";
+import ViewToggle from "./ViewToggle";
 import {
   SCENARIOS,
   STARTING_BALANCE,
@@ -18,6 +27,33 @@ import {
 // Simulated network/risk-check delays, so loading states are visible.
 const CHECK_MS = 900;
 const ACCEPT_MS = 1100;
+
+// Two visual layers over one flow. Both screen sets take identical props, so
+// the state machine below is shared and the two views can't drift apart.
+const SCREENS = {
+  wire: {
+    Home: HomeScreen,
+    Amount: AmountScreen,
+    Terms: TermsScreen,
+    Done: DoneScreen,
+    Decline: DeclineScreen,
+    Verify: VerifyIncomeScreen,
+  },
+  hifi: {
+    Home: HfHomeScreen,
+    Amount: HfAmountScreen,
+    Terms: HfTermsScreen,
+    Done: HfDoneScreen,
+    Decline: HfDeclineScreen,
+    Verify: HfVerifyIncomeScreen,
+  },
+};
+
+// The view lives in the URL (?view=hifi) so a link can open either one.
+function viewFromUrl() {
+  if (typeof window === "undefined") return "wire";
+  return new URLSearchParams(window.location.search).get("view") === "hifi" ? "hifi" : "wire";
+}
 
 const INITIAL = {
   screen: "home", // home | amount | terms | done | declined | verify
@@ -38,6 +74,7 @@ const INITIAL = {
  */
 export default function App() {
   const [scenarioKey, setScenarioKey] = useState("approved");
+  const [view, setView] = useState(viewFromUrl);
   const [s, setS] = useState(INITIAL);
   const [toast, setToast] = useState(null);
   const timers = useRef([]);
@@ -117,31 +154,69 @@ export default function App() {
     }, ACCEPT_MS);
   }
 
+  // Switching view keeps the flow state: same screen, same choices.
+  function changeView(next) {
+    setView(next);
+    const url = new URL(window.location.href);
+    if (next === "hifi") url.searchParams.set("view", "hifi");
+    else url.searchParams.delete("view");
+    window.history.replaceState(null, "", url);
+  }
+
+  // Hi-fi Home has wallet controls the prototype doesn't build; say so plainly.
+  function unavailable(what) {
+    showToast(`${what} isn't part of this prototype. Only the salary advance works here.`, null);
+  }
+
+  const hifi = view === "hifi";
+  const S = SCREENS[view];
   const balance = STARTING_BALANCE + (s.advance ? s.advance.disbursed : 0);
 
   return (
-    <div className="min-h-screen w-full flex flex-col lg:flex-row items-center lg:items-start justify-center gap-6 py-6">
-      {/* Fixed height, never taller than the viewport, so overlays (Toast, BottomSheet)
-          pin to the visible bottom of the screen. Content scrolls inside each screen. */}
-      <div className="relative w-[390px] max-w-full shrink-0 h-[min(844px,calc(100dvh-48px))] flex flex-col bg-white rounded-[28px] shadow-xl overflow-hidden border border-neutral-300">
-        {renderScreen()}
-        <Toast open={!!toast} message={toast?.message} icon={toast?.icon} />
-      </div>
+    <MotionConfig reducedMotion="user">
+      <div
+        className={
+          "min-h-screen w-full flex flex-col lg:flex-row items-center lg:items-start justify-center gap-6 py-6 transition-colors duration-500 " +
+          (hifi ? "bg-gradient-to-br from-hf-blue-100 via-hf-page to-hf-blue-50" : "")
+        }
+      >
+        {/* Fixed height, never taller than the viewport, so overlays (Toast, BottomSheet)
+            pin to the visible bottom of the screen. Content scrolls inside each screen. */}
+        <div
+          data-view={view}
+          className={
+            "relative w-[390px] max-w-full shrink-0 h-[min(844px,calc(100dvh-48px))] flex flex-col rounded-[28px] overflow-hidden " +
+            (hifi
+              ? "font-geist bg-hf-page shadow-hf-float sm:rounded-[44px] sm:ring-[7px] sm:ring-hf-ink-900"
+              : "bg-white shadow-xl border border-neutral-300")
+          }
+        >
+          {renderScreen()}
+          {hifi ? (
+            <HfToast open={!!toast} message={toast?.message} icon={toast?.icon === null ? null : "check"} />
+          ) : (
+            <Toast open={!!toast} message={toast?.message} icon={toast?.icon} />
+          )}
+        </div>
 
-      <DemoSwitcher
-        scenarios={SCENARIOS}
-        value={scenarioKey}
-        onChange={(key) => reset(key)}
-        onReset={() => reset()}
-      />
-    </div>
+        <div className="w-[calc(100%-32px)] max-w-[390px] lg:w-64 space-y-5">
+          <ViewToggle value={view} onChange={changeView} />
+          <DemoSwitcher
+            scenarios={SCENARIOS}
+            value={scenarioKey}
+            onChange={(key) => reset(key)}
+            onReset={() => reset()}
+          />
+        </div>
+      </div>
+    </MotionConfig>
   );
 
   function renderScreen() {
     switch (s.screen) {
       case "amount":
         return (
-          <AmountScreen
+          <S.Amount
             key="amount"
             limit={scenario.limit}
             value={s.applied}
@@ -153,7 +228,7 @@ export default function App() {
         );
       case "terms":
         return (
-          <TermsScreen
+          <S.Terms
             key="terms"
             applied={s.applied}
             disbursed={s.disbursed}
@@ -168,7 +243,7 @@ export default function App() {
         );
       case "done":
         return (
-          <DoneScreen
+          <S.Done
             key="done"
             {...s.advance}
             onDone={() => update({ screen: "home" })}
@@ -176,7 +251,7 @@ export default function App() {
         );
       case "declined":
         return (
-          <DeclineScreen
+          <S.Decline
             key="declined"
             reason={scenario.denial_reason}
             onVerify={() => update({ screen: "verify" })}
@@ -185,7 +260,7 @@ export default function App() {
         );
       case "verify":
         return (
-          <VerifyIncomeScreen
+          <S.Verify
             key="verify"
             uploading={s.busy === "upload"}
             onUpload={upload}
@@ -194,7 +269,7 @@ export default function App() {
         );
       default:
         return (
-          <HomeScreen
+          <S.Home
             key="home"
             balance={balance}
             advance={s.advance}
@@ -203,6 +278,7 @@ export default function App() {
             checking={s.busy === "check"}
             onSeeOffer={seeOffer}
             onSeeDecline={() => update({ screen: "declined" })}
+            onUnavailable={unavailable}
           />
         );
     }

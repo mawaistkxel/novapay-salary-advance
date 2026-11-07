@@ -7,7 +7,7 @@ export default function DemoSwitcher({ scenarios, value, onChange, onReset }) {
   return (
     <aside
       aria-label="Prototype controls"
-      className="w-[calc(100%-32px)] max-w-[390px] lg:w-64 rounded-md border border-dashed border-neutral-500 bg-neutral-50 p-4 space-y-3"
+      className="w-full rounded-md border border-dashed border-neutral-500 bg-neutral-50 p-4 space-y-3"
     >
       <div>
         <p className="text-caption font-semibold uppercase tracking-wide text-neutral-700">
