@@ -181,9 +181,10 @@ export default function HomeScreen({
       return (
         <>
           {label()}
-          <div className="flex gap-3 rounded-hf-md bg-hf-mist p-4">
-            <HourglassMedium aria-hidden="true" size={22} className="shrink-0 text-hf-navy-600" />
-            <p className="text-hf-body text-hf-ink-900">We're checking the document you sent. We'll let you know when it's done.</p>
+          {/* Dark navy status panel (my call): the one navy surface on Home in this state. */}
+          <div className="hf-liquid-deep hf-grain hf-grain-light hf-on-dark relative isolate flex gap-3 overflow-hidden rounded-hf-md p-4 text-white">
+            <HourglassMedium aria-hidden="true" size={22} className="shrink-0 text-hf-navy-100" />
+            <p className="text-hf-body text-white">We're checking the document you sent. We'll let you know when it's done.</p>
           </div>
         </>
       );
