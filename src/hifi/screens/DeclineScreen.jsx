@@ -1,4 +1,4 @@
-import { Button, Illustration, Notice, Screen, declineIllustration } from "..";
+import { Button, Illustration, Screen, declineIllustration } from "..";
 import { declineCopyFor } from "../../data/declineCopy";
 
 /**
@@ -30,12 +30,6 @@ export default function DeclineScreen({ reason, onVerify, onHome }) {
           </Button>
         </div>
       }
-    >
-      {copy.canVerify ? null : (
-        <Notice tone="info" title={copy.nextTitle}>
-          {copy.next}
-        </Notice>
-      )}
-    </Screen>
+    />
   );
 }

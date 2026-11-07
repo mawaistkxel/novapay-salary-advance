@@ -197,7 +197,7 @@ Heading → (haircut Notice, if any) → Card with CostBreakdown → consent Che
 A caution Notice above the breakdown: "We can offer Rs 5,000, not Rs 10,000", with why in one line, "The fee and total below are for Rs 5,000. You can still say no." Fee and total are recalculated.
 
 ### Decline
-Heading per reason (`income_unverified`: "Verify your income to see the offer"; `credit_score` / `other`: "We can't offer you an advance right now") → the reason as one plain paragraph directly under the heading (no "Why" label, no card; centred in hi-fi) → for `credit_score` / `other` only, an info Notice "What this means" (support pointer) → pinned actions. For `income_unverified` the paragraph already says what to do, so there's no Notice. A next step appears only when one exists:
+Heading per reason (`income_unverified`: "Verify your income to see the offer"; `credit_score` / `other`: "We can't offer you an advance right now") → the reason as one plain paragraph directly under the heading (no "Why" label, no card; centred in hi-fi) → pinned actions. No Notices on this screen (removed 7 Nov). A next step appears only when one exists:
 
 | Reason | Why (copy) | Next step |
 |---|---|---|

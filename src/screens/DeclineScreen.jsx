@@ -1,4 +1,4 @@
-import { Button, Notice } from "../novakit";
+import { Button } from "../novakit";
 import ScreenLayout from "./ScreenLayout";
 import { declineCopyFor } from "../data/declineCopy";
 
@@ -19,11 +19,6 @@ export default function DeclineScreen({ reason, onVerify, onHome }) {
     >
       <p className="text-body text-neutral-700">{copy.why}</p>
 
-      {copy.canVerify ? null : (
-        <Notice tone="info" title={copy.nextTitle}>
-          {copy.next}
-        </Notice>
-      )}
 
       <div className="space-y-3">
         {copy.canVerify ? (
