@@ -11,10 +11,10 @@ import chart from "../assets/illustrations/chart.png";
  * money imagery would sell, and a lock or cross would read as punishment.
  *
  * name: magnifier ("we need to check something") | chart ("based on your history")
- * size: sm 40px (Home card) | lg 72px (screen header)
+ * size: sm 28px (inside a 40px IconBadge on the Home card) | lg 72px (screen header)
  */
 const SOURCES = { magnifier, chart };
-const SIZES = { sm: "h-10 w-10", lg: "h-[72px] w-[72px]" };
+const SIZES = { sm: "h-7 w-7", lg: "h-[72px] w-[72px]" };
 
 export default function Illustration({ name, size = "lg", className = "" }) {
   return (

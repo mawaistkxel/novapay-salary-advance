@@ -194,7 +194,13 @@ export default function HomeScreen({
       const copy = declineCopyFor(declineReason);
       return (
         <>
-          {label(null, <Illustration name={declineIllustration(declineReason)} size="sm" />)}
+          {label(
+            null,
+            // A 40px circle like the other states, tinted so it shows on the white card.
+            <IconBadge size="sm" tone="soft">
+              <Illustration name={declineIllustration(declineReason)} size="sm" />
+            </IconBadge>,
+          )}
           <p className="text-hf-body text-hf-ink-700">{copy.home}</p>
           <Button variant="secondary" onClick={onSeeDecline}>
             {copy.homeAction}

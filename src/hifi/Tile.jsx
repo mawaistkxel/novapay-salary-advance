@@ -32,6 +32,8 @@ export function IconBadge({ children, tone = "glass", size = "md" }) {
   const tones = {
     glass: "hf-glass-strong text-hf-navy-700",
     navy: "hf-liquid text-white",
+    // A visible circle on white glass (glass-on-glass disappears); decorative.
+    soft: "bg-hf-navy-50 text-hf-navy-700",
     amber: "bg-hf-amber-50 text-hf-amber-700",
     green: "bg-hf-green-50 text-hf-green-600",
   };
