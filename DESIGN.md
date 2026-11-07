@@ -5,7 +5,8 @@ The single design reference for this repo: product context, principles, tokens, 
 - **Product rules** (fees, tiers, dates): [`PRODUCT_REFERENCE.md`](PRODUCT_REFERENCE.md). It wins on any conflict.
 - **Why each decision was made:** [`docs/DECISIONS.md`](docs/DECISIONS.md) · **what changed in the system:** [`docs/SYSTEM_CHANGES.md`](docs/SYSTEM_CHANGES.md)
 - **Source of truth for values:** `tailwind.config.js` (tokens) and `src/novakit/` (components). If this file and the code disagree, the code wins; fix this file.
-- **Figma mirror:** [Nova Lite → Components](https://www.figma.com/design/8nnupfLUC7Futie5CQh22R/Nova-Lite?node-id=1-25) (variables, text styles, component sets) · [Research page](https://www.figma.com/design/8nnupfLUC7Futie5CQh22R/Nova-Lite?node-id=1-24) (assumptions and research board)
+- **High-fidelity view:** `src/hifi/` (NovaKit Hi-Fi, `hf-*` tokens). See §10.
+- **Figma mirror:** [Nova Lite → Components](https://www.figma.com/design/OM0mESsfRjnVjeNucMPgW0/Nova-Lite?node-id=1-133) (variables, text styles, component sets, example screens). The research board was in a deleted file and hasn't been rebuilt yet.
 
 ---
 
@@ -255,3 +256,22 @@ Reject output that adds:
 - screens added for their own sake
 
 Run `npm run build` before every commit.
+
+---
+
+## 10. High-fidelity view (NovaKit Hi-Fi)
+
+A "Wireframe / High fidelity" toggle sits outside the phone frame (`?view=hifi` opens it directly). Both views run **the same flow, rules and copy**; only the visual layer differs. Full token/component mapping and contrast table: [`docs/SYSTEM_CHANGES.md`](docs/SYSTEM_CHANGES.md#high-fidelity-view-novakit-hi-fi-added-7-nov).
+
+**Look:** cobalt-blue hero (hf-blue-700 → 600) with frosted glass tiles, a white sheet that rises over it, cool gray tiles, a floating pill tab bar, Geist with large light-weight money figures, and a navy band for the total. From the moodboard's blue references (images 3 and 5).
+
+**Rules that carry over unchanged:** §2 principles, §6 patterns, §7 copy and §8 accessibility all apply. In particular:
+- Blue hero only on **Home** and **Choose amount** (browsing and choosing). **Terms, Done, Decline and Verify** use the plain light layout: reading and bad news should be calm.
+- Text on the hero is solid white. Glass tiles behind text stay at **white/10**; lighter fails AA low in the hero. Decorative planes stay in the top ~170px.
+- The total to repay is the loudest number on the terms screen. Accept and "Not now" are the same size and weight.
+- Borrowed money is never shown as good news (no green for the advance, no celebration on Done).
+- Every new colour is a token; no hex in components.
+
+**Motion (hi-fi only):** spring-based, `transform`/`opacity` only. Screen content reveals in a short stagger, the sheet rises, the tier highlight glides (`layoutId`), the consent tick and the timeline draw themselves, the toast drops like an island. Nothing celebrates. `MotionConfig reducedMotion="user"` plus the CSS rule turn it off.
+
+**Libraries:** `framer-motion`, `@phosphor-icons/react` and `@fontsource-variable/geist` were approved for the hi-fi view (an exception to §9's "no new UI libraries"). Don't add more without asking.

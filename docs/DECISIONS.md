@@ -22,6 +22,16 @@ Feeds write-up section 2 and the three extra sections. Product rules come from `
 | Home stops inviting a declined user to "See your offer" and links to the reason | Re-showing the offer card after a decline is a small cruelty | — |
 | Demo scenario switcher **outside** the phone frame | Every path is one click away in the live session; can't be mistaken for product UI | — |
 | **No new colour tokens** | All new UI maps to existing tokens; every pair contrast-checked (lowest 4.71:1) | No `danger` red; failures use the caution tone, which is deliberate (it isn't the user's error) |
+| **A second, high-fidelity view** behind a "Wireframe / High fidelity" toggle outside the frame (7 Nov) | Shows the same decisions with a finished look taken from my moodboard (blue + frosted glass), without touching the wireframe that the write-up argues from | Two visual layers to maintain; mitigated by sharing everything except presentation |
+| Hi-fi screens take **the same props** as the wireframe screens; one state machine in `App.jsx`; decline copy moved to `src/data/declineCopy.js` | The two views can't drift: same flow, same rules, same words | Hi-fi layouts can't add steps or behaviour of their own |
+| Switching view **keeps the current screen and choices**; the view is in the URL (`?view=hifi`) | The same moment can be compared side by side in the live session; a link can open either view | — |
+| Hi-fi borrows the moodboard's **look, not its copy** ("Get Loans in Minutes!", "we've got your back", the giant "12x") | That copy is the predatory tone the brief asks us to remove | The hi-fi is less "exciting" than its references |
+| Hi-fi is **blue on the browsing screens, light and plain on the deciding ones** (Terms, Done, Decline, Verify) | The hero is for orientation and choosing; reading terms and bad news should be calm, not branded | Less visual consistency between screens |
+| The **total to repay is the loudest number** on the hi-fi terms screen (navy band) | It's the number the person is agreeing to | Draws the eye away from "You receive", which is intended |
+| A borrowed advance is shown in **ink, not "money in" green**, in recent activity | Borrowed money isn't income; green would frame debt as good news | — |
+| New packages, approved by me: **framer-motion, @phosphor-icons/react, @fontsource-variable/geist** (self-hosted, no CDN) | Spring motion and shared-element transitions, one consistent icon set, and a typeface close to the moodboard | The JS bundle is now 445 KB (135 KB gzipped); only the hi-fi view uses them |
+| Hi-fi motion: screen reveal, sheet rise, sliding tier highlight, tick draw, timeline draw, island toast. **No celebration**, and off under reduced motion (`MotionConfig reducedMotion="user"` + the CSS rule) | Motion explains change; it never sells | — |
+| Wallet controls outside the advance (Send, Top up, Pay bills, tabs, bell) **say they're not in the prototype** instead of doing nothing | Dead buttons in a click-through look like bugs | A toast reviewers may see often |
 
 ## Assumptions
 
