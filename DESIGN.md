@@ -261,17 +261,20 @@ Run `npm run build` before every commit.
 
 ## 10. High-fidelity view (NovaKit Hi-Fi)
 
-A "Wireframe / High fidelity" toggle sits outside the phone frame (`?view=hifi` opens it directly). Both views run **the same flow, rules and copy**; only the visual layer differs. Full token/component mapping and contrast table: [`docs/SYSTEM_CHANGES.md`](docs/SYSTEM_CHANGES.md#high-fidelity-view-novakit-hi-fi-added-7-nov).
+A "Wireframe / High fidelity" toggle sits outside the phone frame (`?view=hifi` opens it directly). Both views run **the same flow, rules and copy**; only the visual layer differs. Full token, material and component mapping plus the contrast table: [`docs/SYSTEM_CHANGES.md`](docs/SYSTEM_CHANGES.md).
 
-**Look:** cobalt-blue hero (hf-blue-700 → 600) with frosted glass tiles, a white sheet that rises over it, cool gray tiles, a floating pill tab bar, Geist with large light-weight money figures, and a navy band for the total. From the moodboard's blue references (images 3 and 5).
+**Look:** misty slate with a single navy accent and a web approximation of liquid glass, after the "Payno" reference. Light-weight Geist (display 300, headings 400), frosted white cards with bright top edges, round glass icon buttons with thin Phosphor "light" icons, liquid navy buttons with a glossy cap, a slate haze rising behind Home's lower half, and a glass tab bar with a haloed centre button.
 
 **Rules that carry over unchanged:** §2 principles, §6 patterns, §7 copy and §8 accessibility all apply. In particular:
-- Blue hero only on **Home** and **Choose amount** (browsing and choosing). **Terms, Done, Decline and Verify** use the plain light layout: reading and bad news should be calm.
-- Text on the hero is solid white. Glass tiles behind text stay at **white/10**; lighter fails AA low in the hero. Decorative planes stay in the top ~170px.
+- One accent: navy-600. Amber and green only for caution and money in.
+- Text never depends on blur. Anything with text over the Home haze uses `.hf-glass-strong` (≥80% white).
 - The total to repay is the loudest number on the terms screen. Accept and "Not now" are the same size and weight.
 - Borrowed money is never shown as good news (no green for the advance, no celebration on Done).
-- Every new colour is a token; no hex in components.
+- Shapes: cards 28px, rows and options 20px, every control a pill or circle.
+- Every colour is a token; materials are classes in `index.css`; no hex in components.
 
-**Motion (hi-fi only):** spring-based, `transform`/`opacity` only. Screen content reveals in a short stagger, the sheet rises, the tier highlight glides (`layoutId`), the consent tick and the timeline draw themselves, the toast drops like an island. Nothing celebrates. `MotionConfig reducedMotion="user"` plus the CSS rule turn it off.
+**Motion (hi-fi only):** spring-based, `transform`/`opacity` only, each with a reason: content reveals in a short stagger (orientation), the tier slab glides (shows the choice moved), the tick and the timeline draw (confirm a state), the toast drops (feedback). Nothing celebrates. `MotionConfig reducedMotion="user"` plus the CSS rule turn it off.
 
 **Libraries:** `framer-motion`, `@phosphor-icons/react` and `@fontsource-variable/geist` were approved for the hi-fi view (an exception to §9's "no new UI libraries"). Don't add more without asking.
+
+**Not done:** dark mode, and a screen-reader pass.

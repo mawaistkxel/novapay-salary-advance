@@ -36,7 +36,8 @@ Session 2 (7 Nov 2026), branch `hifi`:
 - Added the high-fidelity view: NovaKit Hi-Fi in `src/hifi/` (15 components, `hf-*` tokens), six hi-fi screens, `ViewToggle` outside the frame. Decline copy moved to `src/data/declineCopy.js` (shared).
 - Fixed in passing: screen headings showed a focus box after a screen change (global `:focus-visible` beat `outline-none`); affects the wireframe too.
 - Tested in the browser at 360×640, 390×844 and 1280×800: all five scenarios, view switch mid-flow, keyboard on the tier picker, no horizontal scroll. Reduced motion checked in code only (not emulated). Not yet on a real phone or with a screen reader.
-- Docs: DECISIONS, SYSTEM_CHANGES (hi-fi tokens, components, contrast), DESIGN.md §10. Not yet merged to `main` or deployed.
+- Restyled the hi-fi view (v2) to my "Payno" reference: misty slate palette, one navy accent, light Geist, glass materials in `index.css` (`.hf-glass`, `.hf-glass-strong`, `.hf-liquid`, `.hf-haze`), round glass quick actions, glass tab bar with a haloed centre button.
+- Docs: DECISIONS, SYSTEM_CHANGES (hi-fi tokens, materials, components, contrast), DESIGN.md §10. Not yet merged to `main` or deployed. Dark mode not done.
 
 Next steps: I review the flow and the write-up → create the private repo, push, PR `salary-advance` → `main`, merge → Vercel import → test the production link incognito and on a phone → invite reviewers → export the write-up to a Google Doc/PDF.
 
@@ -140,7 +141,7 @@ Timeline: 72 hours from when the brief was sent, sized for about 6 hours of focu
 | Demo access = "Demo scenario" switcher **outside the phone frame**; changing it resets to Home | Every path one click away in the live session, clearly not product UI |
 | Repo = **private** GitHub `novapay-salary-advance`, reviewers invited | Unsure the case materials should be public |
 | No new colour tokens; extensions: TierPicker, CostBreakdown, Checkbox, Notice; fixes to Button, Toast, Card, ListRow, index.css | Restraint; every change maps to existing tokens |
-| **High-fidelity view** behind a "Wireframe / High fidelity" toggle outside the frame; direction = **bright blue + frosted glass** (moodboard images 3 and 5) | I want a finished look alongside the wireframe; the wireframe stays the reasoning baseline |
+| **High-fidelity view** behind a "Wireframe / High fidelity" toggle outside the frame; direction = **misty slate + navy liquid glass** after my "Payno" reference (v2, replaced the first blue + glass pass) | I want a finished look alongside the wireframe; the wireframe stays the reasoning baseline |
 | Hi-fi screens share the wireframe's props and state machine; switching view keeps the current screen and choices; `?view=hifi` in the URL | Same flow, rules and words in both views; side-by-side comparison in the live session |
 | Packages approved for hi-fi: framer-motion, @phosphor-icons/react, @fontsource-variable/geist | Motion, icons, typeface; nothing else without asking |
 
