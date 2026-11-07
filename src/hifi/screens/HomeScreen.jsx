@@ -207,7 +207,7 @@ export default function HomeScreen({
           <h2 className="flex-1 text-hf-body font-medium text-hf-navy-100">Need cash before payday?</h2>
         </div>
         <p className="text-hf-body text-hf-navy-100">
-          You may qualify for a NovaPay salary advance. Checking won't take any money.
+          You may qualify for a NovaPay salary advance.
         </p>
         <Button variant="inverse" size="lg" loading={checking} onClick={onSeeOffer}>
           {checking ? "Checking…" : "Check eligibility"}

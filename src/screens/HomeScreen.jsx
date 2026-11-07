@@ -105,7 +105,7 @@ export default function HomeScreen({
         <div>
           <div className="text-title text-neutral-900">Need cash before payday?</div>
           <div className="text-body text-neutral-700 mt-1">
-            You may qualify for a NovaPay salary advance. Checking won't take any money.
+            You may qualify for a NovaPay salary advance.
           </div>
         </div>
         <Button size="lg" loading={checking} onClick={onSeeOffer}>
