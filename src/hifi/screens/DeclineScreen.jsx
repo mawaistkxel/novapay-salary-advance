@@ -1,4 +1,3 @@
-import { ShieldCheck } from "@phosphor-icons/react";
 import { Button, Illustration, Notice, Screen, Tile, declineIllustration } from "..";
 import { declineCopyFor } from "../../data/declineCopy";
 
@@ -17,7 +16,7 @@ export default function DeclineScreen({ reason, onVerify, onHome }) {
       onBack={onHome}
       icon={<Illustration name={declineIllustration(reason)} size="lg" />}
       center
-      heading="We can't offer you an advance right now"
+      heading={copy.heading}
     >
       <Tile tone="glass" as="section" aria-labelledby="hf-why" className="space-y-1 p-5">
         <h3 id="hf-why" className="text-hf-body font-medium text-hf-ink-900">
@@ -29,11 +28,6 @@ export default function DeclineScreen({ reason, onVerify, onHome }) {
       <Notice tone="info" title={copy.nextTitle}>
         {copy.next}
       </Notice>
-
-      <p className="flex gap-2.5 px-1 text-hf-body text-hf-ink-700">
-        <ShieldCheck aria-hidden="true" size={20} className="mt-px shrink-0 text-hf-navy-600" />
-        Nothing else in your NovaPay wallet changes because of this.
-      </p>
 
       <div className="space-y-3 pt-1">
         {copy.canVerify ? (

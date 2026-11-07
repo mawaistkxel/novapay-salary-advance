@@ -197,7 +197,7 @@ Heading → (haircut Notice, if any) → Card with CostBreakdown → consent Che
 A caution Notice above the breakdown: "We can offer Rs 5,000, not Rs 10,000", with why in one line, "The fee and total below are for Rs 5,000. You can still say no." Fee and total are recalculated.
 
 ### Decline
-"We can't offer you an advance right now" → **Why** (plain reason per `denial_reason`) → info Notice: "What you can do" / "What this means" → "Nothing else in your NovaPay wallet changes because of this." → actions. A next step appears only when one exists:
+Heading per reason (`income_unverified`: "Verify your salary to see the offer"; `credit_score` / `other`: "We can't offer you an advance right now") → **Why** (plain reason per `denial_reason`) → info Notice: "What you can do" / "What this means" → actions. A next step appears only when one exists:
 
 | Reason | Why (copy) | Next step |
 |---|---|---|

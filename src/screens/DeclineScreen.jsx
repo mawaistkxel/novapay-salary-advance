@@ -15,7 +15,7 @@ export default function DeclineScreen({ reason, onVerify, onHome }) {
     <ScreenLayout
       title="Salary advance"
       onBack={onHome}
-      heading="We can't offer you an advance right now"
+      heading={copy.heading}
     >
       <section aria-labelledby="why" className="space-y-1">
         <h3 id="why" className="text-body font-semibold text-neutral-900">
@@ -27,10 +27,6 @@ export default function DeclineScreen({ reason, onVerify, onHome }) {
       <Notice tone="info" title={copy.nextTitle}>
         {copy.next}
       </Notice>
-
-      <p className="text-body text-neutral-700">
-        Nothing else in your NovaPay wallet changes because of this.
-      </p>
 
       <div className="space-y-3">
         {copy.canVerify ? (

@@ -13,6 +13,7 @@
  */
 export const DECLINE_COPY = {
   income_unverified: {
+    heading: "Verify your salary to see the offer",
     why: "We couldn't confirm your salary. To lend before payday, we need to see that you're paid a regular salary, and we don't have proof of that yet.",
     nextTitle: "What you can do",
     next: "Share a recent payslip or bank statement. Once we've confirmed your income, we'll let you know whether an advance is available to you.",
@@ -21,6 +22,7 @@ export const DECLINE_COPY = {
     homeAction: "See what's needed",
   },
   credit_score: {
+    heading: "We can't offer you an advance right now",
     why: "This is based on your credit score, which comes from your history of borrowing and repaying.",
     nextTitle: "What this means",
     next: "There's nothing you can do in the app to change this decision today. If you think something in your credit history is wrong, NovaPay support can tell you where it came from.",
@@ -29,6 +31,7 @@ export const DECLINE_COPY = {
     homeAction: "See why",
   },
   other: {
+    heading: "We can't offer you an advance right now",
     why: "Our checks didn't meet the conditions for this advance. We can't share more detail in the app.",
     nextTitle: "What this means",
     next: "If you have questions, NovaPay support can help.",
