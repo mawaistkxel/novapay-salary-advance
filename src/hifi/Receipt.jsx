@@ -92,7 +92,8 @@ export function Timeline({ disbursed, total, date, startLabel = "Today" }) {
         initial={{ scaleX: 0 }}
         animate={{ scaleX: 1 }}
         transition={{ type: "spring", stiffness: 60, damping: 18, delay: 0.25 }}
-        className="absolute left-[12px] right-[calc(50%-4px)] top-[11px] h-px origin-left bg-gradient-to-r from-hf-navy-600 to-hf-navy-900"
+        // Dashed and muted: the repayment hasn't happened yet.
+        className="absolute left-[12px] right-[calc(50%-4px)] top-[11px] h-0 origin-left border-t border-dashed border-hf-ink-500"
       />
       {points.map((p, i) => (
         <li key={i} className="relative">
@@ -100,10 +101,11 @@ export function Timeline({ disbursed, total, date, startLabel = "Today" }) {
             aria-hidden="true"
             className={
               "relative mb-3 grid h-6 w-6 place-items-center rounded-full ring-4 ring-white/80 " +
-              (i === 0 ? "hf-liquid" : "bg-hf-navy-900")
+              // Today is done (liquid navy); payday is still to come (hollow, inactive).
+              (i === 0 ? "hf-liquid" : "border-2 border-hf-ink-500 bg-white")
             }
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-white" />
+            <span className={"h-1.5 w-1.5 rounded-full " + (i === 0 ? "bg-white" : "bg-hf-ink-500")} />
           </span>
           <p className="text-hf-body font-medium text-hf-ink-900">{p.when}</p>
           <p className="text-hf-body text-hf-ink-700">{p.what}</p>
