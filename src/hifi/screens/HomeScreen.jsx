@@ -59,6 +59,8 @@ export default function HomeScreen({
   const [hidden, setHidden] = useState(false);
   const notHere = (what) => onUnavailable?.(what);
   const isOffer = !advance && !documentsSubmitted && !declineReason;
+  // Documents sent: the whole card is the navy status panel (my call), no title row.
+  const isChecking = !advance && documentsSubmitted;
 
   return (
     <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-hf-page">
@@ -117,7 +119,7 @@ export default function HomeScreen({
             {/* The offer is the one navy surface on Home: attention from contrast and
                 plain facts, not hype. Every later state (active, declined, documents
                 sent) goes back to light glass: no loud card for bad news or a debt. */}
-            <Tile tone={isOffer ? "navy" : "strong"} className={isOffer ? "space-y-3.5 p-5" : "space-y-4 p-5"}>
+            <Tile tone={isOffer || isChecking ? "navy" : "strong"} className={isOffer ? "space-y-3.5 p-5" : isChecking ? "p-5" : "space-y-4 p-5"}>
               {renderAdvance()}
             </Tile>
           </motion.div>
@@ -180,9 +182,8 @@ export default function HomeScreen({
     if (documentsSubmitted) {
       return (
         <>
-          {label()}
-          {/* Dark navy status panel (my call): the one navy surface on Home in this state. */}
-          <div className="hf-liquid-deep hf-grain hf-grain-light hf-on-dark relative isolate flex gap-3 overflow-hidden rounded-hf-md p-4 text-white">
+          <h2 className="sr-only">Salary advance</h2>
+          <div className="flex gap-3">
             <HourglassMedium aria-hidden="true" size={22} className="shrink-0 text-hf-navy-100" />
             <p className="text-hf-body text-white">We're checking the document you sent. We'll let you know when it's done.</p>
           </div>
