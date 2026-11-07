@@ -95,7 +95,7 @@ export default function HomeScreen({
             <div className="text-body font-semibold text-neutral-900">Salary advance</div>
             <div className="text-body text-neutral-700 mt-1">{copy.home}</div>
           </div>
-          <Button variant={copy.canVerify ? "primary" : "secondary"} onClick={onSeeDecline}>
+          <Button onClick={onSeeDecline}>
             {copy.homeAction}
           </Button>
         </>
