@@ -16,6 +16,7 @@ export default function DeclineScreen({ reason, onVerify, onHome }) {
       title="Salary advance"
       onBack={onHome}
       icon={<Illustration name={declineIllustration(reason)} size="lg" />}
+      center
       heading="We can't offer you an advance right now"
     >
       <Tile tone="glass" as="section" aria-labelledby="hf-why" className="space-y-1 p-5">

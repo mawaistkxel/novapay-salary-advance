@@ -38,12 +38,15 @@ export function Atmosphere() {
  * `feature` puts the heading and lead inside a glass card, for screens whose
  * headline is a number (Choose amount).
  *
+ * `center` centres the icon and heading block (Decline, where an illustration
+ * leads); the content below stays left-aligned for reading.
+ *
  * `footer` pins its content to the bottom of the screen, outside the scroll,
  * with a short fade so content slides under it. Used for "See full cost" and for
  * Terms (Accept + "Not now"). On Terms the consent box must stay in the scroll,
  * below the costs: that's what makes a pinned Accept safe.
  */
-export default function Screen({ title, onBack, heading, lead, icon, feature = false, footer, children }) {
+export default function Screen({ title, onBack, heading, lead, icon, feature = false, center = false, footer, children }) {
   const headingRef = useRef(null);
   useEffect(() => {
     headingRef.current?.focus({ preventScroll: true });
@@ -51,7 +54,7 @@ export default function Screen({ title, onBack, heading, lead, icon, feature = f
 
   const head = (
     <>
-      {icon ? <div className="mb-4">{icon}</div> : null}
+      {icon ? <div className={center ? "mb-4 flex justify-center" : "mb-4"}>{icon}</div> : null}
       <h2 ref={headingRef} tabIndex={-1} className="text-hf-h1 text-hf-ink-900 outline-none">
         {heading}
       </h2>
@@ -74,7 +77,7 @@ export default function Screen({ title, onBack, heading, lead, icon, feature = f
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={spring}
-          className={feature ? "hf-glass mb-6 rounded-hf-lg p-5" : "mb-7"}
+          className={(feature ? "hf-glass mb-6 rounded-hf-lg p-5" : "mb-7") + (center ? " text-center" : "")}
         >
           {head}
         </motion.div>
