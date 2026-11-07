@@ -14,7 +14,7 @@ export default function VerifyIncomeScreen({ uploading, onUpload, onBack }) {
       onBack={onBack}
       icon={<Illustration name="shield" size="lg" />}
       center
-      heading="Send one of these"
+      heading="Share one of these"
       footer={
         <div className="space-y-3">
           <Button size="lg" loading={uploading} onClick={onUpload} icon={<UploadSimple size={18} />}>

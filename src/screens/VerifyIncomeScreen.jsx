@@ -8,7 +8,7 @@ import ScreenLayout from "./ScreenLayout";
  */
 export default function VerifyIncomeScreen({ uploading, onUpload, onBack }) {
   return (
-    <ScreenLayout title="Verify your income" onBack={onBack} heading="Send one of these">
+    <ScreenLayout title="Verify your income" onBack={onBack} heading="Share one of these">
       <section aria-label="Documents you can send">
         <Card className="space-y-2">
           <p className="text-body text-neutral-900">Your most recent payslip</p>
