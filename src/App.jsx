@@ -201,9 +201,10 @@ export default function App() {
           )}
         </div>
 
-        <div className="w-[calc(100%-32px)] max-w-[390px] lg:w-64 space-y-5">
+        <div className={"w-[calc(100%-32px)] max-w-[390px] space-y-5 " + (hifi ? "font-geist lg:w-72" : "lg:w-64")}>
           <ViewToggle value={view} onChange={changeView} />
           <DemoSwitcher
+            hifi={hifi}
             scenarios={SCENARIOS}
             value={scenarioKey}
             onChange={(key) => reset(key)}
