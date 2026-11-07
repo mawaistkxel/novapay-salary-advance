@@ -73,7 +73,7 @@ export default function HomeScreen({
             </RoundButton>
           </motion.header>
 
-          <motion.section variants={rise} aria-label="Wallet" className="hf-glass hf-grain relative isolate overflow-hidden rounded-hf-lg p-5">
+          <motion.section variants={rise} aria-label="Wallet" className="hf-glass hf-glass-light hf-grain relative isolate overflow-hidden rounded-hf-lg p-5">
             <div className="flex items-center gap-2">
               <Wallet aria-hidden="true" size={18} className="text-hf-ink-700" />
               <p className="flex-1 text-hf-body text-hf-ink-700">Available balance</p>
