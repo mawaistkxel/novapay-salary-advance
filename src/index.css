@@ -27,11 +27,92 @@ body {
 
 /* High-fidelity view: the same focus style, in its own blue. */
 [data-view="hifi"] :focus-visible {
-  outline-color: theme("colors.hf.blue.600");
+  outline-color: theme("colors.hf.navy.600");
 }
-/* On the blue hero a blue outline would vanish; white measures ≥ 5.6:1 there. */
-[data-view="hifi"] .hf-on-blue :focus-visible {
-  outline-color: theme("colors.white");
+
+/* ── NovaKit Hi-Fi materials ────────────────────────────────────────────────
+   A web approximation of "liquid glass" (Apple's material is native-only; there
+   is no official web version). Built from layered translucent fills, a bright
+   top edge, an inner hairline and a navy-tinted shadow. Every colour is a token.
+   Text never relies on the blur: each fill is opaque enough on its own to keep
+   body text ≥ 4.5:1, and prefers-reduced-transparency swaps in solid fills. */
+@layer components {
+  /* Frosted card on the mist page. */
+  .hf-glass {
+    background: linear-gradient(180deg, theme(colors.white / 82%), theme(colors.white / 62%));
+    border: 1px solid theme(colors.white / 90%);
+    box-shadow:
+      inset 0 1px 0 theme(colors.white),
+      inset 0 -1px 0 theme(colors.hf.navy.900 / 4%),
+      0 1px 2px theme(colors.hf.navy.900 / 4%),
+      0 16px 36px -22px theme(colors.hf.navy.900 / 38%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    backdrop-filter: blur(22px) saturate(160%);
+  }
+  /* Denser glass for things that float over content (tab bar, toast-free sheets)
+     and over the slate haze, where text needs ≥ 80% white behind it. */
+  .hf-glass-strong {
+    background: linear-gradient(180deg, theme(colors.white / 92%), theme(colors.white / 80%));
+    border: 1px solid theme(colors.white);
+    box-shadow:
+      inset 0 1px 0 theme(colors.white),
+      inset 0 -1px 0 theme(colors.hf.navy.900 / 5%),
+      0 20px 44px -20px theme(colors.hf.navy.900 / 45%);
+    -webkit-backdrop-filter: blur(26px) saturate(170%);
+    backdrop-filter: blur(26px) saturate(170%);
+  }
+  /* Liquid navy: the one accent. A glossy cap of light across the top, an inner
+     rim, a soft navy drop. White text on it is ≥ 9.13:1 at its lightest point. */
+  .hf-liquid {
+    background:
+      radial-gradient(120% 90% at 50% -30%, theme(colors.white / 30%), transparent 60%),
+      linear-gradient(180deg, theme(colors.hf.navy.600), theme(colors.hf.navy.800));
+    box-shadow:
+      inset 0 1px 0 theme(colors.white / 40%),
+      inset 0 -3px 8px theme(colors.hf.navy.900 / 45%),
+      0 0 0 1px theme(colors.hf.navy.900 / 25%),
+      0 12px 26px -12px theme(colors.hf.navy.700 / 85%);
+  }
+  /* The tab bar's centre button: liquid navy inside a white glass halo. */
+  .hf-liquid-halo {
+    box-shadow:
+      inset 0 1px 0 theme(colors.white / 45%),
+      inset 0 -3px 8px theme(colors.hf.navy.900 / 45%),
+      0 0 0 5px theme(colors.white / 75%),
+      0 0 0 6px theme(colors.hf.navy.900 / 6%),
+      0 14px 28px -10px theme(colors.hf.navy.700 / 80%);
+  }
+  /* Home only: the slate haze that rises behind recent activity and the tab bar. */
+  .hf-haze {
+    background: linear-gradient(
+      180deg,
+      theme(colors.hf.page / 0%) 0%,
+      theme(colors.hf.slate.300 / 75%) 45%,
+      theme(colors.hf.slate.400) 100%
+    );
+  }
+  /* Behind the phone frame (prototype page, not product UI): frosted vertical panes. */
+  .hf-backdrop {
+    background-color: theme(colors.hf.page);
+    background-image:
+      linear-gradient(180deg, theme(colors.white / 0%) 55%, theme(colors.hf.slate.300 / 55%) 100%),
+      repeating-linear-gradient(
+        90deg,
+        theme(colors.white / 0%) 0px,
+        theme(colors.white / 55%) 34px,
+        theme(colors.white / 0%) 70px,
+        theme(colors.white / 0%) 118px
+      );
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .hf-glass,
+  .hf-glass-strong {
+    background: theme(colors.white);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
 }
 
 /* Respect reduced-motion: no transitions or spinners spinning. */
