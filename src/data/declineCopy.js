@@ -16,7 +16,7 @@
  */
 export const DECLINE_COPY = {
   income_unverified: {
-    heading: "Verify your income to see the offer",
+    heading: "Verify your income to see the\u00A0offer", // no-break space keeps "the offer" together,
     why: "To lend you before the payday, we need to verify your proof of income, for that purpose, share your salary slip to unlock the offers.",
     nextTitle: "What you can do",
     next: "Share a recent payslip or bank statement. Once we've confirmed your income, we'll let you know whether an advance is available to you.",
