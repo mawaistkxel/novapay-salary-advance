@@ -82,6 +82,23 @@ body {
       0 0 0 6px theme(colors.hf.navy.900 / 6%),
       0 14px 28px -10px theme(colors.hf.navy.700 / 80%);
   }
+  /* Fine grain under a card's content (the element needs relative + isolate).
+     A static SVG noise tile tinted navy-900, so it's an image, not a live filter:
+     no repaint cost while scrolling. Sits below the text, which stays crisp.
+     At 0.26 it darkens the fill by ~8% on average (≤ 15.6% on the darkest
+     specks): ink-700 stays 6.05:1 on average and 5.19:1 at worst. */
+  .hf-grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0.26;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.086 0 0 0 0 0.114 0 0 0 0 0.231 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
+  }
+
   /* Home only: the slate haze that rises behind recent activity and the tab bar. */
   .hf-haze {
     background: linear-gradient(

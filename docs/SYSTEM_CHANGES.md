@@ -97,6 +97,7 @@ A second component set behind the "High fidelity" toggle. **It doesn't replace N
 | `.hf-glass-strong` | White 92→80%, used where something floats or sits over the haze | Tab bar, round buttons, secondary button, Home cards over the haze |
 | `.hf-liquid` | Navy 600→800 with a glossy radial cap of light, inner rim and navy drop | Primary button, selected radio, checkbox, total band, emphasised badge |
 | `.hf-liquid-halo` | Adds a white glass halo ring | Tab bar centre button |
+| `.hf-grain` | Static navy SVG noise under the content (pseudo-element, opacity 0.26); an image, not a live filter | Home balance card |
 | `.hf-haze` | Page→slate gradient rising from the bottom | Home only |
 | `.hf-backdrop` | Frosted vertical panes | Behind the phone frame (prototype page, not product UI) |
 
@@ -133,6 +134,7 @@ Prototype-only (not in either kit): `src/ViewToggle.jsx`, beside `DemoSwitcher`.
 | hf-green-600 (#11663A) on white / on 62% glass over slate-400 | 7.03 / 4.97 | Money in. **The first green (#16804A) measured 3.52 on glass over the haze and still 4.17 on strong glass, so it failed**; darkened until it passes on any glass |
 | hf-navy-700 on hf-navy-50 | 9.81 | Info title, "Active" chip, current tab |
 | hf-navy-700 on white glass | ≥9.8 | "Not now" |
+| hf-ink-700 on the grained balance card (average / darkest speck) | 6.05 / 5.19 | "Available balance" over `.hf-grain` |
 | hf-amber-700 on hf-amber-50 | 5.79 | Caution title |
 | white on hf-navy-900 | 15.90 | Toast |
 | hf-ink-500 on white / page | 3.60 / 3.18 | Radio and checkbox rings only (graphics, ≥3:1) |
