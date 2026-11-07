@@ -17,6 +17,16 @@ export default function VerifyIncomeScreen({ uploading, onUpload, onBack }) {
         </IconBadge>
       }
       heading="Show us your salary"
+      footer={
+        <div className="space-y-3">
+          <Button size="lg" loading={uploading} onClick={onUpload} icon={<UploadSimple size={18} />}>
+            {uploading ? "Uploading…" : "Upload a document"}
+          </Button>
+          <Button size="lg" variant="secondary" onClick={onBack} disabled={uploading}>
+            Not now
+          </Button>
+        </div>
+      }
     >
       <section aria-labelledby="hf-send" className="space-y-3">
         <h3 id="hf-send" className="text-hf-h2 font-normal text-hf-ink-900">
@@ -64,14 +74,6 @@ export default function VerifyIncomeScreen({ uploading, onUpload, onBack }) {
         </section>
       </Tile>
 
-      <div className="space-y-3 pt-1">
-        <Button size="lg" loading={uploading} onClick={onUpload} icon={<UploadSimple size={18} />}>
-          {uploading ? "Uploading…" : "Upload a document"}
-        </Button>
-        <Button size="lg" variant="secondary" onClick={onBack} disabled={uploading}>
-          Not now
-        </Button>
-      </div>
     </Screen>
   );
 }

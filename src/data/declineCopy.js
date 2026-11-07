@@ -7,6 +7,9 @@
  * "not available" (credit, other). The reason itself stays behind the tap,
  * never on Home, where someone else may be looking at the phone.
  *
+ * `why` sits directly under the heading. `next` is shown only where there's no
+ * direct action (credit_score, other); for income, `why` already says what to do.
+ *
  * Names the real reason in everyday words, and only offers a next step when one
  * actually exists. `other` isn't in the demo switcher; its copy is here so the
  * screen never falls back to a blank or vague message.
@@ -14,7 +17,7 @@
 export const DECLINE_COPY = {
   income_unverified: {
     heading: "Verify your salary to see the offer",
-    why: "We couldn't confirm your salary. To lend before payday, we need to see that you're paid a regular salary, and we don't have proof of that yet.",
+    why: "To lend you before the payday, we need to verify your proof of income, for that purpose, share your salary slip to unlock the offers.",
     nextTitle: "What you can do",
     next: "Share a recent payslip or bank statement. Once we've confirmed your income, we'll let you know whether an advance is available to you.",
     canVerify: true,

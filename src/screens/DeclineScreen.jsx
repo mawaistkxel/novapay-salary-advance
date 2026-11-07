@@ -17,16 +17,13 @@ export default function DeclineScreen({ reason, onVerify, onHome }) {
       onBack={onHome}
       heading={copy.heading}
     >
-      <section aria-labelledby="why" className="space-y-1">
-        <h3 id="why" className="text-body font-semibold text-neutral-900">
-          Why
-        </h3>
-        <p className="text-body text-neutral-700">{copy.why}</p>
-      </section>
+      <p className="text-body text-neutral-700">{copy.why}</p>
 
-      <Notice tone="info" title={copy.nextTitle}>
-        {copy.next}
-      </Notice>
+      {copy.canVerify ? null : (
+        <Notice tone="info" title={copy.nextTitle}>
+          {copy.next}
+        </Notice>
+      )}
 
       <div className="space-y-3">
         {copy.canVerify ? (

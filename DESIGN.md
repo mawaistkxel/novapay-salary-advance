@@ -197,11 +197,11 @@ Heading → (haircut Notice, if any) → Card with CostBreakdown → consent Che
 A caution Notice above the breakdown: "We can offer Rs 5,000, not Rs 10,000", with why in one line, "The fee and total below are for Rs 5,000. You can still say no." Fee and total are recalculated.
 
 ### Decline
-Heading per reason (`income_unverified`: "Verify your salary to see the offer"; `credit_score` / `other`: "We can't offer you an advance right now") → **Why** (plain reason per `denial_reason`) → info Notice: "What you can do" / "What this means" → actions. A next step appears only when one exists:
+Heading per reason (`income_unverified`: "Verify your salary to see the offer"; `credit_score` / `other`: "We can't offer you an advance right now") → the reason as one plain paragraph directly under the heading (no "Why" label, no card; centred in hi-fi) → for `credit_score` / `other` only, an info Notice "What this means" (support pointer) → pinned actions. For `income_unverified` the paragraph already says what to do, so there's no Notice. A next step appears only when one exists:
 
 | Reason | Why (copy) | Next step |
 |---|---|---|
-| `income_unverified` | We couldn't confirm your salary… | **Verify your income** (primary) + Back to home |
+| `income_unverified` | To lend you before the payday, we need to verify your proof of income… | **Verify your income** (primary) + Back to home |
 | `credit_score` | This is based on your credit score… | Back to home only; support for errors |
 | `other` | Our checks didn't meet the conditions… | Back to home; support for questions |
 
@@ -279,7 +279,7 @@ A "Wireframe / High fidelity" toggle sits outside the phone frame (`?view=hifi` 
 - The total to repay is the loudest number on the terms screen. Accept and "Not now" are the same size and weight.
 - Borrowed money is never shown as good news (no green for the advance, no celebration on Done).
 - Shapes: cards 28px, rows and options 20px, every control a pill or circle.
-- Pinned actions: "See full cost" (Choose amount) and Accept + "Not now" (Terms) sit in a pinned bar (`Screen footer`). On Terms this is only safe because Accept stays disabled until the consent box is ticked, and the box stays in the scrolling content below the costs. Never move the consent box into the bar. A failed Accept shows its message in the bar, above the button.
+- **Pinned actions, every screen (rule, 7 Nov):** a screen's actions always sit in the pinned bar at the bottom (`Screen footer`), never at the end of the scrolling content: "See full cost" (Choose amount), Accept + "Not now" (Terms), Verify your income + Back to home (Decline), Upload + "Not now" (Verify income), Back to home (Done). Home has no screen-level actions (its buttons belong to cards). On Terms this is only safe because Accept stays disabled until the consent box is ticked, and the box stays in the scrolling content below the costs. Never move the consent box into the bar. A failed Accept shows its message in the bar, above the button.
 - Every colour is a token; materials are classes in `index.css`; no hex in components.
 
 **Motion (hi-fi only):** spring-based, `transform`/`opacity` only, each with a reason: content reveals in a short stagger (orientation), the tier slab glides (shows the choice moved), the tick and the timeline draw (confirm a state), the toast drops (feedback). Nothing celebrates. `MotionConfig reducedMotion="user"` plus the CSS rule turn it off.

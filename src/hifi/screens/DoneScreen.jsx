@@ -20,6 +20,11 @@ export default function DoneScreen({ disbursed, fee, total, onDone }) {
           <Money amount={disbursed} size="h1" /> is in your wallet
         </>
       }
+      footer={
+        <Button size="lg" onClick={onDone}>
+          Back to home
+        </Button>
+      }
     >
       <Receipt receivedLabel="You received" disbursed={disbursed} fee={fee} total={total} date={PAYDAY} showHints={false} />
       <Tile>
@@ -28,9 +33,6 @@ export default function DoneScreen({ disbursed, fee, total, onDone }) {
       <p className="text-hf-body text-hf-ink-700">
         We'll remind you before {PAYDAY}. You'll also see this on your home screen.
       </p>
-      <Button size="lg" onClick={onDone}>
-        Back to home
-      </Button>
     </Screen>
   );
 }
