@@ -40,9 +40,9 @@ Session 2 (7 Nov 2026), branch `hifi`:
 - Docs: DECISIONS, SYSTEM_CHANGES (hi-fi tokens, materials, components, contrast), DESIGN.md §10. Dark mode not done.
 - Payday reminder added as a phone notification (`src/PhoneNotification.jsx`), sent from the demo panel once an advance exists; hi-fi only (taken out of the wireframe on 8 Nov). Tested at 360×640, 390×844 and 1280×800.
 - Session 3 (8 Nov), hi-fi only: Receipt rows one line each with "One-time fee (3%)"; reminder line removed from Done; reduced amount shown as a navy apology box with the disguise illustration. Home active card: grey icon circle, amount first, no timeline. The wireframe is unchanged.
-- 8 Nov: committed, pushed, PR #2 `hifi` → `main` merged (merge commit 290dc29). Vercel: I'm importing the repo myself from my own account (the Vercel connector only reached the "ASAP Semi" team).
+- 8 Nov: committed, pushed, PR #2 `hifi` → `main` merged (merge commit 290dc29). Vercel: imported by me from my own account. **Production: https://novapay-salary-advance-six.vercel.app/** (public, no login). Claude tested it in Chrome: all five scenarios in both views, the reminder notification, the haircut box, 360×640 and 390×844 (frame fits, toasts on screen, no horizontal scroll), `?view=hifi`, no console errors or failed assets.
 
-Next steps: I import the repo on Vercel (production domain only) → test the production link incognito and on a phone → invite reviewers to the private repo → trim the write-up to ~2 pages and export it to a Google Doc/PDF.
+Next steps: I test the production link incognito and on a real phone → invite reviewers to the private repo → trim the write-up to ~2 pages and export it to a Google Doc/PDF.
 
 Next steps, in order:
 1. Git hygiene: the first commit should be the untouched starter; this CLAUDE.md goes in a later commit.
@@ -210,7 +210,7 @@ The README warns that the system is messier than its docs: some things are missi
 
 ## 13. Deliverables checklist
 
-- [ ] Production link (Vercel) + GitHub repo link
+- [x] Production link (Vercel) + GitHub repo link: https://novapay-salary-advance-six.vercel.app/ · https://github.com/mawaistkxel/novapay-salary-advance (private; reviewers still to be invited)
 - [ ] Write-up, about 2 pages max, as a Google Doc or PDF (per the README):
   1. What's going on: where today's experience fails at the hard moments (what works, what doesn't, what's ambiguous)
   2. What I built, and why: specific, defensible decisions (flow, disclosure, not-good path), not a screen tour
