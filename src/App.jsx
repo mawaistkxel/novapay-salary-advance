@@ -16,6 +16,7 @@ import HfDoneScreen from "./hifi/screens/DoneScreen";
 import HfDeclineScreen from "./hifi/screens/DeclineScreen";
 import HfVerifyIncomeScreen from "./hifi/screens/VerifyIncomeScreen";
 import DemoSwitcher from "./DemoSwitcher";
+import PhoneNotification from "./PhoneNotification";
 import ViewToggle from "./ViewToggle";
 import {
   SCENARIOS,
@@ -29,6 +30,8 @@ import {
 // CHECK_MS is the quote on the Amount screen (where a haircut can apply).
 const CHECK_MS = 900;
 const ACCEPT_MS = 1100;
+// How long the payday reminder banner stays up, like a phone notification.
+const REMINDER_MS = 8000;
 
 // Two visual layers over one flow. Both screen sets take identical props, so
 // the state machine below is shared and the two views can't drift apart.
@@ -67,6 +70,7 @@ const INITIAL = {
   acceptAttempts: 0,
   advance: null, // { disbursed, fee, total } once accepted
   documentsSubmitted: false,
+  reminder: null, // id of the payday reminder notification while it's showing
 };
 
 /**
@@ -166,6 +170,20 @@ export default function App() {
     }, ACCEPT_MS);
   }
 
+  // Demo panel (hi-fi only): send the payday reminder as a phone notification.
+  // Only possible once an advance exists (the button is disabled before that).
+  function sendReminder() {
+    if (!s.advance) return;
+    const id = Date.now() + Math.random();
+    update({ reminder: id });
+    later(() => setS((prev) => (prev.reminder === id ? { ...prev, reminder: null } : prev)), REMINDER_MS);
+  }
+
+  // Tapping the notification opens the app on Home, where the advance card has the facts.
+  function openReminder() {
+    update({ reminder: null, screen: "home" });
+  }
+
   // Switching view keeps the flow state: same screen, same choices.
   function changeView(next) {
     setView(next);
@@ -216,6 +234,8 @@ export default function App() {
           ) : (
             <Toast open={!!toast} message={toast?.message} icon={toast?.icon} />
           )}
+          {/* The payday reminder is a hi-fi-only addition; the wireframe is unchanged. */}
+          {hifi ? <PhoneNotification open={!!s.reminder} total={s.advance?.total} onOpen={openReminder} /> : null}
         </div>
 
         <div className={"w-[calc(100%-32px)] max-w-[390px] space-y-5 " + (hifi ? "font-geist lg:w-72" : "lg:w-64")}>
@@ -226,6 +246,8 @@ export default function App() {
             value={scenarioKey}
             onChange={(key) => reset(key)}
             onReset={() => reset()}
+            canSendReminder={!!s.advance}
+            onSendReminder={sendReminder}
           />
         </div>
       </div>

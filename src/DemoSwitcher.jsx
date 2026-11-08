@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowCounterClockwise } from "@phosphor-icons/react";
+import { ArrowCounterClockwise, BellSimple } from "@phosphor-icons/react";
 
 /**
  * Demo scenario switcher. Prototype-only: it sits outside the phone frame so
@@ -9,8 +9,26 @@ import { ArrowCounterClockwise } from "@phosphor-icons/react";
  * `hifi` styles it like the high-fidelity app (glass card, liquid-navy radios
  * matching the amount tiles, a glass restart pill); otherwise it's the plain
  * dashed wireframe panel. Native radios in a fieldset either way.
+ *
+ * "Send payment reminder" (high fidelity only) shows the payday reminder as a
+ * phone notification. It's disabled until an advance has been taken, with a
+ * line saying why. The wireframe panel is unchanged.
  */
-export default function DemoSwitcher({ scenarios, value, onChange, onReset, hifi = false }) {
+const REMINDER_HINT_ID = "reminder-hint";
+
+function reminderHint(enabled) {
+  return enabled ? "Shows it as a phone notification." : "Available once an advance has been taken.";
+}
+
+export default function DemoSwitcher({
+  scenarios,
+  value,
+  onChange,
+  onReset,
+  canSendReminder = false,
+  onSendReminder,
+  hifi = false,
+}) {
   if (!hifi) {
     return (
       <aside
@@ -89,6 +107,23 @@ export default function DemoSwitcher({ scenarios, value, onChange, onReset, hifi
           );
         })}
       </fieldset>
+      <div className="space-y-1.5 px-1">
+        <motion.button
+          type="button"
+          onClick={onSendReminder}
+          disabled={!canSendReminder}
+          aria-describedby={REMINDER_HINT_ID}
+          whileTap={canSendReminder ? { scale: 0.97 } : undefined}
+          transition={{ type: "spring", stiffness: 500, damping: 30 }}
+          className="hf-glass-strong inline-flex h-11 items-center gap-2 rounded-full px-4 text-hf-body font-medium text-hf-navy-700 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          <BellSimple aria-hidden="true" size={18} weight="regular" />
+          Send payment reminder
+        </motion.button>
+        <p id={REMINDER_HINT_ID} className="px-1 text-hf-small text-hf-ink-700">
+          {reminderHint(canSendReminder)}
+        </p>
+      </div>
       <motion.button
         type="button"
         onClick={onReset}
