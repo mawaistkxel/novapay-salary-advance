@@ -1,12 +1,23 @@
 import { useEffect, useRef, useState } from "react";
+import { MotionConfig } from "framer-motion";
+import { IconContext } from "@phosphor-icons/react";
 import { Toast } from "./novakit";
+import { Toast as HfToast } from "./hifi";
 import HomeScreen from "./screens/HomeScreen";
 import AmountScreen from "./screens/AmountScreen";
 import TermsScreen from "./screens/TermsScreen";
 import DoneScreen from "./screens/DoneScreen";
 import DeclineScreen from "./screens/DeclineScreen";
 import VerifyIncomeScreen from "./screens/VerifyIncomeScreen";
+import HfHomeScreen from "./hifi/screens/HomeScreen";
+import HfAmountScreen from "./hifi/screens/AmountScreen";
+import HfTermsScreen from "./hifi/screens/TermsScreen";
+import HfDoneScreen from "./hifi/screens/DoneScreen";
+import HfDeclineScreen from "./hifi/screens/DeclineScreen";
+import HfVerifyIncomeScreen from "./hifi/screens/VerifyIncomeScreen";
 import DemoSwitcher from "./DemoSwitcher";
+import PhoneNotification from "./PhoneNotification";
+import ViewToggle from "./ViewToggle";
 import {
   SCENARIOS,
   STARTING_BALANCE,
@@ -16,20 +27,50 @@ import {
 } from "./data/scenarios";
 
 // Simulated network/risk-check delays, so loading states are visible.
+// CHECK_MS is the quote on the Amount screen (where a haircut can apply).
 const CHECK_MS = 900;
 const ACCEPT_MS = 1100;
+// How long the payday reminder banner stays up, like a phone notification.
+const REMINDER_MS = 8000;
+
+// Two visual layers over one flow. Both screen sets take identical props, so
+// the state machine below is shared and the two views can't drift apart.
+const SCREENS = {
+  wire: {
+    Home: HomeScreen,
+    Amount: AmountScreen,
+    Terms: TermsScreen,
+    Done: DoneScreen,
+    Decline: DeclineScreen,
+    Verify: VerifyIncomeScreen,
+  },
+  hifi: {
+    Home: HfHomeScreen,
+    Amount: HfAmountScreen,
+    Terms: HfTermsScreen,
+    Done: HfDoneScreen,
+    Decline: HfDeclineScreen,
+    Verify: HfVerifyIncomeScreen,
+  },
+};
+
+// The view lives in the URL (?view=hifi) so a link can open either one.
+function viewFromUrl() {
+  if (typeof window === "undefined") return "wire";
+  return new URLSearchParams(window.location.search).get("view") === "hifi" ? "hifi" : "wire";
+}
 
 const INITIAL = {
   screen: "home", // home | amount | terms | done | declined | verify
   applied: null, // applied_amount
   disbursed: null, // disbursed_amount (after any haircut)
   consent: false,
-  busy: null, // which action is loading: check | quote | accept | upload
+  busy: null, // which action is loading: quote | accept | upload
   acceptError: false,
   acceptAttempts: 0,
   advance: null, // { disbursed, fee, total } once accepted
-  declined: false,
   documentsSubmitted: false,
+  reminder: null, // id of the payday reminder notification while it's showing
 };
 
 /**
@@ -38,6 +79,7 @@ const INITIAL = {
  */
 export default function App() {
   const [scenarioKey, setScenarioKey] = useState("approved");
+  const [view, setView] = useState(viewFromUrl);
   const [s, setS] = useState(INITIAL);
   const [toast, setToast] = useState(null);
   const timers = useRef([]);
@@ -50,9 +92,11 @@ export default function App() {
   }
   useEffect(() => () => timers.current.forEach(clearTimeout), []);
 
-  function showToast(message, icon) {
-    setToast({ message, icon });
-    later(() => setToast(null), 3200);
+  // tone "caution" is for a failed action: shown longer, announced assertively.
+  function showToast(message, icon, { title, tone, ms = 3200 } = {}) {
+    const id = Date.now() + Math.random();
+    setToast({ id, message, icon, title, tone });
+    later(() => setToast((t) => (t && t.id === id ? null : t)), ms);
   }
 
   function reset(nextKey = scenarioKey) {
@@ -63,13 +107,13 @@ export default function App() {
     setS(INITIAL);
   }
 
-  // Home → eligibility check → amount (approved) or decline.
+  // Eligibility is pre-assessed (an assumption, see docs/DECISIONS.md), so Home
+  // already knows the answer: approved users go straight to the amounts, and a
+  // declined user never taps "check" only to be told no.
+  const declineReason = scenario.decision === "approved" ? null : scenario.denial_reason || "other";
+
   function seeOffer() {
-    update({ busy: "check" });
-    later(() => {
-      if (scenario.decision === "approved") update({ busy: null, screen: "amount" });
-      else update({ busy: null, screen: "declined", declined: true });
-    }, CHECK_MS);
+    update({ screen: "amount" });
   }
 
   // Amount → risk check on the requested amount (haircut happens here) → terms.
@@ -93,6 +137,15 @@ export default function App() {
     later(() => {
       if (scenario.failFirstAccept && attempt === 1) {
         update({ busy: null, acceptError: true, acceptAttempts: attempt });
+        // Hi-fi shows the failure in the island at the top (like other feedback);
+        // the wireframe keeps its inline caution Notice above Accept.
+        if (view === "hifi") {
+          showToast("No money was moved and nothing will be taken from your wallet. Please try again.", "warning", {
+            title: "That didn't go through",
+            tone: "caution",
+            ms: 6000,
+          });
+        }
         return;
       }
       update({
@@ -117,31 +170,95 @@ export default function App() {
     }, ACCEPT_MS);
   }
 
+  // Demo panel (hi-fi only): send the payday reminder as a phone notification.
+  // Only possible once an advance exists (the button is disabled before that).
+  function sendReminder() {
+    if (!s.advance) return;
+    const id = Date.now() + Math.random();
+    update({ reminder: id });
+    later(() => setS((prev) => (prev.reminder === id ? { ...prev, reminder: null } : prev)), REMINDER_MS);
+  }
+
+  // Tapping the notification opens the app on Home, where the advance card has the facts.
+  function openReminder() {
+    update({ reminder: null, screen: "home" });
+  }
+
+  // Switching view keeps the flow state: same screen, same choices.
+  function changeView(next) {
+    setView(next);
+    const url = new URL(window.location.href);
+    if (next === "hifi") url.searchParams.set("view", "hifi");
+    else url.searchParams.delete("view");
+    window.history.replaceState(null, "", url);
+  }
+
+  // Hi-fi Home has wallet controls the prototype doesn't build; say so plainly.
+  function unavailable(what) {
+    showToast(`${what} isn't part of this prototype. Only the salary advance works here.`, null);
+  }
+
+  const hifi = view === "hifi";
+  const S = SCREENS[view];
   const balance = STARTING_BALANCE + (s.advance ? s.advance.disbursed : 0);
 
   return (
-    <div className="min-h-screen w-full flex flex-col lg:flex-row items-center lg:items-start justify-center gap-6 py-6">
-      {/* Fixed height, never taller than the viewport, so overlays (Toast, BottomSheet)
-          pin to the visible bottom of the screen. Content scrolls inside each screen. */}
-      <div className="relative w-[390px] max-w-full shrink-0 h-[min(844px,calc(100dvh-48px))] flex flex-col bg-white rounded-[28px] shadow-xl overflow-hidden border border-neutral-300">
-        {renderScreen()}
-        <Toast open={!!toast} message={toast?.message} icon={toast?.icon} />
-      </div>
+    <MotionConfig reducedMotion="user">
+      <div
+        className={
+          "min-h-screen w-full flex flex-col lg:flex-row items-center lg:items-start justify-center gap-6 py-6 transition-colors duration-500 " +
+          (hifi ? "hf-backdrop" : "")
+        }
+      >
+        {/* Fixed height, never taller than the viewport, so overlays (Toast, BottomSheet)
+            pin to the visible bottom of the screen. Content scrolls inside each screen. */}
+        <div
+          data-view={view}
+          className={
+            "relative w-[390px] max-w-full shrink-0 h-[min(844px,calc(100dvh-48px))] flex flex-col rounded-[28px] overflow-hidden " +
+            (hifi
+              ? "font-geist bg-hf-page shadow-hf-float sm:rounded-[44px] sm:ring-[7px] sm:ring-hf-ink-900"
+              : "bg-white shadow-xl border border-neutral-300")
+          }
+        >
+          {/* Hi-fi icons are thin line glyphs, like the reference; screens opt into fill. */}
+          <IconContext.Provider value={{ weight: hifi ? "light" : "regular" }}>{renderScreen()}</IconContext.Provider>
+          {hifi ? (
+            <HfToast
+              open={!!toast}
+              message={toast?.message}
+              title={toast?.title}
+              tone={toast?.tone}
+              icon={toast?.icon === null ? null : toast?.icon || "check"}
+            />
+          ) : (
+            <Toast open={!!toast} message={toast?.message} icon={toast?.icon} />
+          )}
+          {/* The payday reminder is a hi-fi-only addition; the wireframe is unchanged. */}
+          {hifi ? <PhoneNotification open={!!s.reminder} total={s.advance?.total} onOpen={openReminder} /> : null}
+        </div>
 
-      <DemoSwitcher
-        scenarios={SCENARIOS}
-        value={scenarioKey}
-        onChange={(key) => reset(key)}
-        onReset={() => reset()}
-      />
-    </div>
+        <div className={"w-[calc(100%-32px)] max-w-[390px] space-y-5 " + (hifi ? "font-geist lg:w-72" : "lg:w-64")}>
+          <ViewToggle value={view} onChange={changeView} />
+          <DemoSwitcher
+            hifi={hifi}
+            scenarios={SCENARIOS}
+            value={scenarioKey}
+            onChange={(key) => reset(key)}
+            onReset={() => reset()}
+            canSendReminder={!!s.advance}
+            onSendReminder={sendReminder}
+          />
+        </div>
+      </div>
+    </MotionConfig>
   );
 
   function renderScreen() {
     switch (s.screen) {
       case "amount":
         return (
-          <AmountScreen
+          <S.Amount
             key="amount"
             limit={scenario.limit}
             value={s.applied}
@@ -153,7 +270,7 @@ export default function App() {
         );
       case "terms":
         return (
-          <TermsScreen
+          <S.Terms
             key="terms"
             applied={s.applied}
             disbursed={s.disbursed}
@@ -168,7 +285,7 @@ export default function App() {
         );
       case "done":
         return (
-          <DoneScreen
+          <S.Done
             key="done"
             {...s.advance}
             onDone={() => update({ screen: "home" })}
@@ -176,7 +293,7 @@ export default function App() {
         );
       case "declined":
         return (
-          <DeclineScreen
+          <S.Decline
             key="declined"
             reason={scenario.denial_reason}
             onVerify={() => update({ screen: "verify" })}
@@ -185,7 +302,7 @@ export default function App() {
         );
       case "verify":
         return (
-          <VerifyIncomeScreen
+          <S.Verify
             key="verify"
             uploading={s.busy === "upload"}
             onUpload={upload}
@@ -194,15 +311,15 @@ export default function App() {
         );
       default:
         return (
-          <HomeScreen
+          <S.Home
             key="home"
             balance={balance}
             advance={s.advance}
-            declined={s.declined}
+            declineReason={declineReason}
             documentsSubmitted={s.documentsSubmitted}
-            checking={s.busy === "check"}
             onSeeOffer={seeOffer}
             onSeeDecline={() => update({ screen: "declined" })}
+            onUnavailable={unavailable}
           />
         );
     }

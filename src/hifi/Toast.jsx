@@ -1,0 +1,44 @@
+import { AnimatePresence, motion } from "framer-motion";
+import { CheckCircle, Info, WarningCircle } from "@phosphor-icons/react";
+
+/**
+ * Toast — NovaKit Hi-Fi ("island")
+ * A smoked-navy glass pill that drops from under the status bar. Same contract
+ * as NovaKit's Toast: an always-mounted role="status" region; transient
+ * confirmations only. White on navy-900 is 15.9:1.
+ *
+ * icon: "check" (default) | "warning" (failed action, amber-400 on navy-900) |
+ *       null → info glyph for neutral messages.
+ * title: optional bold first line. tone "caution" announces assertively (a failed
+ * money action must be heard); the caller keeps it up longer.
+ */
+export default function Toast({ open, message, title, icon = "check", tone }) {
+  return (
+    <div role="status" aria-live={tone === "caution" ? "assertive" : "polite"} className="pointer-events-none absolute inset-x-3 top-12 z-30 flex justify-center">
+      <AnimatePresence>
+        {open ? (
+          <motion.div
+            key={(title || "") + message}
+            initial={{ opacity: 0, y: -18, scale: 0.92 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -12, scale: 0.96 }}
+            transition={{ type: "spring", stiffness: 420, damping: 30 }}
+            className="flex max-w-full items-start gap-2.5 rounded-[22px] bg-hf-navy-900/95 px-4 py-3 text-hf-body text-white shadow-hf-float ring-1 ring-inset ring-white/15 backdrop-blur-xl"
+          >
+            {icon === "warning" ? (
+              <WarningCircle aria-hidden="true" size={20} weight="fill" className="mt-px shrink-0 text-hf-amber-400" />
+            ) : icon ? (
+              <CheckCircle aria-hidden="true" size={20} weight="fill" className="mt-px shrink-0 text-hf-green-400" />
+            ) : (
+              <Info aria-hidden="true" size={20} className="mt-px shrink-0 text-hf-navy-100" />
+            )}
+            <span>
+              {title ? <span className="block font-medium">{title}</span> : null}
+              {message}
+            </span>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+    </div>
+  );
+}

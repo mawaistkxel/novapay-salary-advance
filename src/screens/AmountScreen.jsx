@@ -1,6 +1,7 @@
 import { Button, TierPicker, AmountText } from "../novakit";
 import ScreenLayout from "./ScreenLayout";
 import { TIERS, PAYDAY, totalFor } from "../data/scenarios";
+import { LIMIT_EXPLAINER_TITLE } from "../data/limitCopy";
 
 /**
  * Choose amount. The cost of each tier is visible while choosing, and tiers
@@ -18,11 +19,8 @@ export default function AmountScreen({ limit, value, onChange, onBack, onContinu
         {PAYDAY}
       </>
     ),
-    lockedReason: (
-      <>
-        Your current limit is <AmountText amount={limit} size="body" />.
-      </>
-    ),
+    // Placeholder until stakeholders confirm how limits work (opens nothing yet).
+    lockedReason: <span className="font-semibold text-brand">{LIMIT_EXPLAINER_TITLE}</span>,
   }));
 
   return (

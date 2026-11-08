@@ -2,7 +2,7 @@
 
 One row per token or component added or modified. This doubles as the **Code Connect–style mapping** the brief asks for: each design property maps to a code prop and to tokens in `tailwind.config.js`. Import everything from the barrel: `import { TierPicker } from "./novakit"`.
 
-**Figma component sheet:** [Nova Lite → Components page](https://www.figma.com/design/8nnupfLUC7Futie5CQh22R/Nova-Lite?node-id=1-25). It mirrors `src/novakit/`:
+**Figma component sheet:** [Nova Lite → Components page](https://www.figma.com/design/OM0mESsfRjnVjeNucMPgW0/Nova-Lite?node-id=1-133). It mirrors `src/novakit/`:
 - **Variables:** a "NovaKit" collection of 31 variables (colour, radius, spacing). Each has code syntax set to its Tailwind `theme()` path.
 - **Styles:** 6 text styles (display, title, body, body-strong, caption, caption-strong) and the `shadow/card` effect style. Inter stands in for the system UI font.
 - **Components:** 12, as 15 component and component-set nodes, each tagged Added / Changed / Starter. Every fill, stroke, radius and gap is bound to a variable. Each description names its source file and the property-to-prop mapping. Variant sets: Button 16, TierPicker / Option 4, AmountText 3, Checkbox 3, TextField 3, Notice 2, CostBreakdown / Row 2.
@@ -59,3 +59,93 @@ One row per token or component added or modified. This doubles as the **Code Con
 | brand on brand-50 | 5.62 | Selected tier |
 | neutral-500 on white | 3.95 | Radio and checkbox borders (graphics, ≥3:1) |
 | brand on white | 6.29 | Focus ring, primary button |
+
+---
+
+## High-fidelity view: NovaKit Hi-Fi (added 7 Nov, restyled the same day)
+
+A second component set behind the "High fidelity" toggle. **It doesn't replace NovaKit Lite**: the wireframe still uses `src/novakit/`, unchanged. Where a Lite component exists, the Hi-Fi one keeps **the same contract** (props, states, accessibility), so the hi-fi screens take identical props and share the flow logic in `App.jsx`. Import from `src/hifi/index.js`.
+
+**Visual direction (v2):** misty slate with one navy accent and a web approximation of liquid glass, after my "Payno" reference: light-weight Geist, frosted white cards with bright top edges, round glass icon buttons with thin line icons, liquid navy buttons, and a glass tab bar with a haloed centre button. v1 (cobalt hero + frosted tiles) was replaced because it read as heavy and generic next to the reference.
+
+**Packages added (approved):** `framer-motion` (spring motion, `layoutId`, `MotionConfig` for reduced motion), `@phosphor-icons/react` (thin "light" icons via `IconContext` in `App.jsx`), `@fontsource-variable/geist` (self-hosted). The `npm audit` warnings come from the starter's vite/postcss, not from these.
+
+### Tokens (`tailwind.config.js`, `hf` namespace)
+
+| Token | Value | Rationale |
+|---|---|---|
+| `hf-page` / `hf-mist` / `hf-line` | #EEF1F5 / #F5F7FA / #E1E6EE | Cool mist page, solid tile, hairline. One temperature throughout |
+| `hf-slate-300 / 400` | #B9C2D5 / #8F9CB9 | Home haze only. **No text sits directly on it** (ink-700 on slate-300 is 4.18:1) |
+| `hf-navy-50 / 100` | #EDF0F7 / #DCE2EE | Selected and info surfaces; text on navy |
+| `hf-navy-500` | #56669A | Decorative only |
+| `hf-navy-600` | #36457C | **The accent**: buttons, selected rims, focus, links (white on it 9.13:1) |
+| `hf-navy-700 / 800 / 900` | #2B386A / #222C56 / #161D3B | Pressed, info titles, toast |
+| `hf-ink-900 / 700` | #1B2238 / #4B556B | Text: 13.91 / 6.59:1 on the page |
+| `hf-ink-500 / 300` | #7E879C / #CDD3DF | Graphics only (radio and checkbox rings, 3.60:1) / borders |
+| `hf-amber-*` | unchanged | Caution |
+| `hf-green-600` | #11663A (was #16804A) | Money in; darkened so it passes over the haze |
+| `hf-amber-400` | #FBBF24 | Warning icon in the island toast only (9.44:1 on navy-900); never text on light surfaces |
+| `font-geist` | Geist Variable | Display at weight 300, headings 400, labels 500 |
+| `rounded-hf-sm / md / lg` | 14 / 20 / 28px | Rule: cards 28, rows and options 20, controls pill |
+| `shadow-hf-soft / float` | navy-tinted | Elevation tinted with the navy, never black glows |
+| `text-hf-hero / h1 / h2 / body / small` | 42 light / 26 regular / 18 medium / 15 / 13px | Money facts never use `hf-small` |
+
+### Materials (`src/index.css`, `@layer components`)
+
+| Class | What it is | Where |
+|---|---|---|
+| `.hf-glass` | White 82→62% fill, white hairline border, bright inset top edge, navy-tinted drop, `backdrop-filter: blur(22px) saturate(160%)` | Cards, rows, tier options |
+| `.hf-glass-strong` | White 92→80%, used where something floats or sits over the haze | Tab bar, round buttons, secondary button, Home cards over the haze |
+| `.hf-liquid` | Navy 600→800 with a glossy radial cap of light, inner rim and navy drop | Primary button, selected radio, checkbox, total band, emphasised badge |
+| `.hf-liquid-deep` | Navy 700→900 with a soft corner bloom instead of the glossy cap (the cap is too bright across a tall card) | Home offer card (`Tile tone="navy"`) |
+| `.hf-soft-white` | Frosted white glass (90→78%) with a bright top rim and sheen, faint lower rim, navy drop, blur | `Button variant="inverse"` (on navy) |
+| `.hf-grain-light` | The grain tile tinted white at 0.10, so it shows on navy | Home offer card |
+| `.hf-liquid-halo` | Adds a white glass halo ring | Tab bar centre button |
+| `.hf-grain` | Static navy SVG noise under the content (pseudo-element, opacity 0.26); an image, not a live filter | Home balance card |
+| `.hf-haze` | Page→slate gradient rising from the bottom | Home only |
+| `.hf-backdrop` | Frosted vertical panes | Behind the phone frame (prototype page, not product UI) |
+
+These approximate Apple's Liquid Glass on the web; there is no official web version. Text never depends on the blur: each fill is opaque enough on its own, and `prefers-reduced-transparency: reduce` swaps in solid white.
+
+### Components
+
+| Component | Lite counterpart | Design property → code | Notes |
+|---|---|---|---|
+| **Button** | Button | `variant` primary \| secondary \| inverse (soft white glass on navy, navy text ≥ 7.33:1) · `size` md 48 \| lg 56 · `loading` · `disabled` · `icon` | Primary = liquid navy; secondary = white liquid glass with navy text. Same size, weight and type. Press = `scale .98` spring |
+| **Money** | AmountText | `amount` · `size` hero \| h1 \| h2 \| body · `weight` | Light large figures, softer "Rs". Rolls on change, never from zero; screen readers get the final value |
+| **TierPicker** | TierPicker | same props; default / selected / focused / locked | Glass rows; one `layoutId` slab with a navy rim glides to the choice; radio fills with liquid navy. Focus = outline outside the row |
+| **Receipt** + **Timeline** | CostBreakdown | `receivedLabel` · `disbursed` · `fee` · `total` · `date` | `<dl>` in glass; one line per row, no hints underneath (removed 8 Nov, with the `showHints` prop); the fee label carries the rate, "One-time fee (3%)", with "(3%)" in `hf-ink-700` (6.59:1; `hf-ink-500` would fail at 3.60:1); total on a liquid navy slab. Timeline: "Today" is a liquid navy point; payday is inactive until it happens (hollow ink-500 point, dashed ink-500 connector, 3.60:1 as graphics); its text keeps full contrast (money facts are never muted) |
+| **Checkbox** | Checkbox | same props | Glass tile; ticked = brighter glass, navy rim, liquid box, tick draws itself |
+| **Notice** | Notice | same props | info = navy-50, caution = amber-50; thin Phosphor icon |
+| **Toast** ("island") | Toast | `open` · `message` · `title` · `icon` check \| warning \| null · `tone` caution | Smoked navy glass pill under the status bar; always-mounted `role="status"`. `tone="caution"` (failed Accept) sets `aria-live="assertive"`, amber-400 warning icon, bold title, shown 6 s |
+| **Screen** + **Atmosphere** | ScreenLayout | `title` · `onBack` · `heading` · `lead` · `icon` · `feature` · `center` (centres the icon + heading block; Decline, Verify income, Done) · `footer` (pinned action bar with a fade above; Choose amount and Terms. On Terms the consent box must stay in the scrolling content) | Mist page with soft light sources; `feature` puts the heading in a glass card (Choose amount); `feature="navy"` puts it in a smoked navy box (`bg-hf-navy-900`, the island toast's surface; white heading 15.9:1, `hf-navy-100` lead ≥ 10.3:1; two faint decorative rings) for Terms with a reduced amount. Focus moves to the heading; content staggers in |
+| **Tile**, **IconBadge**, **RoundButton** | Card (+ ListRow icon) | `tone` glass \| strong \| solid \| navy (one emphasised surface per screen; sets white focus outlines via `.hf-on-dark`); badge `tone` glass \| navy \| soft (navy-50 circle, for an illustration on white glass) \| grey (`hf-page` circle, navy icon; 8 Nov, the Salary advance card title on Home, where a glass circle vanished); button `tone` glass \| navy, `pressed` | One surface family instead of Card + Panel |
+| **TxRow** | ListRow | `leading` · `icon` · `title` · `subtitle` · `amount` · `direction` in \| out \| advance | An advance is ink, not green |
+| **FactStrip** | none | `items[{value, label}]` · `tone` light \| dark | Up to three facts as large values over small labels, in a `<dl>` (label read first). Values top-aligned. Choose amount: "3% one-time fee · 0% interest · 28 Jul repayment". Light: ink-900 values, ink-700 labels (≥ 6.6:1); dark: white / navy-100 on navy (≥ 6.39:1) |
+| **Logo** | none | `as` (h1 on Home) · `showWord` | Prototype mark: two rounded uprights and a softened diagonal (a segmented "N") + "NovaPay" wordmark, one colour (navy-900, 14.56:1 on the page). Hand-drawn SVG, allowed as a single simple geometric mark |
+| **Illustration** | none | `name` magnifier \| chart \| shield \| disguise (8 Nov; white-background PNG, used only on a white circle on Terms with a reduced amount, with an amber-400 WarningCircle badge on navy-900) · `size` sm 28 (inside a 40px IconBadge) \| lg 72 · `declineIllustration(reason)` (credit_score → chart, else magnifier) | 3D navy spot illustrations from the Nova Lite Figma file (Components → Illustrations: "handglass front", "scedule front", "shield front"), PNG 192px with transparent backgrounds, in `src/assets/illustrations/`. Used on the Verify income header (shield, lg) and in the decline state: the decline screen's header (lg, replacing the icon badge) and the declined Home card (sm, inside a 40px IconBadge with `tone="soft"`: a glass circle vanished on the white card). Decorative: `alt=""` + `aria-hidden`. Not used for selling or celebrating; no coin, lock or cross illustrations |
+| **QuickAction**, **TabBar**, **Avatar**, **StatusBar**, **TopBar** | AppBar (TopBar) / none | — | Round 56px glass actions; glass tab bar with haloed liquid centre button; controls outside the advance toast "not part of this prototype" |
+
+Prototype-only (not in either kit): `src/ViewToggle.jsx`, beside `DemoSwitcher`; `src/PhoneNotification.jsx`, the payday reminder as a phone notification banner (high fidelity only; stands in for the OS, so it isn't a kit component; `.hf-glass-strong` + `hf-ink`, drops in with a spring).
+
+### Contrast checks, hi-fi
+
+| Pair | Ratio | Use |
+|---|---|---|
+| white on hf-navy-600 (lightest point of `.hf-liquid`) | 9.13 | Primary button, total band, badges |
+| hf-navy-100 on hf-navy-600 | 7.03 | "Total you repay" label |
+| hf-ink-900 / 700 on hf-page | 13.91 / 6.59 | Text on the page |
+| hf-ink-700 on `.hf-glass` over the page | 7.09 | Secondary text in cards |
+| hf-ink-700 on 62% glass over slate-400 (worst case) | 5.28 | Cards that scroll over the Home haze |
+| hf-ink-900 on the same | 11.14 | Primary text over the haze |
+| hf-green-600 (#11663A) on white / on 62% glass over slate-400 | 7.03 / 4.97 | Money in. **The first green (#16804A) measured 3.52 on glass over the haze and still 4.17 on strong glass, so it failed**; darkened until it passes on any glass |
+| hf-navy-700 on hf-navy-50 | 9.81 | Info title, "Active" chip, current tab |
+| hf-navy-700 on white glass | ≥9.8 | "Not now" |
+| hf-ink-700 on the grained balance card (average / darkest speck) | 6.05 / 5.19 | "Available balance" over `.hf-grain` |
+| white / hf-navy-100 on `.hf-liquid-deep` under the bloom (worst case) | 7.35 / 5.65 | Offer card title, body and labels. **The glossy `.hf-liquid` cap measured 3.12 for navy-100 on a tall card**, so the card uses its own material |
+| hf-navy-700 on `.hf-soft-white` (78% white over navy, worst case) | 7.33 | "See amounts and cost" on navy |
+| White focus outline on navy | ≥ 7.35 | `.hf-on-dark` |
+| hf-amber-700 on hf-amber-50 | 5.79 | Caution title |
+| white on hf-navy-900 | 15.90 | Toast |
+| hf-ink-500 on white / page | 3.60 / 3.18 | Radio and checkbox rings only (graphics, ≥3:1) |
+| Focus outline hf-navy-600 on the page | 8.06 | All hi-fi controls (`[data-view="hifi"]` in `index.css`) |

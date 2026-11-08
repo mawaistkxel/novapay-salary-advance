@@ -5,7 +5,8 @@ The single design reference for this repo: product context, principles, tokens, 
 - **Product rules** (fees, tiers, dates): [`PRODUCT_REFERENCE.md`](PRODUCT_REFERENCE.md). It wins on any conflict.
 - **Why each decision was made:** [`docs/DECISIONS.md`](docs/DECISIONS.md) · **what changed in the system:** [`docs/SYSTEM_CHANGES.md`](docs/SYSTEM_CHANGES.md)
 - **Source of truth for values:** `tailwind.config.js` (tokens) and `src/novakit/` (components). If this file and the code disagree, the code wins; fix this file.
-- **Figma mirror:** [Nova Lite → Components](https://www.figma.com/design/8nnupfLUC7Futie5CQh22R/Nova-Lite?node-id=1-25) (variables, text styles, component sets) · [Research page](https://www.figma.com/design/8nnupfLUC7Futie5CQh22R/Nova-Lite?node-id=1-24) (assumptions and research board)
+- **High-fidelity view:** `src/hifi/` (NovaKit Hi-Fi, `hf-*` tokens). See §10.
+- **Figma mirror:** [Nova Lite → Components](https://www.figma.com/design/OM0mESsfRjnVjeNucMPgW0/Nova-Lite?node-id=1-133) (variables, text styles, component sets, example screens). The research board was in a deleted file and hasn't been rebuilt yet.
 
 ---
 
@@ -171,7 +172,7 @@ Import everything from the barrel: `import { Button, Notice } from "./novakit"`.
 | **BottomSheet** | Starter (flagged) | `open` · `onClose` · children | — | Closes on any backdrop tap; no `role="dialog"`/`aria-modal`/focus trap. **Never use for a loan decision.** |
 | **Panel** | Deprecated | — | — | Duplicates Card. Use Card. |
 
-Screen-level helpers (not part of NovaKit): `src/screens/ScreenLayout.jsx` (app bar + scrolling body; moves focus to the heading on mount) and `src/DemoSwitcher.jsx` (prototype-only, outside the phone frame).
+Screen-level helpers (not part of NovaKit): `src/screens/ScreenLayout.jsx` (app bar + scrolling body; moves focus to the heading on mount) `src/DemoSwitcher.jsx` (prototype-only, outside the phone frame) and `src/PhoneNotification.jsx` (prototype-only, high fidelity only: stands in for the phone's notification banner for the payday reminder; sent from the hi-fi demo panel once an advance exists).
 
 ---
 
@@ -190,29 +191,38 @@ Screen-level helpers (not part of NovaKit): `src/screens/ScreenLayout.jsx` (app 
 Heading → (haircut Notice, if any) → Card with CostBreakdown → consent Checkbox → (failure Notice, if any) → `Accept and get Rs X` (primary, lg, disabled until ticked, loading on submit) → `Not now` (secondary, lg).
 
 ### Choosing an amount
-"You can borrow up to Rs X" + one line on the fee, the date and no interest → TierPicker with the repayment per tier → "See full cost" (disabled until a tier is chosen, with "Choose an amount to continue." beneath).
+"You can borrow up to Rs X" + one line on the fee, the date and no interest → TierPicker with the repayment per tier → "See full cost". A locked tier carries a "How limits work" label (placeholder, opens nothing until how limits are set is confirmed) (disabled until a tier is chosen, with "Choose an amount to continue." beneath).
 
 ### Reduced amount (haircut)
 A caution Notice above the breakdown: "We can offer Rs 5,000, not Rs 10,000", with why in one line, "The fee and total below are for Rs 5,000. You can still say no." Fee and total are recalculated.
 
+**Hi-fi (8 Nov):** the Notice and the "Your salary advance" heading are replaced by a navy box at the top (`Screen feature="navy"`, centred): the disguise illustration in a white circle with an amber alert badge, the heading "Oops, Rs 5,000 is all we can offer right now." (was "Sorry, we can only offer Rs 5,000"; changed the same day at my call) and the lead "Our checks didn't allow the Rs 10,000 you asked for. You're free to say no." The wireframe keeps the caution Notice and its wording.
+
 ### Decline
-"We can't offer you an advance right now" → **Why** (plain reason per `denial_reason`) → info Notice: "What you can do" / "What this means" → "Nothing else in your NovaPay wallet changes because of this." → actions. A next step appears only when one exists:
+Heading per reason (`income_unverified`: "Verify your income to see the offer"; `credit_score` / `other`: "We can't offer you an advance right now") → the reason as one plain paragraph directly under the heading (no "Why" label, no card; centred in hi-fi) → pinned actions. No Notices on this screen (removed 7 Nov). A next step appears only when one exists:
 
 | Reason | Why (copy) | Next step |
 |---|---|---|
-| `income_unverified` | We couldn't confirm your salary… | **Verify your income** (primary) + Back to home |
+| `income_unverified` | To lend you before the payday, we need to verify your proof of income… | **Verify your income** (primary) + Back to home |
 | `credit_score` | This is based on your credit score… | Back to home only; support for errors |
 | `other` | Our checks didn't meet the conditions… | Back to home; support for questions |
 
-After a decline, Home shows "Not available to you right now" with a link to the reason, not the original offer card.
+Eligibility is shown on Home upfront; there is no tap-to-check step that can end in a no. A declined user's Home card is quiet (light surface, no reason on Home) and opens the decline screen:
+
+| Reason | Home card | Button |
+|---|---|---|
+| `income_unverified` | We need to verify your salary before we can offer an advance. | See what's needed (primary) |
+| `credit_score` / `other` | Not available to you right now. | See why (primary; the card's only action) |
+
+Approved users see the offer card ("See amounts and cost"), with no limit amount on Home. Copy lives in `src/data/declineCopy.js` (`home`, `homeAction`).
 
 ### Loading, failure, empty
-- **Loading:** the triggering button shows its loading state ("Checking…", "Sending…", "Uploading…"); no full-screen spinners.
-- **Failure on a money action:** caution Notice with `alert`: "That didn't go through. No money was moved and nothing will be taken from your wallet. Please try again." Keep the person on the same screen with their choices intact.
+- **Loading:** the triggering button shows its loading state ("Checking…" on See full cost, "Sending…", "Uploading…"); no full-screen spinners.
+- **Failure on a money action:** caution Notice with `alert`: "That didn't go through. No money was moved and nothing will be taken from your wallet. Please try again." Keep the person on the same screen with their choices intact. Hi-fi shows it in the island toast at the top instead (title "That didn't go through", amber warning icon, 6 s, announced assertively), the same place and style as other feedback.
 - **Back out:** "Not now" returns Home with the toast "No advance taken. Nothing has changed in your wallet."
 
 ### Confirmation
-Heading "Rs X is in your wallet", the same breakdown repeated, "We'll remind you before 28 Jul.", "Back to home". No celebration.
+Heading "Rs X is in your wallet", the same breakdown repeated, "We'll remind you before 28 Jul.", "Back to home". No celebration. Hi-fi drops the reminder line (8 Nov) and ends on the timeline; the reminder itself is shown as a phone notification from the demo panel.
 
 ---
 
@@ -255,3 +265,29 @@ Reject output that adds:
 - screens added for their own sake
 
 Run `npm run build` before every commit.
+
+---
+
+## 10. High-fidelity view (NovaKit Hi-Fi)
+
+A "Wireframe / High fidelity" toggle sits outside the phone frame (`?view=hifi` opens it directly). Both views run **the same flow, rules and copy**; only the visual layer differs. Full token, material and component mapping plus the contrast table: [`docs/SYSTEM_CHANGES.md`](docs/SYSTEM_CHANGES.md).
+
+**Look:** misty slate with a single navy accent and a web approximation of liquid glass, after the "Payno" reference. Light-weight Geist (display 300, headings 400), frosted white cards with bright top edges, round glass icon buttons with thin Phosphor "light" icons, liquid navy buttons with a glossy cap, a slate haze rising behind Home's lower half, and a glass tab bar with a haloed centre button.
+
+**Rules that carry over unchanged:** §2 principles, §6 patterns, §7 copy and §8 accessibility all apply. In particular:
+- One accent: navy-600. Amber and green only for caution and money in.
+- One emphasised navy surface per screen at most (Home: the offer card). It carries facts, never hype, and only in the offer state. **Exception (8 Nov, my call):** Terms with a reduced amount has the navy apology box at the top as well as the navy total slab.
+- Text never depends on blur. Anything with text over the Home haze uses `.hf-glass-strong` (≥80% white).
+- The total to repay is the loudest number on the terms screen. Accept and "Not now" are the same size and weight.
+- Borrowed money is never shown as good news (no green for the advance, no celebration on Done).
+- Shapes: cards 28px, rows and options 20px, every control a pill or circle.
+- **Pinned actions, every screen (rule, 7 Nov):** a screen's actions always sit in the pinned bar at the bottom (`Screen footer`), never at the end of the scrolling content: "See full cost" (Choose amount), Accept + "Not now" (Terms), Verify your income + Back to home (Decline), Upload + "Not now" (Verify income), Back to home (Done). Home has no screen-level actions (its buttons belong to cards). On Terms this is only safe because Accept stays disabled until the consent box is ticked, and the box stays in the scrolling content below the costs. Never move the consent box into the bar. A failed Accept shows its message in the island toast at the top, not in the bar.
+- Every colour is a token; materials are classes in `index.css`; no hex in components.
+
+**Motion (hi-fi only):** spring-based, `transform`/`opacity` only, each with a reason: content reveals in a short stagger (orientation), the tier slab glides (shows the choice moved), the tick and the timeline draw (confirm a state), the toast drops (feedback). Nothing celebrates. `MotionConfig reducedMotion="user"` plus the CSS rule turn it off.
+
+**Illustrations:** small 3D navy spot illustrations from the Nova Lite Figma (Components → Illustrations), only in the decline state and Verify income: magnifier (income, other) and chart (credit score), 72px on the decline screen; shield, 72px on Verify income and 28px inside a 40px navy-50 circle on the Home card; disguise (hat, glasses, moustache; supplied from Figma on 8 Nov), 72px inside a 96px white circle on Terms with a reduced amount. Its PNG has a solid white background, so it only sits on white. Decorative (`alt=""`). Never coins, gold or a briefcase (selling), never a lock or cross (punishing). Export note: the Figma REST export renders these components on a grey square because of their "change color" overlay layer; export through the plugin API instead.
+
+**Libraries:** `framer-motion`, `@phosphor-icons/react` and `@fontsource-variable/geist` were approved for the hi-fi view (an exception to §9's "no new UI libraries"). Don't add more without asking.
+
+**Not done:** dark mode, and a screen-reader pass.

@@ -1,0 +1,65 @@
+import { Info } from "@phosphor-icons/react";
+import { Button, FactStrip, Money, Screen, TierPicker } from "..";
+import { TIERS, PAYDAY, totalFor } from "../../data/scenarios";
+import { LIMIT_EXPLAINER_TITLE } from "../../data/limitCopy";
+
+/**
+ * Choose amount (high fidelity). Same rules as the wireframe: the repayment for
+ * each tier is visible while choosing, tiers above the limit are locked with a
+ * plain reason (the over-limit request can't happen), nothing is preselected.
+ * The limit is set like the balance on Home: a light, large figure in glass.
+ */
+export default function AmountScreen({ limit, value, onChange, onBack, onContinue, checking }) {
+  const options = TIERS.map((amount) => ({
+    amount,
+    locked: amount > limit,
+    detail: (
+      <>
+        You repay <Money amount={totalFor(amount)} className="text-hf-ink-900" /> on {PAYDAY}
+      </>
+    ),
+    // The limit is already stated above and in the badge; this is a placeholder
+    // until stakeholders confirm how limits work (it opens nothing yet).
+    lockedReason: (
+      <span className="inline-flex items-center gap-1.5 font-medium text-hf-navy-700">
+        <Info aria-hidden="true" size={18} />
+        {LIMIT_EXPLAINER_TITLE}
+      </span>
+    ),
+  }));
+
+  return (
+    <Screen
+      feature
+      title="Salary advance"
+      onBack={onBack}
+      heading={
+        <>
+          <span className="block text-hf-body text-hf-ink-700">You can borrow up to</span>
+          <Money amount={limit} size="hero" className="mt-2" />
+        </>
+      }
+      footer={
+        <div className="space-y-2">
+          <Button size="lg" disabled={!value} loading={checking} onClick={onContinue}>
+            {checking ? "Checking…" : "See full cost"}
+          </Button>
+          {!value ? <p className="text-center text-hf-body text-hf-ink-700">Choose an amount to continue.</p> : null}
+        </div>
+      }
+      lead={
+        <FactStrip
+          items={[
+            { value: "3%", label: "one-time fee" },
+            { value: "0%", label: "interest" },
+            { value: PAYDAY, label: "repayment" },
+          ]}
+        />
+      }
+    >
+      <TierPicker label="How much do you need?" name="tier" options={options} value={value} onChange={onChange} />
+
+
+    </Screen>
+  );
+}
