@@ -14,8 +14,8 @@ import { PAYDAY, feeFor, totalFor } from "../../data/scenarios";
  * Accept and "Not now" are pinned to the bottom. That's safe because Accept is
  * disabled until the consent box is ticked, and the box stays in the scrolling
  * content below the costs: on a short screen you still pass the breakdown to
- * reach it. A failed Accept shows its message in the pinned bar, right above the
- * button, so it can't be hidden behind it.
+ * reach it. A failed Accept shows its message in the island toast at the top
+ * (App.jsx), where other feedback appears, so the bar never hides it.
  */
 export default function TermsScreen({
   applied,
