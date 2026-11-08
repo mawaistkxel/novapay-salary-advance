@@ -27,13 +27,10 @@ export default function DoneScreen({ disbursed, fee, total, onDone }) {
         </Button>
       }
     >
-      <Receipt receivedLabel="You received" disbursed={disbursed} fee={fee} total={total} date={PAYDAY} showHints={false} />
+      <Receipt receivedLabel="You received" disbursed={disbursed} fee={fee} total={total} date={PAYDAY} />
       <Tile>
         <Timeline disbursed={disbursed} total={total} date={PAYDAY} />
       </Tile>
-      <p className="text-hf-body text-hf-ink-700">
-        We'll remind you before {PAYDAY}. You'll also see this on your home screen.
-      </p>
     </Screen>
   );
 }

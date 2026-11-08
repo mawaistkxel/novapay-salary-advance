@@ -5,33 +5,35 @@ import { IconBadge } from "./Tile";
 
 /**
  * Receipt — NovaKit Hi-Fi cost disclosure (the hi-fi CostBreakdown).
- * A <dl> in a glass card: You receive → One-time fee → Taken from your wallet on,
- * each with a glass icon chip and a body-size hint; then the total on a liquid
- * navy slab. The total is the loudest thing on the screen on purpose: it's the
- * number the person agrees to. Nothing in it is smaller than 15px.
+ * A <dl> in a glass card: You receive → One-time fee (3%) → Taken from your
+ * wallet on, each with a glass icon chip and one line, no hints underneath (removed
+ * 8 Nov: the rows say enough). Then the total on a liquid navy slab. The total is
+ * the loudest thing on the screen on purpose: it's the number the person agrees
+ * to. Nothing in it is smaller than 15px.
  */
-export default function Receipt({ receivedLabel = "You receive", disbursed, fee, total, date, showHints = true }) {
+export default function Receipt({ receivedLabel = "You receive", disbursed, fee, total, date }) {
   const rows = [
     {
+      key: "received",
       icon: <ArrowDownLeft size={20} />,
       label: receivedLabel,
-      hint: "Into your NovaPay wallet",
       value: <Money amount={disbursed} className="text-hf-ink-900" />,
     },
     {
+      key: "fee",
       icon: <Percent size={20} />,
-      label: "One-time fee",
-      hint: (
+      // The rate in secondary ink (6.59:1), not ink-500: it's a money fact.
+      label: (
         <>
-          3% of <Money amount={disbursed} weight="normal" />. No interest.
+          One-time fee <span className="text-hf-ink-700">(3%)</span>
         </>
       ),
       value: <Money amount={fee} className="text-hf-ink-900" />,
     },
     {
+      key: "date",
       icon: <CalendarBlank size={20} />,
       label: "Taken from your wallet on",
-      hint: "Your next payday",
       value: <span className="text-hf-body font-medium text-hf-ink-900">{date}</span>,
     },
   ];
@@ -40,12 +42,9 @@ export default function Receipt({ receivedLabel = "You receive", disbursed, fee,
     <dl className="hf-glass overflow-hidden rounded-hf-lg p-1.5">
       <div className="divide-y divide-hf-line/80 px-3">
         {rows.map((row) => (
-          <div key={row.label} className="flex items-center gap-3 py-3.5">
+          <div key={row.key} className="flex items-center gap-3 py-3.5">
             <IconBadge size="sm">{row.icon}</IconBadge>
-            <div className="min-w-0 flex-1">
-              <dt className="text-hf-body text-hf-ink-900">{row.label}</dt>
-              {showHints && row.hint ? <p className="text-hf-body text-hf-ink-700">{row.hint}</p> : null}
-            </div>
+            <dt className="min-w-0 flex-1 text-hf-body text-hf-ink-900">{row.label}</dt>
             <dd className="shrink-0 text-right">{row.value}</dd>
           </div>
         ))}
