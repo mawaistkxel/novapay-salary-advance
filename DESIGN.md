@@ -172,7 +172,7 @@ Import everything from the barrel: `import { Button, Notice } from "./novakit"`.
 | **BottomSheet** | Starter (flagged) | `open` · `onClose` · children | — | Closes on any backdrop tap; no `role="dialog"`/`aria-modal`/focus trap. **Never use for a loan decision.** |
 | **Panel** | Deprecated | — | — | Duplicates Card. Use Card. |
 
-Screen-level helpers (not part of NovaKit): `src/screens/ScreenLayout.jsx` (app bar + scrolling body; moves focus to the heading on mount) and `src/DemoSwitcher.jsx` (prototype-only, outside the phone frame).
+Screen-level helpers (not part of NovaKit): `src/screens/ScreenLayout.jsx` (app bar + scrolling body; moves focus to the heading on mount) `src/DemoSwitcher.jsx` (prototype-only, outside the phone frame) and `src/PhoneNotification.jsx` (prototype-only, high fidelity only: stands in for the phone's notification banner for the payday reminder; sent from the hi-fi demo panel once an advance exists).
 
 ---
 
@@ -195,6 +195,8 @@ Heading → (haircut Notice, if any) → Card with CostBreakdown → consent Che
 
 ### Reduced amount (haircut)
 A caution Notice above the breakdown: "We can offer Rs 5,000, not Rs 10,000", with why in one line, "The fee and total below are for Rs 5,000. You can still say no." Fee and total are recalculated.
+
+**Hi-fi (8 Nov):** the Notice and the "Your salary advance" heading are replaced by a navy box at the top (`Screen feature="navy"`, centred): the disguise illustration in a white circle with an amber alert badge, the heading "Oops, Rs 5,000 is all we can offer right now." (was "Sorry, we can only offer Rs 5,000"; changed the same day at my call) and the lead "Our checks didn't allow the Rs 10,000 you asked for. You're free to say no." The wireframe keeps the caution Notice and its wording.
 
 ### Decline
 Heading per reason (`income_unverified`: "Verify your income to see the offer"; `credit_score` / `other`: "We can't offer you an advance right now") → the reason as one plain paragraph directly under the heading (no "Why" label, no card; centred in hi-fi) → pinned actions. No Notices on this screen (removed 7 Nov). A next step appears only when one exists:
@@ -220,7 +222,7 @@ Approved users see the offer card ("See amounts and cost"), with no limit amount
 - **Back out:** "Not now" returns Home with the toast "No advance taken. Nothing has changed in your wallet."
 
 ### Confirmation
-Heading "Rs X is in your wallet", the same breakdown repeated, "We'll remind you before 28 Jul.", "Back to home". No celebration.
+Heading "Rs X is in your wallet", the same breakdown repeated, "We'll remind you before 28 Jul.", "Back to home". No celebration. Hi-fi drops the reminder line (8 Nov) and ends on the timeline; the reminder itself is shown as a phone notification from the demo panel.
 
 ---
 
@@ -274,7 +276,7 @@ A "Wireframe / High fidelity" toggle sits outside the phone frame (`?view=hifi` 
 
 **Rules that carry over unchanged:** §2 principles, §6 patterns, §7 copy and §8 accessibility all apply. In particular:
 - One accent: navy-600. Amber and green only for caution and money in.
-- One emphasised navy surface per screen at most (Home: the offer card). It carries facts, never hype, and only in the offer state.
+- One emphasised navy surface per screen at most (Home: the offer card). It carries facts, never hype, and only in the offer state. **Exception (8 Nov, my call):** Terms with a reduced amount has the navy apology box at the top as well as the navy total slab.
 - Text never depends on blur. Anything with text over the Home haze uses `.hf-glass-strong` (≥80% white).
 - The total to repay is the loudest number on the terms screen. Accept and "Not now" are the same size and weight.
 - Borrowed money is never shown as good news (no green for the advance, no celebration on Done).
@@ -284,7 +286,7 @@ A "Wireframe / High fidelity" toggle sits outside the phone frame (`?view=hifi` 
 
 **Motion (hi-fi only):** spring-based, `transform`/`opacity` only, each with a reason: content reveals in a short stagger (orientation), the tier slab glides (shows the choice moved), the tick and the timeline draw (confirm a state), the toast drops (feedback). Nothing celebrates. `MotionConfig reducedMotion="user"` plus the CSS rule turn it off.
 
-**Illustrations:** small 3D navy spot illustrations from the Nova Lite Figma (Components → Illustrations), only in the decline state and Verify income: magnifier (income, other) and chart (credit score), 72px on the decline screen; shield, 72px on Verify income and 28px inside a 40px navy-50 circle on the Home card. Decorative (`alt=""`). Never coins, gold or a briefcase (selling), never a lock or cross (punishing). Export note: the Figma REST export renders these components on a grey square because of their "change color" overlay layer; export through the plugin API instead.
+**Illustrations:** small 3D navy spot illustrations from the Nova Lite Figma (Components → Illustrations), only in the decline state and Verify income: magnifier (income, other) and chart (credit score), 72px on the decline screen; shield, 72px on Verify income and 28px inside a 40px navy-50 circle on the Home card; disguise (hat, glasses, moustache; supplied from Figma on 8 Nov), 72px inside a 96px white circle on Terms with a reduced amount. Its PNG has a solid white background, so it only sits on white. Decorative (`alt=""`). Never coins, gold or a briefcase (selling), never a lock or cross (punishing). Export note: the Figma REST export renders these components on a grey square because of their "change color" overlay layer; export through the plugin API instead.
 
 **Libraries:** `framer-motion`, `@phosphor-icons/react` and `@fontsource-variable/geist` were approved for the hi-fi view (an exception to §9's "no new UI libraries"). Don't add more without asking.
 

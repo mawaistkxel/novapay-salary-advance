@@ -25,7 +25,7 @@ There's no current flow in the starter, so this read is based on the brief's des
 - *Credit score:* the reason, and the honest truth that there's nothing to do in the app today, with a pointer to support if something in their history looks wrong. No "try again later" when nothing would change.
 - There's no "Check eligibility" tap that can end in a no. Home already shows the answer: the offer for approved users, and for declined users a quiet card ("We need to verify your salary…" or "Not available to you right now") that opens the reason. The reason itself is never on Home, where others may see the phone. This assumes NovaPay can pre-assess eligibility, which I'd confirm with compliance.
 
-**What I chose not to build:** late-repayment reminders (outside the first-time flow, and the rules don't define failed pulls or fees), a full verification loop, and a celebratory confirmation. The confirmation repeats the total and the date, because taking on debt isn't a win to cheer.
+**What I chose not to build:** the late-repayment path (outside the first-time flow, and the rules don't define failed pulls or fees; the payday reminder itself is shown only as a phone notification, in the high-fidelity view, that names the amount and date but not the debt), a full verification loop, and a celebratory confirmation. The confirmation repeats the total and the date, because taking on debt isn't a win to cheer.
 
 **Edges:** loading states on every money action (no double submit); an Accept failure that says "No money was moved and nothing will be taken"; toasts announced to screen readers; focus moves to each new screen's heading; and it works at 360×640 (fixing an existing bug where overlays rendered below the fold).
 

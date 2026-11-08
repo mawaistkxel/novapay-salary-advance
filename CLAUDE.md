@@ -38,6 +38,8 @@ Session 2 (7 Nov 2026), branch `hifi`:
 - Tested in the browser at 360×640, 390×844 and 1280×800: all five scenarios, view switch mid-flow, keyboard on the tier picker, no horizontal scroll. Reduced motion checked in code only (not emulated). Not yet on a real phone or with a screen reader.
 - Restyled the hi-fi view (v2) to my "Payno" reference: misty slate palette, one navy accent, light Geist, glass materials in `index.css` (`.hf-glass`, `.hf-glass-strong`, `.hf-liquid`, `.hf-haze`), round glass quick actions, glass tab bar with a haloed centre button.
 - Docs: DECISIONS, SYSTEM_CHANGES (hi-fi tokens, materials, components, contrast), DESIGN.md §10. Not yet merged to `main` or deployed. Dark mode not done.
+- Payday reminder added as a phone notification (`src/PhoneNotification.jsx`), sent from the demo panel once an advance exists; hi-fi only (taken out of the wireframe on 8 Nov). Tested at 360×640, 390×844 and 1280×800.
+- Session 3 (8 Nov), hi-fi only: Receipt rows one line each with "One-time fee (3%)"; reminder line removed from Done; reduced amount shown as a navy apology box with the disguise illustration. The wireframe is unchanged since the last commit.
 
 Next steps: I review the flow and the write-up → create the private repo, push, PR `salary-advance` → `main`, merge → Vercel import → test the production link incognito and on a phone → invite reviewers → export the write-up to a Google Doc/PDF.
 
@@ -144,6 +146,7 @@ Timeline: 72 hours from when the brief was sent, sized for about 6 hours of focu
 | **High-fidelity view** behind a "Wireframe / High fidelity" toggle outside the frame; direction = **misty slate + navy liquid glass** after my "Payno" reference (v2, replaced the first blue + glass pass) | I want a finished look alongside the wireframe; the wireframe stays the reasoning baseline |
 | Hi-fi screens share the wireframe's props and state machine; switching view keeps the current screen and choices; `?view=hifi` in the URL | Same flow, rules and words in both views; side-by-side comparison in the live session |
 | **Eligibility shown on Home upfront** (no "Check eligibility" tap); declined card is quiet, per reason, with the reason one tap away; approved button "See amounts and cost"; no limit on Home (7 Nov) | A tap that can only end in a no is a let-down the UI creates; assumes pre-assessment, logged as open question 9 in `docs/DECISIONS.md` |
+| **Payday reminder = phone notification only, hi-fi view only** (wireframe left as it was, 8 Nov), sent from a "Send payment reminder" button in the demo panel, disabled until an advance is taken; names amount and date, not "advance"; tap → Home (7 Nov) | Shows the reminder promised on Done without building the late path; lock-screen privacy |
 | Packages approved for hi-fi: framer-motion, @phosphor-icons/react, @fontsource-variable/geist | Motion, icons, typeface; nothing else without asking |
 
 ## 8. Open decisions: ask me, don't decide silently
