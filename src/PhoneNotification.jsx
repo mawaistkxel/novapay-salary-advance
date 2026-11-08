@@ -23,7 +23,7 @@ export default function PhoneNotification({ open, total, onOpen }) {
   const text = `Rs ${fmt.format(total || 0)} will be taken from your wallet on ${PAYDAY}, your payday.`;
 
   return (
-    <div role="status" aria-live="polite" className="pointer-events-none absolute inset-x-2 top-2 z-40">
+    <div role="status" aria-live="polite" className="hf-overlay-top pointer-events-none absolute inset-x-2 top-2 z-40">
       <AnimatePresence>
         {open ? (
           <motion.button

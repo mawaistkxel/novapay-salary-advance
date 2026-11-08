@@ -179,6 +179,7 @@ Screen-level helpers (not part of NovaKit): `src/screens/ScreenLayout.jsx` (app 
 ## 5. Layout
 
 - Mobile-first, designed at **360×640** and **390×844**. The prototype renders in a 390px phone frame whose height is capped at the viewport (`h-[min(844px,calc(100dvh-48px))]`), with an internal scrolling `<main>`, so overlays pin to the visible bottom.
+- **Phone mode (8 Nov):** on a screen narrower than 640px (any phone held upright), the hi-fi app fills the screen: no frame, no wireframe or view toggle, and the fake status bar becomes a spacer the height of the notch area (`.hf-statusbar`), since the phone shows its own. The tab bar, pinned footers, the top toast and the reminder notification keep clear of the notch and home indicator (`env(safe-area-inset-*)`, `viewport-fit=cover`). The demo controls move into a small dashed "Demo" tab with a left arrow on the right edge, level with Home's quick actions, that opens a bottom sheet (`src/PhoneDemo.jsx`). Desktop and tablet are unchanged.
 - Screen anatomy: `AppBar` → scrolling body (`p-4 pb-8 space-y-5`) → heading (`text-title`, focus target) → content → actions at the end of the content, not sticky. On money screens the person scrolls past the costs to reach Accept, which is intended.
 - Primary above secondary, both full width, `space-y-3`.
 - No horizontal scroll at 360px.

@@ -68,7 +68,7 @@ export default function HomeScreen({
       <div aria-hidden="true" className="hf-haze pointer-events-none absolute inset-x-0 bottom-0 h-[58%]" />
 
       <StatusBar tone="dark" className="relative" />
-      <main className="relative flex-1 overflow-y-auto px-5 pb-32 pt-1">
+      <main className="hf-home-main relative flex-1 overflow-y-auto px-5 pb-32 pt-1">
         <motion.div variants={list} initial="hidden" animate="show" className="space-y-5">
           <motion.header variants={rise} className="flex items-center gap-3">
             {/* The logo is the page title, so it's the h1 (replaces a hidden one). */}

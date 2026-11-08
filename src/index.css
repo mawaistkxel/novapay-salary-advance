@@ -192,3 +192,35 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ── Phone mode (8 Nov) ─────────────────────────────────────────────────────
+   On a phone held upright, App.jsx sets data-device="phone": the hi-fi app
+   fills the screen with no frame. The fake status bar becomes a spacer the
+   height of the notch area (the phone shows its own), and anything pinned to
+   the top or bottom keeps clear of the notch and the home indicator. Needs
+   viewport-fit=cover (index.html); env() is 0 on phones without them. */
+[data-device="phone"] .hf-statusbar {
+  height: max(env(safe-area-inset-top), 0.75rem);
+  padding: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+[data-device="phone"] .hf-overlay-top {
+  top: calc(env(safe-area-inset-top) + 0.5rem);
+}
+[data-device="phone"] .hf-tabbar {
+  bottom: calc(1rem + env(safe-area-inset-bottom));
+}
+[data-device="phone"] .hf-home-main {
+  padding-bottom: calc(8rem + env(safe-area-inset-bottom));
+}
+[data-device="phone"] .hf-safe-footer {
+  padding-bottom: calc(1.5rem + env(safe-area-inset-bottom));
+}
+/* Overscroll and the area behind the browser bars match the app, not the desk. */
+html:has([data-device="phone"]),
+html:has([data-device="phone"]) body {
+  background: theme(colors.hf.page);
+  overscroll-behavior: none;
+}
+

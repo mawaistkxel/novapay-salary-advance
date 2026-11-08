@@ -116,7 +116,7 @@ export default function Screen({ title, onBack, heading, lead, icon, feature = f
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ ...spring, delay: 0.15 }}
-          className="relative shrink-0 bg-hf-page px-5 pb-6 pt-2"
+          className="hf-safe-footer relative shrink-0 bg-hf-page px-5 pb-6 pt-2"
         >
           {/* Fade above the bar so scrolling content slips under it (decorative). */}
           <div

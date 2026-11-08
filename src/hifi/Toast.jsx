@@ -14,7 +14,7 @@ import { CheckCircle, Info, WarningCircle } from "@phosphor-icons/react";
  */
 export default function Toast({ open, message, title, icon = "check", tone }) {
   return (
-    <div role="status" aria-live={tone === "caution" ? "assertive" : "polite"} className="pointer-events-none absolute inset-x-3 top-12 z-30 flex justify-center">
+    <div role="status" aria-live={tone === "caution" ? "assertive" : "polite"} className="hf-overlay-top pointer-events-none absolute inset-x-3 top-12 z-30 flex justify-center">
       <AnimatePresence>
         {open ? (
           <motion.div

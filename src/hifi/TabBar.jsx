@@ -46,7 +46,7 @@ export default function TabBar({ active = "home", onUnavailable }) {
   };
 
   return (
-    <nav aria-label="Main" className="hf-glass-strong absolute inset-x-4 bottom-4 z-20 rounded-full px-2 py-1.5">
+    <nav aria-label="Main" className="hf-glass-strong hf-tabbar absolute inset-x-4 bottom-4 z-20 rounded-full px-2 py-1.5">
       <ul className="grid grid-cols-5 items-center">
         {LEFT.map(tab)}
         <li className="grid place-items-center">
