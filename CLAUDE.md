@@ -41,6 +41,7 @@ Session 2 (7 Nov 2026), branch `hifi`:
 - Payday reminder added as a phone notification (`src/PhoneNotification.jsx`), sent from the demo panel once an advance exists; hi-fi only (taken out of the wireframe on 8 Nov). Tested at 360×640, 390×844 and 1280×800.
 - Session 3 (8 Nov), hi-fi only: Receipt rows one line each with "One-time fee (3%)"; reminder line removed from Done; reduced amount shown as a navy apology box with the disguise illustration. Home active card: grey icon circle, amount first, no timeline. The wireframe is unchanged.
 - 8 Nov: committed, pushed, PR #2 `hifi` → `main` merged (merge commit 290dc29). Vercel: imported by me from my own account. **Production: https://novapay-salary-advance-six.vercel.app/** (public, no login). Claude tested it in Chrome: all five scenarios in both views, the reminder notification, the haircut box, 360×640 and 390×844 (frame fits, toasts on screen, no horizontal scroll), `?view=hifi`, no console errors or failed assets.
+- 8 Nov: **phone mode** merged (PR #5) and live: under 640px wide the hi-fi app fills the screen, no frame, wireframe or fake status bar; demo controls behind a "Demo" tab level with Home's quick actions. Checked on production at 360×640 and 390×844 (emulated) plus desktop. Not yet on a real phone (notch and home-bar spacing).
 
 Next steps: I test the production link incognito and on a real phone → invite reviewers to the private repo → trim the write-up to ~2 pages and export it to a Google Doc/PDF.
 
