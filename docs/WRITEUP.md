@@ -1,6 +1,6 @@
 # NovaPay salary advance: what I changed and why
 
-**Prototype:** https://novapay-salary-advance-six.vercel.app/ (on a laptop: a "Demo scenario" panel beside the phone reaches every path, and a toggle switches Wireframe / High fidelity; on a phone the high-fidelity app fills the screen and the scenarios sit behind a small "Demo" tab). **Repo:** https://github.com/mawaistkxel/novapay-salary-advance
+**Prototype:** https://novapay-salary-advance-six.vercel.app/ (on a laptop: a "Demo scenario" panel beside the phone reaches every path, and a toggle switches Wireframe / High fidelity; on a phone the high-fidelity app fills the screen and the scenarios sit behind a small "Demo" tab). **Repo:** https://github.com/mawaistkxel/novapay-salary-advance **Figma:** https://www.figma.com/design/OM0mESsfRjnVjeNucMPgW0/Nova-Lite?node-id=0-1&t=inwH0iG5n8NYZKwG-1
 
 ## 1. What's going on
 
