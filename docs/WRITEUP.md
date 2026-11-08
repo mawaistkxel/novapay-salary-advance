@@ -63,7 +63,8 @@ The starter has no current flow, so this rests on the brief: the advance "conver
 ## What I'd do differently with more time
 - Design the **late-repayment** path: reminder timing and tone, a failed pull, Home while overdue. It's where this most easily turns predatory.
 - **Urdu** copy, and a plain-language test of the consent sentence with real borrowers.
-- A screen-reader and real-device pass; fix `TextField`, `BottomSheet` and the missing semantic colours.
+- Add a **cooling-off window** to cancel after Accept, once compliance confirms its length and rules (none is defined today, so the prototype promises none).
+- Run a **full accessibility pass**: screen-reader order, focus states and contrast in the high-fidelity view, plus a real-device check; then fix `TextField`, `BottomSheet` and the missing semantic colours.
 
 ## How I used AI
 A planning chat turned the brief into a handoff file of guardrails and open decisions; the coding agent asked me those decisions rather than making them, then built in small commits I reviewed (log: `docs/AI_LOG.md`).
