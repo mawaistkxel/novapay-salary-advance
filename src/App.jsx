@@ -17,6 +17,7 @@ import HfDeclineScreen from "./hifi/screens/DeclineScreen";
 import HfVerifyIncomeScreen from "./hifi/screens/VerifyIncomeScreen";
 import DemoSwitcher from "./DemoSwitcher";
 import PhoneNotification from "./PhoneNotification";
+import PhoneDemo from "./PhoneDemo";
 import ViewToggle from "./ViewToggle";
 import {
   SCENARIOS,
@@ -54,6 +55,23 @@ const SCREENS = {
   },
 };
 
+// Phone mode (8 Nov): on a phone held upright (narrower than Tailwind's sm, 640px)
+// the hi-fi app fills the screen: no device frame, no fake status bar, no
+// wireframe. The demo controls move into a small "Demo" tab (PhoneDemo).
+const PHONE_QUERY = "(max-width: 639px)";
+function usePhone() {
+  const [phone, setPhone] = useState(
+    () => typeof window !== "undefined" && window.matchMedia(PHONE_QUERY).matches,
+  );
+  useEffect(() => {
+    const mq = window.matchMedia(PHONE_QUERY);
+    const onChange = () => setPhone(mq.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+  return phone;
+}
+
 // The view lives in the URL (?view=hifi) so a link can open either one.
 function viewFromUrl() {
   if (typeof window === "undefined") return "wire";
@@ -79,7 +97,10 @@ const INITIAL = {
  */
 export default function App() {
   const [scenarioKey, setScenarioKey] = useState("approved");
-  const [view, setView] = useState(viewFromUrl);
+  const [viewChoice, setView] = useState(viewFromUrl);
+  const phone = usePhone();
+  // A phone always gets the hi-fi app; the toggle and the wireframe stay on larger screens.
+  const view = phone ? "hifi" : viewChoice;
   const [s, setS] = useState(INITIAL);
   const [toast, setToast] = useState(null);
   const timers = useRef([]);
@@ -202,23 +223,39 @@ export default function App() {
   const S = SCREENS[view];
   const balance = STARTING_BALANCE + (s.advance ? s.advance.disbursed : 0);
 
+  const demoProps = {
+    hifi,
+    scenarios: SCENARIOS,
+    value: scenarioKey,
+    onChange: (key) => reset(key),
+    onReset: () => reset(),
+    canSendReminder: !!s.advance,
+    onSendReminder: sendReminder,
+  };
+
   return (
     <MotionConfig reducedMotion="user">
       <div
+        data-device={phone ? "phone" : undefined}
         className={
-          "min-h-screen w-full flex flex-col lg:flex-row items-center lg:items-start justify-center gap-6 py-6 transition-colors duration-500 " +
-          (hifi ? "hf-backdrop" : "")
+          phone
+            ? "h-[100dvh] w-full overflow-hidden bg-hf-page"
+            : "min-h-screen w-full flex flex-col lg:flex-row items-center lg:items-start justify-center gap-6 py-6 transition-colors duration-500 " +
+              (hifi ? "hf-backdrop" : "")
         }
       >
         {/* Fixed height, never taller than the viewport, so overlays (Toast, BottomSheet)
-            pin to the visible bottom of the screen. Content scrolls inside each screen. */}
+            pin to the visible bottom of the screen. Content scrolls inside each screen.
+            On a phone it's the whole screen: no frame, corners or ring. */}
         <div
           data-view={view}
           className={
-            "relative w-[390px] max-w-full shrink-0 h-[min(844px,calc(100dvh-48px))] flex flex-col rounded-[28px] overflow-hidden " +
-            (hifi
-              ? "font-geist bg-hf-page shadow-hf-float sm:rounded-[44px] sm:ring-[7px] sm:ring-hf-ink-900"
-              : "bg-white shadow-xl border border-neutral-300")
+            phone
+              ? "relative flex h-full w-full flex-col overflow-hidden font-geist bg-hf-page"
+              : "relative w-[390px] max-w-full shrink-0 h-[min(844px,calc(100dvh-48px))] flex flex-col rounded-[28px] overflow-hidden " +
+                (hifi
+                  ? "font-geist bg-hf-page shadow-hf-float sm:rounded-[44px] sm:ring-[7px] sm:ring-hf-ink-900"
+                  : "bg-white shadow-xl border border-neutral-300")
           }
         >
           {/* Hi-fi icons are thin line glyphs, like the reference; screens opt into fill. */}
@@ -238,18 +275,14 @@ export default function App() {
           {hifi ? <PhoneNotification open={!!s.reminder} total={s.advance?.total} onOpen={openReminder} /> : null}
         </div>
 
-        <div className={"w-[calc(100%-32px)] max-w-[390px] space-y-5 " + (hifi ? "font-geist lg:w-72" : "lg:w-64")}>
-          <ViewToggle value={view} onChange={changeView} />
-          <DemoSwitcher
-            hifi={hifi}
-            scenarios={SCENARIOS}
-            value={scenarioKey}
-            onChange={(key) => reset(key)}
-            onReset={() => reset()}
-            canSendReminder={!!s.advance}
-            onSendReminder={sendReminder}
-          />
-        </div>
+        {phone ? (
+          <PhoneDemo {...demoProps} />
+        ) : (
+          <div className={"w-[calc(100%-32px)] max-w-[390px] space-y-5 " + (hifi ? "font-geist lg:w-72" : "lg:w-64")}>
+            <ViewToggle value={view} onChange={changeView} />
+            <DemoSwitcher {...demoProps} />
+          </div>
+        )}
       </div>
     </MotionConfig>
   );
