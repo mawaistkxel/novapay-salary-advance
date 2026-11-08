@@ -34,7 +34,7 @@ Keep or share this chat itself as part of the AI log.
 3. **The starter commit wasn't untouched.** `CLAUDE.md` appeared inside the repo folder after the first listing and was swept into "Initial commit: starter as provided". Caught in the staged-file list and amended before anything was pushed, so commit 1 is the real starter again.
 4. **A test that was wrong, not the UI.** The first keyboard test pressed Tab twice, left the radio group (which is one tab stop) and changed the demo scenario with the arrow keys. Re-ran the test correctly instead of "fixing" working UI.
 
-> **Chosen for the write-up: #1** (invented reminder timing). It shows the trust guardrails at work and is easy to explain in the live session. #2 is the backup if they ask about design↔code judgement.
+> **In the write-up (8 Nov):** AI slop and how I kept it out, the decline promise, #1 (invented reminder timing), and the generic-to-modern restyle. It shows the trust guardrails at work and is easy to explain in the live session. #2 is the backup if they ask about design↔code judgement.
 
 ## 3. Figma component sheet (same session)
 
@@ -74,6 +74,7 @@ Keep or share this chat itself as part of the AI log.
 - **Scope kept honest:** when I asked to revert everything on the wireframe, it checked git and found only the reminder had touched the wireframe, rather than reverting by memory.
 - **Test results it didn't "fix":** in an unfocused Chrome window, animations never finished, so the notification looked stuck and the quick actions looked 14px off. It confirmed both were test artifacts (screenshots forced the frames) instead of changing working UI.
 - **Deploy:** the Vercel connector could only reach a team account, so it asked where the project should live; I deployed from my own account and it tested the production link through every scenario.
+- **A promise in the decline, removed:** checking the write-up against the app, the income decline still read "Verify your income to see the offer… share your salary slip to unlock the offers". A verified salary can still be declined for other reasons, so that promised an offer we can't guarantee. Rewritten (both views): "Verify your income to see if you can get an advance" / "we'll check whether an advance is available to you".
 - **Phone mode:** it proposed three ways to reach the demo scenarios on a phone; I chose the "Demo" tab. It narrowed the tab after measuring that a 44px target would cover the Scan button.
 
 ## Template for later entries ("log this")

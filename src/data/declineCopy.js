@@ -15,10 +15,12 @@
  */
 export const DECLINE_COPY = {
   income_unverified: {
-    heading: "Verify your income to see the\u00A0offer", // no-break space keeps "the offer" together,
-    why: "To lend you before the payday, we need to verify your proof of income, for that purpose, share your salary slip to unlock the offers.",
+    // No promise of an offer (8 Nov): a verified income can still be declined
+    // for other reasons (credit score, other), so the copy says we'll check.
+    heading: "Verify your income to see if you can get an\u00A0advance",
+    why: "To lend before payday, we need proof of your income. Share a salary slip or bank statement, and we'll check whether an advance is available to you.",
     canVerify: true,
-    home: "We need to verify your salary before we can offer an advance.",
+    home: "We need to verify your salary before we can check for an advance.",
     homeAction: "See what's needed",
   },
   credit_score: {
