@@ -27,7 +27,6 @@ import {
   StatusBar,
   TabBar,
   Tile,
-  Timeline,
   TxRow,
 } from "..";
 import { PAYDAY } from "../../data/scenarios";
@@ -154,7 +153,7 @@ export default function HomeScreen({
     return (
       <div className="flex items-center gap-3">
         {leading || (
-          <IconBadge size="sm">
+          <IconBadge size="sm" tone="grey">
             <HandCoins size={20} />
           </IconBadge>
         )}
@@ -169,12 +168,15 @@ export default function HomeScreen({
       return (
         <>
           {label(<span className="rounded-full bg-hf-navy-50 px-2.5 py-1 text-hf-small font-medium text-hf-navy-700">Active</span>)}
-          <p className="text-hf-body text-hf-ink-700">
-            <Money amount={advance.total} className="text-hf-ink-900" /> will be taken from your wallet on {PAYDAY},
-            your next payday.
-          </p>
-          <div className="rounded-hf-md bg-hf-mist p-4">
-            <Timeline disbursed={advance.disbursed} total={advance.total} date={PAYDAY} />
+          {/* The two facts that matter, made scannable (8 Nov): the amount large, the
+              date in primary ink. Calm, not alarming: no colour, no countdown. */}
+          <div>
+            <p>
+              <Money amount={advance.total} size="h1" className="text-hf-ink-900" />
+            </p>
+            <p className="mt-1 text-hf-body text-hf-ink-700">
+              will be taken from your wallet on <span className="font-medium text-hf-ink-900">{PAYDAY}</span>.
+            </p>
           </div>
         </>
       );

@@ -26,6 +26,7 @@ export default function Tile({ tone = "glass", as: Tag = "div", className = "", 
  * IconBadge — round icon chip.
  * glass: white glass circle, navy line icon (rows, headers)
  * navy:  liquid navy circle, white icon (the one emphasised badge per screen)
+ * grey:  light grey circle (page colour), navy icon: visible on a white card
  * amber / green: semantic only.
  */
 export function IconBadge({ children, tone = "glass", size = "md" }) {
@@ -34,6 +35,8 @@ export function IconBadge({ children, tone = "glass", size = "md" }) {
     navy: "hf-liquid text-white",
     // A visible circle on white glass (glass-on-glass disappears); decorative.
     soft: "bg-hf-navy-50 text-hf-navy-700",
+    // Neutral version of soft, for the Salary advance card title (8 Nov).
+    grey: "bg-hf-page text-hf-navy-700",
     amber: "bg-hf-amber-50 text-hf-amber-700",
     green: "bg-hf-green-50 text-hf-green-600",
   };
