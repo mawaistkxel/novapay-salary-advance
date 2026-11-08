@@ -1,6 +1,7 @@
 import magnifier from "../assets/illustrations/magnifier.png";
 import chart from "../assets/illustrations/chart.png";
 import shield from "../assets/illustrations/shield.png";
+import disguise from "../assets/illustrations/disguise.png";
 
 /**
  * Illustration — a small 3D navy spot illustration from the Nova Lite Figma file
@@ -13,9 +14,12 @@ import shield from "../assets/illustrations/shield.png";
  *
  * name: magnifier ("we need to check something") | chart ("based on your history")
  *       | shield (Verify income: "your document is handled with care")
+ *       | disguise (Terms, reduced amount: hat, glasses and moustache, supplied
+ *         by me from Figma on 8 Nov). Its background is solid white, not
+ *         transparent, so it only sits on a white circle.
  * size: sm 28px (inside a 40px IconBadge on the Home card) | lg 72px (screen header)
  */
-const SOURCES = { magnifier, chart, shield };
+const SOURCES = { magnifier, chart, shield, disguise };
 const SIZES = { sm: "h-7 w-7", lg: "h-[72px] w-[72px]" };
 
 export default function Illustration({ name, size = "lg", className = "" }) {

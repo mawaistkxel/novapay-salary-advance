@@ -36,7 +36,10 @@ export function Atmosphere() {
  * content, which reveals in a short stagger (off under reduced motion).
  *
  * `feature` puts the heading and lead inside a glass card, for screens whose
- * headline is a number (Choose amount).
+ * headline is a number (Choose amount). `feature="navy"` puts them in a smoked
+ * navy box instead, the same surface as the island toast, for news the person
+ * must read before deciding (Terms, reduced amount). White on navy-900 is
+ * 15.9:1; the lead is navy-100 (≥ 10.3:1).
  *
  * `center` centres the icon and heading block (Decline, where an illustration
  * leads); the content below stays left-aligned for reading.
@@ -48,6 +51,7 @@ export function Atmosphere() {
  */
 export default function Screen({ title, onBack, heading, lead, icon, feature = false, center = false, footer, children }) {
   const headingRef = useRef(null);
+  const navy = feature === "navy";
   useEffect(() => {
     headingRef.current?.focus({ preventScroll: true });
   }, []);
@@ -55,11 +59,14 @@ export default function Screen({ title, onBack, heading, lead, icon, feature = f
   const head = (
     <>
       {icon ? <div className={center ? "mb-4 flex justify-center" : "mb-4"}>{icon}</div> : null}
-      <h2 ref={headingRef} tabIndex={-1} className="text-hf-h1 text-hf-ink-900 outline-none">
+      <h2 ref={headingRef} tabIndex={-1} className={"text-hf-h1 outline-none " + (navy ? "text-white" : "text-hf-ink-900")}>
         {heading}
       </h2>
-      {/* A string lead is a paragraph; a node (e.g. a FactStrip) gets its own block. */}
-      {typeof lead === "string" ? (
+      {/* A string lead is a paragraph; a node (e.g. a FactStrip) gets its own block.
+          In the navy box the lead is always running text. */}
+      {navy && lead ? (
+        <p className="mt-3 text-hf-body text-hf-navy-100">{lead}</p>
+      ) : typeof lead === "string" ? (
         <p className="mt-3 text-hf-body text-hf-ink-700">{lead}</p>
       ) : lead ? (
         <div className="mt-4">{lead}</div>
@@ -77,9 +84,22 @@ export default function Screen({ title, onBack, heading, lead, icon, feature = f
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={spring}
-          className={(feature ? "hf-glass mb-6 rounded-hf-lg p-5" : "mb-7") + (center ? " text-center" : "")}
+          className={
+            (navy
+              ? "relative isolate mb-6 overflow-hidden rounded-hf-lg bg-hf-navy-900 px-5 pb-6 pt-7 shadow-hf-float ring-1 ring-inset ring-white/15"
+              : feature
+                ? "hf-glass mb-6 rounded-hf-lg p-5"
+                : "mb-7") + (center ? " text-center" : "")
+          }
         >
           {head}
+          {navy ? (
+            // Depth: two faint rings in the top-right corner, like the Home offer card (decorative).
+            <div aria-hidden="true" className="pointer-events-none absolute -right-14 -top-14 -z-10">
+              <div className="h-44 w-44 rounded-full ring-1 ring-white/10" />
+              <div className="absolute -inset-8 rounded-full ring-1 ring-white/[0.06]" />
+            </div>
+          ) : null}
         </motion.div>
         <motion.div variants={container} initial="hidden" animate="show" className="space-y-5">
           {/* toArray keeps each child's original position in its key, so a Notice
