@@ -30,18 +30,19 @@ Session 1 (Claude Code, 6 Nov 2026):
 - Overlay bug fixed (toast now y=545–591 at 360×640). System changes and the full flow built on branch `salary-advance` (see `docs/SYSTEM_CHANGES.md`).
 - Tested by script through all five scenarios at 360×640, plus 390×844, 1280×800 and 675×414; keyboard pass on the tier picker. Not yet tested with a real screen reader or on a real phone.
 - Docs written: `docs/DECISIONS.md`, `docs/SYSTEM_CHANGES.md`, `docs/AI_LOG.md`, `docs/WRITEUP.md` (draft, ~1,450 words, needs trimming to ~2 pages and one "rejected output" picked).
-- Not on GitHub / Vercel yet; deploy waits for my go-ahead and the reviewers' GitHub usernames.
+- (Since then: on GitHub as private `mawaistkxel/novapay-salary-advance`; PR #1 `salary-advance` → `main` merged 6 Nov.)
 
 Session 2 (7 Nov 2026), branch `hifi`:
 - Added the high-fidelity view: NovaKit Hi-Fi in `src/hifi/` (15 components, `hf-*` tokens), six hi-fi screens, `ViewToggle` outside the frame. Decline copy moved to `src/data/declineCopy.js` (shared).
 - Fixed in passing: screen headings showed a focus box after a screen change (global `:focus-visible` beat `outline-none`); affects the wireframe too.
 - Tested in the browser at 360×640, 390×844 and 1280×800: all five scenarios, view switch mid-flow, keyboard on the tier picker, no horizontal scroll. Reduced motion checked in code only (not emulated). Not yet on a real phone or with a screen reader.
 - Restyled the hi-fi view (v2) to my "Payno" reference: misty slate palette, one navy accent, light Geist, glass materials in `index.css` (`.hf-glass`, `.hf-glass-strong`, `.hf-liquid`, `.hf-haze`), round glass quick actions, glass tab bar with a haloed centre button.
-- Docs: DECISIONS, SYSTEM_CHANGES (hi-fi tokens, materials, components, contrast), DESIGN.md §10. Not yet merged to `main` or deployed. Dark mode not done.
+- Docs: DECISIONS, SYSTEM_CHANGES (hi-fi tokens, materials, components, contrast), DESIGN.md §10. Dark mode not done.
 - Payday reminder added as a phone notification (`src/PhoneNotification.jsx`), sent from the demo panel once an advance exists; hi-fi only (taken out of the wireframe on 8 Nov). Tested at 360×640, 390×844 and 1280×800.
-- Session 3 (8 Nov), hi-fi only: Receipt rows one line each with "One-time fee (3%)"; reminder line removed from Done; reduced amount shown as a navy apology box with the disguise illustration. The wireframe is unchanged since the last commit.
+- Session 3 (8 Nov), hi-fi only: Receipt rows one line each with "One-time fee (3%)"; reminder line removed from Done; reduced amount shown as a navy apology box with the disguise illustration. Home active card: grey icon circle, amount first, no timeline. The wireframe is unchanged.
+- 8 Nov: committed, pushed, PR #2 `hifi` → `main` merged (merge commit 290dc29). Vercel: I'm importing the repo myself from my own account (the Vercel connector only reached the "ASAP Semi" team).
 
-Next steps: I review the flow and the write-up → create the private repo, push, PR `salary-advance` → `main`, merge → Vercel import → test the production link incognito and on a phone → invite reviewers → export the write-up to a Google Doc/PDF.
+Next steps: I import the repo on Vercel (production domain only) → test the production link incognito and on a phone → invite reviewers to the private repo → trim the write-up to ~2 pages and export it to a Google Doc/PDF.
 
 Next steps, in order:
 1. Git hygiene: the first commit should be the untouched starter; this CLAUDE.md goes in a later commit.
