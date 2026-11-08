@@ -34,7 +34,7 @@ Keep or share this chat itself as part of the AI log.
 3. **The starter commit wasn't untouched.** `CLAUDE.md` appeared inside the repo folder after the first listing and was swept into "Initial commit: starter as provided". Caught in the staged-file list and amended before anything was pushed, so commit 1 is the real starter again.
 4. **A test that was wrong, not the UI.** The first keyboard test pressed Tab twice, left the radio group (which is one tab stop) and changed the demo scenario with the arrow keys. Re-ran the test correctly instead of "fixing" working UI.
 
-> Pick one for the write-up, or use something from the planning chat. #2 shows design↔code judgement best; #1 shows the trust guardrails at work.
+> **Chosen for the write-up: #1** (invented reminder timing). It shows the trust guardrails at work and is easy to explain in the live session. #2 is the backup if they ask about design↔code judgement.
 
 ## 3. Figma component sheet (same session)
 
@@ -50,6 +50,31 @@ Keep or share this chat itself as part of the AI log.
 - The focus ring didn't render, because shadow spread needs clipping on.
 - The page header collapsed, because "fill" isn't allowed inside a wrapping layout.
 - AmountText and Checkbox variants had unbound white backgrounds.
+
+## 4. Claude Code session 2 (7 Nov 2026): high-fidelity view
+
+**What I asked:** a finished-looking version alongside the wireframe, first in blue and glass, then restyled to my "Payno" reference (misty slate, one navy accent, liquid glass).
+
+**What the AI did:** built NovaKit Hi-Fi in `src/hifi/` with `hf-*` tokens, mirroring the Lite components' props so both views share one state machine and the same copy; added a view toggle; measured contrast for every new pair; asked before adding the three packages (motion, icons, typeface).
+
+**Kept / reworked:**
+- Kept the reference's look but **rejected its copy** ("Get Loans in Minutes!", "we've got your back", a giant "12x"): that's the predatory tone the brief asks us to remove.
+- A first green for "money in" measured 3.52:1 on glass over the haze; darkened until it passed on every surface.
+- Found in passing: a global focus rule drew a box around every screen heading after a screen change; fixed for both views.
+- Moved eligibility onto Home so there's no "Check eligibility" tap that can only end in a no (my call, logged as an assumption).
+
+## 5. Claude Code session 3 (8 Nov 2026): reminder, polish, deploy, phone mode
+
+**What I asked:** whether the payment reminder was covered; then a reminder preview, copy and layout changes on the hi-fi screens, deployment, and a phone-only layout.
+
+**What the AI did, and what I decided:**
+- **Reminder:** it first said plainly the reminder flow wasn't built (decline was the chosen hard path) and pointed to where the docs say so. I asked for a notification only, sent from a button outside the frame and only after an advance. It wrote the banner to name the amount and date but **not "advance" or "loan"**, because lock screens are public and borrowers here have been shamed; no reminder timing, because none is defined.
+- **Copy I rewrote:** for the reduced amount it proposed "Sorry, we can only offer Rs 5,000" with a two-sentence body. I had it cut the body to one line ("Our checks didn't allow the Rs 10,000 you asked for. You're free to say no.") and wrote the heading myself: "Oops, Rs 5,000 is all we can offer right now."
+- **Misread, then reverted:** asked to restore "the previous version" of the Home card, it guessed I meant the timeline styling and reverted that. I said no; it undid the change and waited for my explanation instead of guessing again.
+- **Scope kept honest:** when I asked to revert everything on the wireframe, it checked git and found only the reminder had touched the wireframe, rather than reverting by memory.
+- **Test results it didn't "fix":** in an unfocused Chrome window, animations never finished, so the notification looked stuck and the quick actions looked 14px off. It confirmed both were test artifacts (screenshots forced the frames) instead of changing working UI.
+- **Deploy:** the Vercel connector could only reach a team account, so it asked where the project should live; I deployed from my own account and it tested the production link through every scenario.
+- **Phone mode:** it proposed three ways to reach the demo scenarios on a phone; I chose the "Demo" tab. It narrowed the tab after measuring that a 44px target would cover the Scan button.
 
 ## Template for later entries ("log this")
 

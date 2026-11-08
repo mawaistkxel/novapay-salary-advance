@@ -1,82 +1,71 @@
 # NovaPay salary advance: what I changed and why
 
-*Draft for the ~2-page write-up. Prototype: `<vercel link>` · Repo: `<github link>`. Use the "Demo scenario" panel next to the phone to reach every path.*
+**Prototype:** https://novapay-salary-advance-six.vercel.app/ (on a laptop: a "Demo scenario" panel beside the phone reaches every path, and a toggle switches Wireframe / High fidelity; on a phone the high-fidelity app fills the screen and the scenarios sit behind a small "Demo" tab). **Repo:** https://github.com/mawaistkxel/novapay-salary-advance
 
 ## 1. What's going on
 
-There's no current flow in the starter, so this read is based on the brief's description: it "converts fine", but it feels off at the moments where we tell someone what a loan costs, that they've been declined, or that a repayment is due. In this market, that's the line between a helpful product and a predatory one.
+The starter has no current flow, so this rests on the brief: the advance "converts fine" but feels off where we say what it costs, that someone is declined, or that a repayment is due.
 
-- **What's working:** the product itself is simple and fair-shaped. It's a flat 3% fee, three fixed tiers and a single repayment on payday. That's easy to explain honestly, which makes it worth protecting.
-- **What isn't:** "converts fine" is the warning sign. A flow can convert well *because* the cost is easy to miss. The system makes that easy: the caption style that would hold a fee or date is 3.95:1 gray, and the secondary button that would hold "Not now" is the same gray, so saying no looks disabled.
-- **What's ambiguous:** what happens when payday comes and the wallet is short, whether late fees exist, and why a limit is what it is. The product doesn't define these, so I didn't make them up (see questions).
+- **Working:** a fair-shaped product (flat 3% fee, three tiers, one repayment on payday) that's easy to explain honestly.
+- **Not working:** "converts fine" is the warning; a flow can convert *because* the cost is easy to miss. The system invites it: captions that would hold a fee or date are 3.95:1 gray, and the secondary button that would hold "Not now" is the same gray, so no looks disabled.
+- **Ambiguous:** what happens if the wallet is short on payday, whether late fees exist, and why a limit is what it is. None is defined, so I didn't invent them.
 
 ## 2. What I built, and why
 
-**One honest decision screen.** The amount you'll receive, the one-time fee, the date it's taken and the total sit together, above Accept, at body size. Nothing about cost lives in small print or on another screen. I'm assuming this matters more than any conversion it costs.
+**One honest decision screen.** Amount received, one-time fee, date taken and total sit together above Accept, at body size, even if that costs conversion.
 
-**Consent you actually give.** Accept is enabled only once you tick "I agree that NovaPay will take Rs 10,300 from my wallet on 28 Jul." The label is the full commitment, not "I agree to the terms." **"Not now" is the same size as Accept** and now readable (8.45:1). Saying no shows "No advance taken. Nothing has changed in your wallet."
+**Consent you actually give.** Accept unlocks only after ticking "I agree that NovaPay will take Rs 10,300 from my wallet on 28 Jul." **"Not now" is the same size and weight as Accept**, and saying no confirms "No advance taken. Nothing has changed in your wallet."
 
-**Cost before commitment.** Each tier shows what you'll repay while you're still choosing, and nothing is preselected (defaulting to the maximum anchors people on borrowing the most). If risk checks cut the amount (a haircut), you're told before Accept, with the fee and total recalculated and "You can still say no."
+**Cost before commitment.** Each tier shows what you'll repay while you choose, and nothing is preselected (the maximum would anchor people on borrowing more). If risk checks cut the amount, you learn it before Accept, with the fee and total recalculated and a plain note that no is fine.
 
-**I designed the over-limit moment away.** Rs 15,000 is visible but locked: "Your current limit is Rs 10,000." Letting someone pick an amount they can't have and then showing an error is a trap the UI sets. Hiding the tier would hide the limit. Showing it locked is the honest middle.
+**Over-limit, designed away.** Rs 15,000 is visible but locked ("Above your limit"). Letting someone pick what they can't have and then erroring is a trap the UI sets; hiding the tier hides the limit.
 
-**The not-good path: decline.** I chose decline because it's the hard moment inside a *first-time* experience, and where vagueness feels most like being judged. The screen says no plainly, names the real reason in everyday words, and only offers a next step when one exists:
-- *Income not verified:* the screen leads with the action ("Verify your income to see the offer") and one plain line on why proof of income is needed, then a single screen explaining what to send, why, and how it's used. No promised review time and no fake instant approval.
-- *Credit score:* the reason, and the honest truth that there's nothing to do in the app today, with a pointer to support if something in their history looks wrong. No "try again later" when nothing would change.
-- There's no "Check eligibility" tap that can end in a no. Home already shows the answer: the offer for approved users, and for declined users a quiet card ("We need to verify your salary…" or "Not available to you right now") that opens the reason. The reason itself is never on Home, where others may see the phone. This assumes NovaPay can pre-assess eligibility, which I'd confirm with compliance.
+**The not-good path: decline.** It's the hard moment inside a *first-time* experience, and where vagueness feels most like judgement. The screen names the real reason in everyday words and offers a next step only when one exists: *income not verified* leads to "Verify your income" and one screen on what to send and how it's used (no promised review time); *credit score* gets the plain reason and a pointer to support, with no "try again later" when nothing would change. Eligibility shows on Home upfront, so there's no "Check eligibility" tap that can only end in a no, and the reason is one tap away rather than on Home, where others may see the phone.
 
-**What I chose not to build:** the late-repayment path (outside the first-time flow, and the rules don't define failed pulls or fees; the payday reminder itself is shown only as a phone notification, in the high-fidelity view, that names the amount and date but not the debt), a full verification loop, and a celebratory confirmation. The confirmation repeats the total and the date, because taking on debt isn't a win to cheer.
+**Not built:** the late-repayment path (failed pulls and fees aren't defined), a full verification loop, and any celebration on confirmation, which repeats the total and date instead. The payday reminder appears only as a phone notification (hi-fi), naming the amount and date but not the debt, since lock screens are public.
 
-**Edges:** loading states on every money action (no double submit); an Accept failure that says "No money was moved and nothing will be taken"; toasts announced to screen readers; focus moves to each new screen's heading; and it works at 360×640 (fixing an existing bug where overlays rendered below the fold).
+**Edges:** loading states on money actions; an Accept failure that says "No money was moved and nothing will be taken"; screen-reader announcements; and a fix for overlays rendering below the fold at 360×640.
+
+**High fidelity, same decisions.** The wireframe is the reasoning baseline. A second view shows the same flow and state machine in a finished look, to prove the guardrails survive polish: the total is the loudest number, borrowed money is never green, nothing celebrates. On phones it's the only view.
 
 ## 3. Where I extended the system, and why
 
-**No new tokens.** Every new state uses existing colour, type and radius tokens, and every pair is contrast-checked (lowest: 4.71:1). Full mapping in `docs/SYSTEM_CHANGES.md`.
+**NovaKit Lite (wireframe): no new tokens.** Every new state maps to existing tokens, each pair contrast-checked (lowest 4.71:1). Full mapping: `docs/SYSTEM_CHANGES.md` and the Figma component sheet.
 
-- **TierPicker** (new): native radio group with a *locked* state; replaces a free-text field that accepts amounts that don't exist. `options[{amount, detail, locked, lockedReason}]`.
-- **CostBreakdown** (new): `<dl>` of money facts with an emphasised total; enforces "never fine print". `items[{label, value, hint, emphasis}]`.
-- **Checkbox** (new): unticked consent with the full statement as its label.
-- **Notice** (new): inline `info` / `caution` message, `alert` for failures. Amber means "read this", never "buy this".
-- **Button** (modified): secondary text 3.95 → 8.45:1; new `loading` state.
-- **Toast** (modified): screen-reader live region; white-on-green 3.45:1 → white on neutral-900 17.4:1.
-- **AmountText** (modified): `tone` prop, so amounts can sit in a button or a coloured title.
-- **Card, ListRow, index.css** (modified): hard-coded hex replaced with tokens; ListRow dates readable. **AppBar:** bigger back target. **Panel:** deprecated, as a duplicate of Card.
+- **TierPicker** (new): native radios with a *locked* state, replacing a free-text field that accepts amounts that don't exist.
+- **CostBreakdown** (new): a `<dl>` of money facts with an emphasised total.
+- **Checkbox** (new): unticked consent; the label is the full commitment.
+- **Notice** (new): `info` / `caution`, `alert` for failures. Amber means "read this", never "buy this".
+- **Modified:** Button (secondary text 3.95 → 8.45:1, `loading`), Toast (live region; 3.45 → 17.4:1), AmountText (`tone`), Card/ListRow/index.css (hex → tokens); Panel deprecated.
 
-**Wrong, inconsistent or missing in NovaKit Lite:** no error/warning/info colours; a success-only Toast with no live region; no tier control, cost component or loading state; `TextField` has no label or error state; `BottomSheet` closes on backdrop tap with no dialog semantics (I'd never put a loan decision in it); Card/Panel duplicate each other; a "full" brand ramp with a `pressed` state name and mislabelled steps; and an amber accent pitched for "expressive moments" that fails contrast as text.
+**NovaKit Hi-Fi:** a separate set in `src/hifi/` (`hf-*` tokens, glass materials in CSS, 18 components) that mirrors Lite's props, so the views can't drift. It adds three packages I approved (motion, icons, a typeface), only used by that view. That's the least restrained part of this work, and I'd only ship it if NovaPay wanted that direction.
+
+**Wrong or missing in NovaKit Lite:** no error/warning/info colours; a success-only Toast with no live region; no tier control, cost component or loading state; `TextField` has no label or error state; `BottomSheet` has no dialog semantics (never for a loan decision); Card and Panel duplicate each other; the "full" brand ramp mixes in a state name; the amber accent fails contrast as text.
 
 ## 4. How I'd know it's good
 
-**Signals at 60–90 days**
-- Repayment: on-time rate holds or improves; fewer `late`/`default` per cohort, especially in the first advance.
-- Understanding: in a short post-accept check, most users can state the total and date correctly. Fewer CS contacts that are about "why was this taken?".
-- Honest choice: "Not now" and smaller tiers are used, and the haircut acceptance rate looks like a real decision rather than near 100%.
-- Decline: verify-income completion, and the share who later qualify; fewer repeat attempts after a credit-score decline.
-- Trust: complaint volume and app-store mentions of "hidden fee" or "harassment"; repeat-borrowing patterns that suggest dependency (watch, don't optimise).
+**At 60–90 days:** on-time repayment holds or improves; users can state the total and date in a post-accept check; fewer "why was this taken?" contacts; "Not now", smaller tiers and haircut refusals get real use; verify-income completion rises; hidden-fee complaints fall; repeat borrowing is watched for dependency, not optimised.
 
-**What it must never do, whatever it does to conversion:** hide or shrink the cost or date; preselect or nudge toward the larger amount; make saying no harder than yes; use urgency, countdowns or celebration to sell debt; invent or hide charges; give a vague or blaming decline; contact a borrower's contacts, or shame or threaten them when they're late.
+**It must never,** whatever it does to conversion: hide or shrink the cost or date; preselect or nudge toward more; make no harder than yes; use urgency, countdowns or celebration to sell debt; invent or hide charges; decline vaguely or with blame; contact a borrower's contacts, or shame or threaten anyone who is late.
 
 ## Assumptions I'm making
-- Total cost of credit belongs on the same screen as Accept, even if it lowers conversion.
-- The payday (28 Jul) is known at offer time; the advance lands in the wallet right after Accept and is taken from the wallet on payday.
+- Total cost belongs on the Accept screen, even if it lowers conversion.
+- Payday (28 Jul) is known at offer time; money lands right after Accept and is taken from the wallet on payday.
 - The haircut is known before Accept and always lands on a tier.
-- Reminders exist before payday (timing not assumed). Checking eligibility takes no money (I don't claim anything about credit records).
-- Income documents are used only to confirm income; support can explain credit-history data.
-- Freelancers are out of scope for a *salary* advance until a rule exists.
+- Eligibility can be pre-assessed, so Home can show it upfront.
+- Income documents are used only to confirm income; freelancers are out of scope until a rule exists.
 
 ## What I'd want to know that I don't
-- **What happens if the wallet is short on payday?** The most important gap. The terms screen can't honestly say what happens if the money isn't there, so it says nothing about it.
-- Are there late fees? Can people cancel or repay early? Any regulator cooling-off rule?
-- What can we legally say about a credit-score decline, and what's behind `other`?
-- Is the haircut really known before Accept?
+- **What happens if the wallet is short on payday?** The biggest gap: the terms can't honestly say, so they say nothing.
+- Late fees, cancellation, early repayment, any cooling-off rule; what we may legally say about a credit-score decline, and what `other` covers.
 - The dataset: decline rates by reason, haircut rate, freelance share, late/default by tier.
-- People: compliance (disclosure wording, Urdu), engineering (payday pull and failure handling), CS (top complaints today).
 
 ## What I'd do differently with more time
-- Design the **late-repayment** path: reminder timing and tone, a failed pull, what Home shows while overdue. It's the moment most likely to turn predatory.
-- **Urdu** copy and a plain-language test with real borrowers, especially the consent sentence.
-- A cancel or early-repay path, once the rule exists.
-- A Figma component sheet with variants and auto-layout for the four new components (the code mapping is in `docs/SYSTEM_CHANGES.md`).
-- Fix the remaining system debt: `TextField` labels and errors, `BottomSheet` dialog semantics, and a proper semantic colour set.
+- Design the **late-repayment** path: reminder timing and tone, a failed pull, Home while overdue. It's where this most easily turns predatory.
+- **Urdu** copy, and a plain-language test of the consent sentence with real borrowers.
+- A screen-reader and real-device pass; fix `TextField`, `BottomSheet` and the missing semantic colours.
 
 ## How I used AI
-See `docs/AI_LOG.md`. In short: a planning chat produced a handoff file with my decisions and guardrails; the coding agent asked me the open decisions instead of making them (I overrode two of its recommendations), then built in small commits. **One output I reworked:** `<pick from AI_LOG.md>`.
+A planning chat turned the brief into a handoff file of guardrails and open decisions; the coding agent asked me those decisions rather than making them, then built in small commits I reviewed (log: `docs/AI_LOG.md`).
+
+**One output I rejected:** the agent's first confirmation copy said "We'll remind you *a few days* before 28 Jul." It reads kindly, but reminder timing isn't defined anywhere, so it quietly invented a product rule and a promise NovaPay might not keep, the exact failure the brief warns about. I cut it to "We'll remind you before 28 Jul" and logged the reminder as an assumption.
