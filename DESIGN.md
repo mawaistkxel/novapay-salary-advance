@@ -200,7 +200,7 @@ A caution Notice above the breakdown: "We can offer Rs 5,000, not Rs 10,000", wi
 **Hi-fi (8 Nov):** the Notice and the "Your salary advance" heading are replaced by a navy box at the top (`Screen feature="navy"`, centred): the disguise illustration in a white circle with an amber alert badge, the heading "Oops, Rs 5,000 is all we can offer right now." (was "Sorry, we can only offer Rs 5,000"; changed the same day at my call) and the lead "Our checks didn't allow the Rs 10,000 you asked for. You're free to say no." The wireframe keeps the caution Notice and its wording.
 
 ### Decline
-Heading per reason (`income_unverified`: "Verify your income to see the offer"; `credit_score` / `other`: "We can't offer you an advance right now") → the reason as one plain paragraph directly under the heading (no "Why" label, no card; centred in hi-fi) → pinned actions. No Notices on this screen (removed 7 Nov). A next step appears only when one exists:
+Heading per reason (`income_unverified`: "Verify your income to see if you can get an advance" (8 Nov; was "…to see the offer", which promised an offer verification can't guarantee); `credit_score` / `other`: "We can't offer you an advance right now") → the reason as one plain paragraph directly under the heading (no "Why" label, no card; centred in hi-fi) → pinned actions. No Notices on this screen (removed 7 Nov). A next step appears only when one exists:
 
 | Reason | Why (copy) | Next step |
 |---|---|---|
@@ -212,7 +212,7 @@ Eligibility is shown on Home upfront; there is no tap-to-check step that can end
 
 | Reason | Home card | Button |
 |---|---|---|
-| `income_unverified` | We need to verify your salary before we can offer an advance. | See what's needed (primary) |
+| `income_unverified` | We need to verify your salary before we can check for an advance. | See what's needed (primary) |
 | `credit_score` / `other` | Not available to you right now. | See why (primary; the card's only action) |
 
 Approved users see the offer card ("See amounts and cost"), with no limit amount on Home. Copy lives in `src/data/declineCopy.js` (`home`, `homeAction`).
